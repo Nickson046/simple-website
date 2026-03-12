@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Admin Dashboard</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="menu-toggle">☰</div>
+
+<h2>Fuel Price Admin</h2>
+
+<input id="petrolInput" placeholder="Petrol Price">
+<input id="dieselInput" placeholder="Diesel Price">
+
+<button onclick="savePrices()">Update Prices</button>
+
+<script>
+
+function savePrices(){
+
+let petrol=document.getElementById("petrolInput").value;
+let diesel=document.getElementById("dieselInput").value;
+
+localStorage.setItem("petrol",petrol);
+localStorage.setItem("diesel",diesel);
+
+alert("Prices Updated");
+
+}
+
+</script>
+
+</body>
+
+</html>
