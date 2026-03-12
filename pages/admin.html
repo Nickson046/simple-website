@@ -1,38 +1,65 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Dashboard</title>
-<link rel="stylesheet" href="css/style.css">
+
+<link rel="stylesheet" href="../css/style.css">
+
 </head>
 
 <body>
 
-<div class="menu-toggle">☰</div>
+<header>
 
-<h2>Fuel Price Admin</h2>
+<div class="logo">⛽ RedFuel Admin</div>
 
-<input id="petrolInput" placeholder="Petrol Price">
-<input id="dieselInput" placeholder="Diesel Price">
+<nav class="main-nav">
+<a href="../index.html">Home</a>
+<a href="prices.html">Fuel Prices</a>
+</nav>
 
-<button onclick="savePrices()">Update Prices</button>
+</header>
+
+<section>
+
+<h2>Fuel Price Admin Panel</h2>
+
+<form id="priceForm">
+
+<input type="number" step="0.01" id="petrolInput" placeholder="Petrol Price">
+
+<input type="number" step="0.01" id="dieselInput" placeholder="Diesel Price">
+
+<button type="submit">Update Prices</button>
+
+</form>
+
+</section>
+
+<footer>
+<p>© 2026 RedFuel Smart Station</p>
+</footer>
 
 <script>
 
-function savePrices(){
+document.getElementById("priceForm").addEventListener("submit", function(e){
 
-let petrol=document.getElementById("petrolInput").value;
-let diesel=document.getElementById("dieselInput").value;
+e.preventDefault();
 
-localStorage.setItem("petrol",petrol);
-localStorage.setItem("diesel",diesel);
+const petrol = document.getElementById("petrolInput").value;
+const diesel = document.getElementById("dieselInput").value;
 
-alert("Prices Updated");
+localStorage.setItem("petrol", petrol);
+localStorage.setItem("diesel", diesel);
 
-}
+alert("Fuel prices updated!");
+
+});
 
 </script>
 
 </body>
-
 </html>

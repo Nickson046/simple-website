@@ -33,11 +33,11 @@
 <div class="price-board">
 
 <div class="fuel">
-PETROL: $1.50
+PETROL: $<span id="petrolPrice"></span>
 </div>
 
 <div class="fuel">
-DIESEL: $1.40
+DIESEL: $<span id="dieselPrice"></span>
 </div>
 
 </div>
@@ -49,6 +49,16 @@ DIESEL: $1.40
 </footer>
 
 <script src="../js/script.js"></script>
+
+<script>
+
+document.getElementById("petrolPrice").innerText =
+localStorage.getItem("petrol") || "1.45";
+
+document.getElementById("dieselPrice").innerText =
+localStorage.getItem("diesel") || "1.38";
+
+</script>
 
 </body>
 </html>
