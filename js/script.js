@@ -38,3 +38,38 @@ document.addEventListener("DOMContentLoaded", () => {
   scrollAnimation();
 
 });
+
+/*
+// HERO BACKGROUND SLIDESHOW
+const hero = document.querySelector(".hero");
+
+// List of background images
+const heroImages = [
+  "images/hero1.jpg",
+  "images/hero2.jpg",
+  "images/hero3.jpg"
+];
+
+let currentHeroIndex = 0;
+
+// Preload images to avoid flash
+heroImages.forEach(src => {
+  const img = new Image();
+  img.src = src;
+});
+
+// Function to change hero background
+function changeHeroBackground() {
+  currentHeroIndex++;
+  if(currentHeroIndex >= heroImages.length) currentHeroIndex = 0;
+  hero.style.backgroundImage = `url('${heroImages[currentHeroIndex]}')`;
+}
+
+// Optional: start with random image
+currentHeroIndex = Math.floor(Math.random() * heroImages.length);
+hero.style.backgroundImage = `url('${heroImages[currentHeroIndex]}')`;
+
+// Change every 5 seconds
+setInterval(changeHeroBackground, 5000);
+
+*/
