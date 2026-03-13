@@ -8,6 +8,7 @@
 
 <link rel="stylesheet" href="css/style.css">
 
+
 </head>
 
 <body>
@@ -26,6 +27,8 @@
 <a href="pages/carwash.html">Car Wash</a>
 <a href="pages/location.html">Location</a>
 </nav>
+
+<button id="themeToggle">🌙</button>
 
 </header>
 
@@ -76,12 +79,97 @@ Fast service. Quality fuel. Always open.
 
 </section>
 
+<section class="highlights">
 
+<h2>Why Choose RedFuel</h2>
+
+<div class="highlight-grid">
+
+<div class="card">
+<h3>24/7 Fuel Service</h3>
+<p>Open day and night for your convenience.</p>
+</div>
+
+<div class="card">
+<h3>Premium Fuel Quality</h3>
+<p>Certified high performance petrol and diesel.</p>
+</div>
+
+<div class="card">
+<h3>Fast Car Wash</h3>
+<p>Automatic cleaning in under 5 minutes.</p>
+</div>
+
+<div class="card">
+<h3>Loyalty Rewards</h3>
+<p>Earn points and receive discounts.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="news">
+
+<h2>Station Updates</h2>
+
+<div id="newsContainer"></div>
+
+</section>
+
+<section>
+
+<h2>Post Station News</h2>
+
+<input type="text" id="newsTitle" placeholder="News title">
+
+<textarea id="newsText" placeholder="Write update"></textarea>
+
+<button onclick="postNews()">Publish</button>
+
+</section>
+
+<!-- first footer-->
 <footer>
-<p>© 2026 RedFuel Smart Station</p>
+
+<div class="footer-grid">
+
+<div>
+<h3>RedFuel Station</h3>
+<p>
+Your trusted local fuel station providing quality fuel,
+car wash services and convenience shopping.
+</p>
+</div>
+
+<div>
+<h3>Quick Links</h3>
+<ul>
+<li><a href="index.html">Home</a></li>
+<li><a href="services.html">Services</a></li>
+<li><a href="prices.html">Fuel Prices</a></li>
+<li><a href="carwash.html">Car Wash</a></li>
+<li><a href="location.html">Location</a></li>
+</ul>
+</div>
+
+<div>
+<h3>Contact</h3>
+<p>Email: info@redfuel.com</p>
+<p>Phone: +123 456 789</p>
+<p>Open 24 Hours</p>
+</div>
+
+</div>
+
+<p class="copyright">© 2026 RedFuel Smart Station</p>
+
 </footer>
 
+
+<script src="js/theme.js"></script>
 <script src="js/script.js"></script>
+<script src="js/loyalty.js"></script>
 
 </body>
 </html>

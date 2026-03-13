@@ -39,6 +39,21 @@
 
 </section>
 
+<!--This section is for posting updates -->
+<section>
+
+<h2>Post Station News</h2>
+
+<input type="text" id="newsTitle" placeholder="News Title">
+
+<input type="text" id="newsImage" placeholder="Image URL">
+
+<textarea id="newsText" placeholder="Write update"></textarea>
+
+<button onclick="postNews()">Publish</button>
+
+</section>
+
 <footer>
 <p>© 2026 RedFuel Smart Station</p>
 </footer>
@@ -60,6 +75,29 @@ alert("Fuel prices updated!");
 });
 
 </script>
+
+<script>
+
+function postNews(){
+
+const title = document.getElementById("newsTitle").value;
+const image = document.getElementById("newsImage").value;
+const text = document.getElementById("newsText").value;
+
+let news = JSON.parse(localStorage.getItem("stationNews")) || [];
+
+news.push({title,image,text});
+
+localStorage.setItem("stationNews",JSON.stringify(news));
+
+alert("News published!");
+
+}
+
+</script>
+
+<script src="js/script.js"></script>
+<script src="../js/theme.js"></script>
 
 </body>
 </html>

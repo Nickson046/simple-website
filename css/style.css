@@ -1,4 +1,6 @@
-/* RESET */
+/* ===============================
+   RESET
+================================*/
 *{
 margin:0;
 padding:0;
@@ -7,27 +9,39 @@ font-family:Arial, Helvetica, sans-serif;
 scroll-behavior:smooth;
 }
 
-/* BODY */
+/* ===============================
+   BODY
+================================*/
 body{
 display:flex;
 flex-direction:column;
 min-height:100vh;
 background:white;
 color:#111;
-transition:0.2s;
+transition:0.3s;
 }
 
-/* HEADER */
+/* ===============================
+   HEADER
+================================*/
 header{
 display:flex;
 justify-content:space-between;
 align-items:center;
-background:red;
+
 padding:15px 40px;
+
+background:rgba(255,0,0,0.85);
+backdrop-filter:blur(10px);
+
 color:white;
+
 position:sticky;
 top:0;
+
 z-index:2000;
+
+box-shadow:0 5px 20px rgba(0,0,0,0.2);
 }
 
 .logo{
@@ -35,12 +49,13 @@ font-size:24px;
 font-weight:bold;
 }
 
-/* NAVIGATION */
+/* ===============================
+   NAVIGATION
+================================*/
 nav.main-nav{
 display:flex;
 align-items:center;
 gap:25px;
-z-index:2000;
 }
 
 nav.main-nav a{
@@ -52,6 +67,7 @@ transition:0.3s;
 }
 
 /* underline animation */
+
 nav.main-nav a::after{
 content:"";
 position:absolute;
@@ -67,7 +83,9 @@ nav.main-nav a:hover::after{
 width:100%;
 }
 
-/* HERO SECTION */
+/* ===============================
+   HERO SECTION
+================================*/
 .hero{
 height:90vh;
 background:url("../images/hero.jpg") center/cover no-repeat;
@@ -89,8 +107,32 @@ top:0;
 left:0;
 width:100%;
 height:100%;
-background:rgba(0,0,0,0.5);
+background:rgba(0,0,0,0.6);
 z-index:0;
+}
+
+/* animated glow */
+
+.hero::after{
+content:"";
+position:absolute;
+top:-50%;
+left:-50%;
+width:200%;
+height:200%;
+background:linear-gradient(
+45deg,
+rgba(255,0,0,0.4),
+rgba(255,120,0,0.2),
+rgba(255,0,0,0.4)
+);
+animation:heroGlow 10s linear infinite;
+z-index:0;
+}
+
+@keyframes heroGlow{
+0%{transform:rotate(0deg)}
+100%{transform:rotate(360deg)}
 }
 
 .hero h1{
@@ -120,12 +162,21 @@ background:#c40000;
 transform:scale(1.05);
 }
 
-/* GENERAL SECTIONS */
+
+/* ===============================
+   GENERAL SECTIONS
+================================*/
+
 section{
-padding:60px 10%;
+padding:50px 10%;
 text-align:center;
-transition:1s;
 flex:1;
+}
+
+/* keep normal sections centered */
+section:not(.hero){
+max-width:1200px;
+margin:auto;
 }
 
 h2{
@@ -134,14 +185,22 @@ margin-bottom:30px;
 font-size:32px;
 }
 
-/* SERVICE GRID */
+.hero{
+width:100%;
+min-height:85vh;
+}
+/* ===============================
+   SERVICE GRID
+================================*/
 .service-grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 gap:20px;
 }
 
-/* GLASS CARDS */
+/* ===============================
+   GLASS CARDS
+================================*/
 .card{
 border:1px solid rgba(255,255,255,0.3);
 padding:25px;
@@ -157,7 +216,9 @@ background:red;
 color:white;
 }
 
-/* FUEL PRICE BOARD */
+/* ===============================
+   FUEL PRICE BOARD
+================================*/
 .price-board{
 display:flex;
 justify-content:center;
@@ -166,18 +227,30 @@ flex-wrap:wrap;
 }
 
 .fuel{
-border:3px solid red;
-padding:25px 50px;
-font-size:28px;
 background:black;
-color:#ff2e2e;
+border:4px solid red;
+padding:30px 60px;
 font-family:monospace;
-letter-spacing:2px;
-box-shadow:0 0 15px red;
-animation:ledGlow 1.5s infinite alternate;
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:10px;
+box-shadow:0 0 20px red;
 }
 
-@keyframes ledGlow{
+.fuel-type{
+font-size:22px;
+letter-spacing:3px;
+color:white;
+}
+
+.fuel-price{
+font-size:40px;
+color:#ff3b3b;
+animation:ledPulse 1.2s infinite alternate;
+}
+
+@keyframes ledPulse{
 from{
 text-shadow:0 0 5px red;
 }
@@ -186,21 +259,9 @@ text-shadow:0 0 20px red,0 0 40px red;
 }
 }
 
-/* FORMS */
-form{
-display:flex;
-flex-direction:column;
-gap:15px;
-max-width:400px;
-margin:auto;
-}
-
-input,select{
-padding:10px;
-border:1px solid red;
-border-radius:4px;
-}
-
+/* ===============================
+   BUTTONS
+================================*/
 button{
 background:red;
 color:white;
@@ -215,22 +276,81 @@ button:hover{
 background:#c40000;
 }
 
-/* LOCATION MAP */
+.btn{
+display:inline-block;
+padding:14px 30px;
+background:#ff2a2a;
+color:white;
+text-decoration:none;
+border-radius:8px;
+font-size:18px;
+transition:0.3s;
+}
+
+.btn:hover{
+background:#d60000;
+transform:scale(1.05);
+}
+
+/* ===============================
+   FORMS
+================================*/
+form{
+display:flex;
+flex-direction:column;
+gap:15px;
+max-width:400px;
+margin:auto;
+}
+
+input,select{
+padding:10px;
+border:1px solid red;
+border-radius:4px;
+}
+
+/* ===============================
+   LOCATION MAP
+================================*/
 .location iframe{
 border-radius:8px;
 margin-top:20px;
 }
 
-/* FOOTER */
+/* ===============================
+   FOOTER
+================================*/
 footer{
 background:red;
 color:white;
 text-align:center;
-padding:20px;
+padding:25px;
 margin-top:auto;
 }
 
-/* DARK MODE */
+.footer-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:30px;
+margin-bottom:20px;
+}
+
+footer ul{
+list-style:none;
+}
+
+footer a{
+color:white;
+text-decoration:none;
+}
+
+footer a:hover{
+text-decoration:underline;
+}
+
+/* ===============================
+   DARK MODE
+================================*/
 body.dark{
 background:#111;
 color:white;
@@ -251,15 +371,18 @@ background:#111;
 border-top:2px solid red;
 }
 
-/* HAMBURGER MENU */
+/* ===============================
+   HAMBURGER MENU
+================================*/
 .menu-toggle{
 display:none;
 font-size:28px;
 cursor:pointer;
-z-index:4000;
 }
 
-/* MOBILE NAVIGATION */
+/* ===============================
+   MOBILE NAVIGATION
+================================*/
 @media(max-width:768px){
 
 .menu-toggle{
@@ -287,10 +410,6 @@ display:flex;
 font-size:32px;
 }
 
-header{
-flex-direction:row;
-}
-
 .service-grid{
 gap:15px;
 }
@@ -302,18 +421,37 @@ align-items:center;
 
 }
 
-/* PAGE BACKGROUNDS */
+/* ===============================
+   PAGE BACKGROUNDS
+================================*/
 
 body.prices{
 background:url("../images/prices.jpg") center/cover fixed;
 }
 
 body.carwash{
-background:url("../images/hero.jpg") center/cover fixed;
+background:url("../images/carwash.jpg") center/cover fixed;
 }
 
+body.location{
+background:url("../images/location.jpg") center/cover fixed;
+}
+
+body.services{
+background:url("../images/services.jpg") center/cover fixed;
+}
+
+body.fleet{
+background:url("../images/fleet.jpg") center/cover fixed;
+}
+
+/* overlay for readability */
+
+body.prices::before,
 body.carwash::before,
-body.prices::before{
+body.location::before,
+body.services::before,
+body.fleet::before{
 content:"";
 position:fixed;
 top:0;
@@ -323,53 +461,4 @@ height:100%;
 background:rgba(0,0,0,0.5);
 pointer-events:none;
 z-index:-1;
-}
-
-/* keep content above overlay */
-/*header,section,footer{
-position:relative;
-z-index:1;
-}*/
-
-.hero{
-height:90vh;
-background:url("../images/hero.jpg") center/cover no-repeat;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-text-align:center;
-color:white;
-position:relative;
-overflow:hidden;
-}
-
-/* animated glow */
-
-.hero::after{
-content:"";
-position:absolute;
-top:-50%;
-left:-50%;
-width:200%;
-height:200%;
-background:linear-gradient(
-45deg,
-rgba(255,0,0,0.4),
-rgba(255,120,0,0.2),
-rgba(255,0,0,0.4)
-);
-animation:heroGlow 10s linear infinite;
-z-index:0;
-}
-
-@keyframes heroGlow{
-0%{transform:rotate(0deg)}
-100%{transform:rotate(360deg)}
-}
-
-.hero h1,
-.hero p,
-.hero button{
-z-index:1;
 }
