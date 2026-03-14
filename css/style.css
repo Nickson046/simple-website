@@ -44,10 +44,10 @@ z-index:2000;
 box-shadow:0 5px 20px rgba(0,0,0,0.2);
 }
 
-.logo{
+/*.logo{
 font-size:24px;
 font-weight:bold;
-}
+}*/
 
 /* ===============================
    NAVIGATION
@@ -461,4 +461,13 @@ height:100%;
 background:rgba(0,0,0,0.5);
 pointer-events:none;
 z-index:-1;
+}
+
+
+/* logo ========*/
+#logo {
+    width: 100px; /* adjust size */
+    height: auto; /* maintain aspect ratio */
+    display: block;
+    margin: 0 auto; /* center the logo */
 }

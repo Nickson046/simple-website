@@ -95,5 +95,29 @@ required></textarea>
 <!-- Firebase Admin Logic -->
 <script type="module" src="../js/admin.js"></script>
 
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyB-Q-MFZDCgHnaVgMRrgxEL9YPrIqZwUrU",
+    authDomain: "redfuel-a2152.firebaseapp.com",
+    projectId: "redfuel-a2152",
+    storageBucket: "redfuel-a2152.firebasestorage.app",
+    messagingSenderId: "782154176195",
+    appId: "1:782154176195:web:46af20e4252e415ba77476",
+    measurementId: "G-GGSJ28E0D7"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
+
 </body>
 </html>
