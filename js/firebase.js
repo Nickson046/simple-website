@@ -18,7 +18,7 @@ appId: "1:782154176195:web:46af20e4252e415ba77476"
 
 
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+export const db = getFirestore(app);
 
 
 async function loadPrices(){
