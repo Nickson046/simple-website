@@ -23,15 +23,29 @@
 
 </header>
 
+
+<!-- ===============================
+FUEL PRICE ADMIN
+================================ -->
 <section>
 
 <h2>Fuel Price Admin Panel</h2>
 
 <form id="priceForm">
 
-<input type="number" step="0.01" id="petrolInput" placeholder="Petrol Price">
+<input 
+type="number" 
+step="0.01" 
+id="petrolInput" 
+placeholder="Petrol Price"
+required>
 
-<input type="number" step="0.01" id="dieselInput" placeholder="Diesel Price">
+<input 
+type="number" 
+step="0.01" 
+id="dieselInput" 
+placeholder="Diesel Price"
+required>
 
 <button type="submit">Update Prices</button>
 
@@ -39,65 +53,47 @@
 
 </section>
 
-<!--This section is for posting updates -->
+
+<!-- ===============================
+POST STATION NEWS
+================================ -->
 <section>
 
 <h2>Post Station News</h2>
 
-<input type="text" id="newsTitle" placeholder="News Title">
+<input 
+type="text" 
+id="newsTitle" 
+placeholder="News Title"
+required>
 
-<input type="text" id="newsImage" placeholder="Image URL">
+<input 
+type="text" 
+id="newsImage" 
+placeholder="Image URL"
+required>
 
-<textarea id="newsText" placeholder="Write update"></textarea>
+<textarea 
+id="newsText" 
+placeholder="Write update"
+required></textarea>
 
 <button onclick="postNews()">Publish</button>
 
 </section>
 
+
 <footer>
 <p>© 2026 RedFuel Smart Station</p>
 </footer>
 
-<script>
 
-document.getElementById("priceForm").addEventListener("submit", function(e){
-
-e.preventDefault();
-
-const petrol = document.getElementById("petrolInput").value;
-const diesel = document.getElementById("dieselInput").value;
-
-localStorage.setItem("petrol", petrol);
-localStorage.setItem("diesel", diesel);
-
-alert("Fuel prices updated!");
-
-});
-
-</script>
-
-<script>
-
-function postNews(){
-
-const title = document.getElementById("newsTitle").value;
-const image = document.getElementById("newsImage").value;
-const text = document.getElementById("newsText").value;
-
-let news = JSON.parse(localStorage.getItem("stationNews")) || [];
-
-news.push({title,image,text});
-
-localStorage.setItem("stationNews",JSON.stringify(news));
-
-alert("News published!");
-
-}
-
-</script>
-
+<!-- Existing scripts -->
 <script src="js/script.js"></script>
 <script src="../js/theme.js"></script>
+
+<!-- Firebase Admin Logic -->
+<script type="module" src="../js/admin.js"></script>
 
 </body>
 </html>
