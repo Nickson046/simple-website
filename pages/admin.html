@@ -1,124 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Dashboard</title>
-
+<title>Locations — RedFuel</title>
 <link rel="stylesheet" href="../css/style.css">
-
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
-
 <body>
 
-<header>
-
-<img src="../images/logo.png" alt=" ⛽RedFuel" id="logo">
-<!--<div class="logo">⛽ RedFuel Admin</div>-->
-
-<nav class="main-nav">
-<a href="../index.html">Home</a>
-<a href="prices.html">Fuel Prices</a>
-</nav>
-
+<header id="mainHeader">
+  <a href="../index.html" class="logo-wrap">
+    <img src="../images/logo.png" alt="RedFuel" id="logo">
+    <span class="logo-text">RED<span>FUEL</span></span>
+  </a>
+  <nav class="main-nav" id="mainNav">
+    <a href="../index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="prices.html">Fuel Prices</a>
+    <a href="fleet.html">Fleet</a>
+    <a href="carwash.html">Car Wash</a>
+    <a href="location.html" class="active">Locations</a>
+    <a href="admin.html" class="nav-admin">Admin</a>
+  </nav>
+  <div class="header-right">
+    <button id="themeToggle">🌙</button>
+    <div class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></div>
+  </div>
 </header>
 
+<div class="page-hero" style="background-image: linear-gradient(to right, rgba(0,0,0,0.92), rgba(0,0,0,0.55)), url('../images/location.jpg');">
+  <div class="breadcrumb">RedFuel / <span>Locations</span></div>
+  <h1>Find Our Stations</h1>
+</div>
 
-<!-- ===============================
-FUEL PRICE ADMIN
-================================ -->
-<section>
+<!-- LOCATION CARDS -->
+<section class="section visible" style="padding-top:4rem;">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Our Network</span>
+      <h2>3 Stations Near You</h2>
+    </div>
 
-<h2>Fuel Price Admin Panel</h2>
+    <!-- STATION 1 -->
+    <div style="display:grid; grid-template-columns:1fr 1.6fr; gap:2rem; align-items:start; margin-bottom:3rem; background:var(--dark); border:1px solid rgba(255,255,255,0.07); border-radius:12px; overflow:hidden;">
+      <div style="padding:2.5rem;">
+        <div style="font-family:var(--font-head); font-size:3rem; font-weight:900; color:rgba(232,0,13,0.15); line-height:1; margin-bottom:-0.5rem;">01</div>
+        <h3 style="color:var(--white); margin:0.75rem 0 0.5rem;">RedFuel City Centre</h3>
+        <p style="margin-bottom:1.5rem; font-size:0.9rem;">123 Main Street, City Centre</p>
+        <ul style="display:flex; flex-direction:column; gap:0.5rem; margin-bottom:1.5rem;">
+          <li style="font-size:0.88rem; color:rgba(255,255,255,0.55);">✓ Petrol & Diesel</li>
+          <li style="font-size:0.88rem; color:rgba(255,255,255,0.55);">✓ Car Wash</li>
+          <li style="font-size:0.88rem; color:rgba(255,255,255,0.55);">✓ Mini Market</li>
+          <li style="font-size:0.88rem; color:rgba(255,255,255,0.55);">✓ 24/7 Service</li>
+        </ul>
+        <a href="https://maps.google.com/?q=123+Main+Street" target="_blank" class="btn btn-outline btn-sm">Get Directions</a>
+      </div>
+      <div class="location">
+        <iframe
+          src="https://maps.google.com/maps?q=gas%20station&t=&z=13&ie=UTF8&iwloc=&output=embed"
+          width="100%" height="280" style="border:0; border-radius:0; margin:0; display:block;" allowfullscreen loading="lazy">
+        </iframe>
+      </div>
+    </div>
 
-<form id="priceForm">
+    <!-- STATION 2 -->
+    <div style="display:grid; grid-template-columns:1fr 1.6fr; gap:2rem; align-items:start; margin-bottom:3rem; background:var(--dark); border:1px solid rgba(232,0,13,0.3); border-radius:12px; overflow:hidden; position:relative;">
+      <div style="position:absolute; top:1.25rem; right:1.25rem; background:var(--red); color:#fff; font-family:var(--font-head); font-size:0.7rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:0.25rem 0.75rem; border-radius:2px; z-index:1;">Flagship</div>
+      <div style="padding:2.5rem;">
+        <div style="font-family:var(--font-head); font-size:3rem; font-weight:900; color:rgba(232,0,13,0.15); line-height:1; margin-bottom:-0.5rem;">02</div>
+        <h3 style="color:var(--white); margin:0.75rem 0 0.5rem;">RedFuel North Hub</h3>
+        <p style="margin-bottom:1.5rem; font-size:0.9rem;">45 Industrial Road, North Zone</p>
+        <ul style="display:flex; flex-direction:column; gap:0.5rem; margin-bottom:1.5rem;">
+          <li style="font-size:0.88rem; color:rgba(255,255,255,0.55);">✓ Petrol & Diesel</li>
+          <li style="font-size:0.88rem; color:rgba(255,255,255,0.55);">✓ Fleet Priority Pumps</li>
+          <li style="font-size:0.88rem; color:rgba(255,255,255,0.55);">✓ Car Wash & Market</li>
+          <li style="font-size:0.88rem; color:rgba(255,255,255,0.55);">✓ 24/7 Service</li>
+        </ul>
+        <a href="https://maps.google.com/?q=45+Industrial+Road" target="_blank" class="btn btn-primary btn-sm">Get Directions</a>
+      </div>
+      <div class="location">
+        <iframe
+          src="https://maps.google.com/maps?q=fuel+station+industrial&t=&z=13&ie=UTF8&iwloc=&output=embed"
+          width="100%" height="280" style="border:0; border-radius:0; margin:0; display:block;" allowfullscreen loading="lazy">
+        </iframe>
+      </div>
+    </div>
 
-<input 
-type="number" 
-step="0.01" 
-id="petrolInput" 
-placeholder="Petrol Price"
-required>
+    <!-- STATION 3 -->
+    <div style="display:grid; grid-template-columns:1fr 1.6fr; gap:2rem; align-items:start; background:var(--dark); border:1px solid rgba(255,255,255,0.07); border-radius:12px; overflow:hidden;">
+      <div style="padding:2.5rem;">
+        <div style="font-family:var(--font-head); font-size:3rem; font-weight:900; color:rgba(232,0,13,0.15); line-height:1; margin-bottom:-0.5rem;">03</div>
+        <h3 style="color:var(--white); margin:0.75rem 0 0.5rem;">RedFuel East Express</h3>
+        <p style="margin-bottom:1.5rem; font-size:0.9rem;">78 Highway Boulevard, East</p>
+        <ul style="display:flex; flex-direction:column; gap:0.5rem; margin-bottom:1.5rem;">
+          <li style="font-size:0.88rem; color:rgba(255,255,255,0.55);">✓ Petrol & Diesel</li>
+          <li style="font-size:0.88rem; color:rgba(255,255,255,0.55);">✓ Express Car Wash</li>
+          <li style="font-size:0.88rem; color:rgba(255,255,255,0.55);">✓ 24hr Market</li>
+          <li style="font-size:0.88rem; color:rgba(255,255,255,0.55);">✓ Highway Access</li>
+        </ul>
+        <a href="https://maps.google.com/?q=78+Highway+Boulevard" target="_blank" class="btn btn-outline btn-sm">Get Directions</a>
+      </div>
+      <div class="location">
+        <iframe
+          src="https://maps.google.com/maps?q=gas+station+highway&t=&z=13&ie=UTF8&iwloc=&output=embed"
+          width="100%" height="280" style="border:0; border-radius:0; margin:0; display:block;" allowfullscreen loading="lazy">
+        </iframe>
+      </div>
+    </div>
 
-<input 
-type="number" 
-step="0.01" 
-id="dieselInput" 
-placeholder="Diesel Price"
-required>
-
-<button type="submit">Update Prices</button>
-
-</form>
-
+  </div>
 </section>
-
-
-<!-- ===============================
-POST STATION NEWS
-================================ -->
-<section>
-
-<h2>Post Station News</h2>
-
-<input 
-type="text" 
-id="newsTitle" 
-placeholder="News Title"
-required>
-
-<input 
-type="text" 
-id="newsImage" 
-placeholder="Image URL"
-required>
-
-<textarea 
-id="newsText" 
-placeholder="Write update"
-required></textarea>
-
-<button onclick="postNews()">Publish</button>
-
-</section>
-
 
 <footer>
-<p>© 2026 RedFuel Smart Station</p>
+  <div class="footer-inner container">
+    <div class="footer-brand">
+      <div class="footer-logo">⛽ REDFUEL</div>
+      <p>Premium fuel network. Always open.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="prices.html">Fuel Prices</a></li>
+        <li><a href="fleet.html">Fleet Orders</a></li>
+        <li><a href="carwash.html">Car Wash</a></li>
+        <li><a href="location.html">Locations</a></li>
+      </ul>
+    </div>
+    <div class="footer-contact">
+      <h4>Contact</h4>
+      <p>📧 info@redfuel.com</p>
+      <p>📞 +123 456 789</p>
+      <p>🕐 Open 24 Hours</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 RedFuel Smart Station. All rights reserved.</p>
+    <a href="admin.html" class="footer-admin-link">Admin Panel</a>
+  </div>
 </footer>
 
-
-<!-- Existing scripts -->
-<script src="../js/script.js"></script>
 <script src="../js/theme.js"></script>
-
-<!-- Firebase Admin Logic -->
-<script type="module" src="../js/admin.js"></script>
-<!--
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyB-Q-MFZDCgHnaVgMRrgxEL9YPrIqZwUrU",
-    authDomain: "redfuel-a2152.firebaseapp.com",
-    projectId: "redfuel-a2152",
-    storageBucket: "redfuel-a2152.firebasestorage.app",
-    messagingSenderId: "782154176195",
-    appId: "1:782154176195:web:46af20e4252e415ba77476",
-    measurementId: "G-GGSJ28E0D7"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-</script>-->
-
+<script src="../js/script.js"></script>
 </body>
 </html>

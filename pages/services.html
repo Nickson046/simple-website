@@ -1,169 +1,155 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Services</title>
+<title>Services — RedFuel</title>
 <link rel="stylesheet" href="../css/style.css">
-
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
-
 <body>
 
-<header>
-<img src="../images/logo.png" alt=" ⛽RedFuel" id="logo">
-<!--<div class="logo">⛽ RedFuel</div>-->
-
-<div class="menu-toggle">☰</div>
-
-<nav class="main-nav">
-<a href="../index.html">Home</a>
-<a href="services.html">Services</a>
-<a href="prices.html">Fuel Prices</a>
-<a href="fleet.html">Fleet Orders</a>
-<a href="carwash.html">Car Wash</a>
-<a href="location.html">Location</a>
-</nav>
-
+<header id="mainHeader">
+  <a href="../index.html" class="logo-wrap">
+    <img src="../images/logo.png" alt="RedFuel" id="logo">
+    <span class="logo-text">RED<span>FUEL</span></span>
+  </a>
+  <nav class="main-nav" id="mainNav">
+    <a href="../index.html">Home</a>
+    <a href="services.html" class="active">Services</a>
+    <a href="prices.html">Fuel Prices</a>
+    <a href="fleet.html">Fleet</a>
+    <a href="carwash.html">Car Wash</a>
+    <a href="location.html">Locations</a>
+    <a href="admin.html" class="nav-admin">Admin</a>
+  </nav>
+  <div class="header-right">
+    <button id="themeToggle">🌙</button>
+    <div class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></div>
+  </div>
 </header>
 
-<section>
-
-<h2>Our Services</h2>
-
-<div class="service-grid">
-
-<div class="card">
-<h3>Petrol</h3>
-<p>Premium petrol fuel.</p>
+<div class="page-hero" style="background-image: linear-gradient(to right, rgba(0,0,0,0.92), rgba(0,0,0,0.55)), url('../images/services.jpg');">
+  <div class="breadcrumb">RedFuel / <span>Services</span></div>
+  <h1>All Services</h1>
 </div>
 
-<div class="card">
-<h3>Diesel</h3>
-<p>Reliable diesel fuel.</p>
-</div>
-
-<div class="card">
-<h3>Car Wash</h3>
-<p>Automatic & manual wash.</p>
-</div>
-
-<div class="card">
-<h3>Mini Market</h3>
-<p>Travel essentials & snacks.</p>
-</div>
-
-</div>
-
+<!-- MAIN SERVICES -->
+<section class="section visible" style="padding-top:4rem;">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Fuel Services</span>
+      <h2>What We Offer</h2>
+    </div>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:1.5rem; max-width:1000px; margin:0 auto;">
+      <div class="card">
+        <div style="font-size:2rem; margin-bottom:1rem;">⛽</div>
+        <h3>Premium Petrol</h3>
+        <p>High-performance 95-grade petrol designed for modern engines and fuel efficiency.</p>
+      </div>
+      <div class="card">
+        <div style="font-size:2rem; margin-bottom:1rem;">🛢</div>
+        <h3>Diesel</h3>
+        <p>Euro 6 compliant diesel supply for trucks, fleets and private vehicles.</p>
+      </div>
+      <div class="card">
+        <div style="font-size:2rem; margin-bottom:1rem;">🔧</div>
+        <h3>Engine Oil</h3>
+        <p>Top-quality lubricants available for all vehicle types, on-site.</p>
+      </div>
+      <div class="card">
+        <div style="font-size:2rem; margin-bottom:1rem;">🔵</div>
+        <h3>Tyre Pressure</h3>
+        <p>Free tyre pressure check to ensure your safety on the road.</p>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section>
-
-<!--this section is for the loyalty rewards -->
-<h2>Loyalty Rewards</h2>
-
-<p>Enter litres purchased to see points earned.</p>
-
-<input type="number" id="fuelAmount" placeholder="Litres">
-
-<h3>Your Points: <span id="points">0</span></h3>
-
+<!-- LOYALTY CALCULATOR -->
+<section class="section" style="background: var(--dark); border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06);">
+  <div class="container" style="max-width:600px; text-align:center;">
+    <span class="section-tag">Earn More</span>
+    <h2 style="margin: 1rem 0 1.25rem;">Loyalty Rewards</h2>
+    <p>Earn 2 points for every litre you fill. Redeem for free washes, discounts and exclusive offers.</p>
+    <div class="loyalty-calc" style="margin:2rem 0; text-align:left;">
+      <label style="font-family:var(--font-head); font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); display:block; margin-bottom:0.75rem;">Enter litres to calculate points:</label>
+      <div class="loyalty-input-row">
+        <input type="number" id="fuelAmount" placeholder="e.g. 40" min="0" style="width:160px; margin-bottom:0;">
+        <div class="points-result">
+          Points: <strong id="points">0</strong>
+        </div>
+      </div>
+    </div>
+    <a href="#" class="btn btn-primary">Sign Up for Rewards</a>
+  </div>
 </section>
 
-
-<section>
-
-<!--this section is for the fuel services  -->
-<h2>Fuel Services</h2>
-
-<div class="service-grid">
-
-<div class="card">
-<h3>Premium Petrol</h3>
-<p>High-performance petrol designed for modern engines and fuel efficiency.</p>
-</div>
-
-<div class="card">
-<h3>Diesel</h3>
-<p>Reliable diesel supply for trucks, fleets and private vehicles.</p>
-</div>
-
-<div class="card">
-<h3>Engine Oil</h3>
-<p>Top-quality lubricants available for all vehicle types.</p>
-</div>
-
-<div class="card">
-<h3>Tyre Pressure Check</h3>
-<p>Free tyre pressure check to ensure safe driving.</p>
-</div>
-
-</div>
-
-</section>
-
-<!--this section is for the convenience store  -->
-<section>
-
-<h2>Mini Market</h2>
-
-<p>
-Our station includes a convenience store offering snacks, drinks,
-travel essentials and automotive accessories.
-</p>
-
-<ul>
-<li>Hot coffee & beverages</li>
-<li>Snacks & groceries</li>
-<li>Phone chargers & accessories</li>
-<li>Vehicle care products</li>
-</ul>
-
+<!-- MINI MARKET -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Convenience</span>
+      <h2>Mini Market</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:center; max-width:900px; margin:0 auto;">
+      <div>
+        <p style="margin-bottom:1.5rem;">Our stations include a full convenience store offering everything you need before, during and after your journey.</p>
+        <ul style="display:flex; flex-direction:column; gap:0.7rem;">
+          <li style="color:rgba(255,255,255,0.6); font-size:0.95rem;">☕ Hot coffee & beverages</li>
+          <li style="color:rgba(255,255,255,0.6); font-size:0.95rem;">🍫 Snacks & groceries</li>
+          <li style="color:rgba(255,255,255,0.6); font-size:0.95rem;">📱 Phone chargers & accessories</li>
+          <li style="color:rgba(255,255,255,0.6); font-size:0.95rem;">🛞 Vehicle care products</li>
+          <li style="color:rgba(255,255,255,0.6); font-size:0.95rem;">🧻 Travel essentials</li>
+        </ul>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:1rem;">
+        <div class="card" style="padding:1.5rem;">
+          <h4 style="margin-bottom:0.4rem;">Open 24/7</h4>
+          <p style="font-size:0.88rem; margin:0;">Shop any time, day or night.</p>
+        </div>
+        <div class="card" style="padding:1.5rem;">
+          <h4 style="margin-bottom:0.4rem;">3 Locations</h4>
+          <p style="font-size:0.88rem; margin:0;">Available at all RedFuel stations.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <footer>
-
-<div class="footer-grid">
-
-<div>
-<h3>RedFuel Station</h3>
-<p>
-Your trusted local fuel station providing quality fuel,
-car wash services and convenience shopping.
-</p>
-</div>
-
-<div>
-<h3>Quick Links</h3>
-<ul>
-<li><a href="index.html">Home</a></li>
-<li><a href="services.html">Services</a></li>
-<li><a href="prices.html">Fuel Prices</a></li>
-<li><a href="carwash.html">Car Wash</a></li>
-<li><a href="location.html">Location</a></li>
-</ul>
-</div>
-
-<div>
-<h3>Contact</h3>
-<p>Email: info@redfuel.com</p>
-<p>Phone: +123 456 789</p>
-<p>Open 24 Hours</p>
-</div>
-
-</div>
-
-<p class="copyright">© 2026 RedFuel Smart Station</p>
-
+  <div class="footer-inner container">
+    <div class="footer-brand">
+      <div class="footer-logo">⛽ REDFUEL</div>
+      <p>Premium fuel network. Always open.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="prices.html">Fuel Prices</a></li>
+        <li><a href="fleet.html">Fleet Orders</a></li>
+        <li><a href="carwash.html">Car Wash</a></li>
+        <li><a href="location.html">Locations</a></li>
+      </ul>
+    </div>
+    <div class="footer-contact">
+      <h4>Contact</h4>
+      <p>📧 info@redfuel.com</p>
+      <p>📞 +123 456 789</p>
+      <p>🕐 Open 24 Hours</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 RedFuel Smart Station. All rights reserved.</p>
+    <a href="admin.html" class="footer-admin-link">Admin Panel</a>
+  </div>
 </footer>
 
-
 <script src="../js/loyalty.js"></script>
-<script src="../js/script.js"></script>
 <script src="../js/theme.js"></script>
-<script src="js/loyalty.js"></script>
+<script src="../js/script.js"></script>
 <script type="module" src="../js/firebase.js"></script>
-
 </body>
 </html>

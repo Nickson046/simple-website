@@ -1,203 +1,355 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RedFuel Smart Station</title>
-
 <link rel="stylesheet" href="css/style.css">
-
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
-
 <body>
 
-<header>
+<!-- ── HEADER ── -->
+<header id="mainHeader">
+  <a href="index.html" class="logo-wrap">
+    <img src="images/logo.png" alt="RedFuel" id="logo">
+    <span class="logo-text">RED<span>FUEL</span></span>
+  </a>
 
-<img src="images/logo.png" alt=" ⛽RedFuel" id="logo">    
-<!--<div class="images/logo.png">⛽ RedFuel</div>-->
+  <nav class="main-nav" id="mainNav">
+    <a href="index.html" class="active">Home</a>
+    <a href="pages/services.html">Services</a>
+    <a href="pages/prices.html">Fuel Prices</a>
+    <a href="pages/fleet.html">Fleet</a>
+    <a href="pages/carwash.html">Car Wash</a>
+    <a href="pages/location.html">Locations</a>
+    <a href="pages/admin.html" class="nav-admin">Admin</a>
+  </nav>
 
-<div class="menu-toggle">☰</div>
-
-<nav class="main-nav">
-<a href="index.html">Home</a>
-<a href="pages/services.html">Services</a>
-<a href="pages/prices.html">Fuel Prices</a>
-<a href="pages/fleet.html">Fleet Orders</a>
-<a href="pages/carwash.html">Car Wash</a>
-<a href="pages/location.html">Location</a>
-</nav>
-
-<button id="themeToggle">🌙</button>
-
+  <div class="header-right">
+    <button id="themeToggle" aria-label="Toggle theme">🌙</button>
+    <div class="menu-toggle" id="menuToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
 </header>
 
+<!-- ── HERO ── -->
+<section class="hero" id="hero">
+  <div class="hero-bg-slider">
+    <div class="hero-slide active" style="background-image:url('images/hero.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('images/hero1.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('images/hero2.jpg')"></div>
+  </div>
+  <div class="hero-overlay"></div>
 
-<section class="hero">
-<div class="hero-slides"></div>
-<h1>Next Generation Fuel Station</h1>
+  <div class="hero-content">
+    <div class="hero-tag">⛽ 3 Stations — Always Open</div>
+    <h1>Next Generation<br><span>Fuel Network</span></h1>
+    <p>Premium fuel. Smart service. Every station, every time.</p>
+    <div class="hero-actions">
+      <a href="pages/prices.html" class="btn btn-primary">Live Fuel Prices</a>
+      <a href="pages/location.html" class="btn btn-outline">Find a Station</a>
+    </div>
+  </div>
 
-<p>
-Smart fueling for modern drivers.
-Fast service. Quality fuel. Always open.
-</p>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-num">3</span><span class="stat-label">Stations</span></div>
+    <div class="stat-divider"></div>
+    <div class="stat"><span class="stat-num">24/7</span><span class="stat-label">Open</span></div>
+    <div class="stat-divider"></div>
+    <div class="stat"><span class="stat-num">10K+</span><span class="stat-label">Customers</span></div>
+    <div class="stat-divider"></div>
+    <div class="stat"><span class="stat-num">5★</span><span class="stat-label">Rated</span></div>
+  </div>
 
-<a href="pages/prices.html">
-<button>Check Fuel Prices</button>
-</a>
-
+  <div class="hero-scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
 </section>
 
-
-<section>
-
-<h2>Our Services</h2>
-
-<div class="service-grid">
-
-<div class="card">
-<h3>Petrol</h3>
-<p>High quality petrol for all vehicles.</p>
+<!-- ── LIVE PRICES TICKER ── -->
+<div class="ticker-bar">
+  <div class="ticker-label">LIVE PRICES</div>
+  <div class="ticker-track">
+    <div class="ticker-item">⛽ PETROL &nbsp;<strong id="tickerPetrol">$1.45</strong></div>
+    <div class="ticker-item">🛢 DIESEL &nbsp;<strong id="tickerDiesel">$1.38</strong></div>
+    <div class="ticker-item">⛽ PETROL &nbsp;<strong id="tickerPetrol2">$1.45</strong></div>
+    <div class="ticker-item">🛢 DIESEL &nbsp;<strong id="tickerDiesel2">$1.38</strong></div>
+    <div class="ticker-item">✅ Prices updated daily</div>
+    <div class="ticker-item">🏆 Loyalty points on every fill</div>
+    <div class="ticker-item">⛽ PETROL &nbsp;<strong>$1.45</strong></div>
+    <div class="ticker-item">🛢 DIESEL &nbsp;<strong>$1.38</strong></div>
+  </div>
 </div>
 
-<div class="card">
-<h3>Diesel</h3>
-<p>Efficient diesel for trucks and cars.</p>
-</div>
-
-<div class="card">
-<h3>Car Wash</h3>
-<p>Professional car cleaning service.</p>
-</div>
-
-<div class="card">
-<h3>Mini Market</h3>
-<p>Snacks, drinks and essentials.</p>
-</div>
-
-</div>
-
+<!-- ── SERVICES ── -->
+<section class="section services-section" id="services">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">What We Offer</span>
+      <h2>Our Services</h2>
+    </div>
+    <div class="services-grid">
+      <a href="pages/prices.html" class="service-card">
+        <div class="service-icon">⛽</div>
+        <h3>Petrol</h3>
+        <p>High-octane petrol for all vehicles. Tested and certified daily.</p>
+        <span class="service-arrow">→</span>
+      </a>
+      <a href="pages/prices.html" class="service-card">
+        <div class="service-icon">🛢</div>
+        <h3>Diesel</h3>
+        <p>Low-emission diesel for trucks, fleets and private vehicles.</p>
+        <span class="service-arrow">→</span>
+      </a>
+      <a href="pages/carwash.html" class="service-card featured">
+        <div class="service-icon">🚗</div>
+        <h3>Car Wash</h3>
+        <p>Automatic cleaning in under 5 minutes. Three packages available.</p>
+        <span class="service-arrow">→</span>
+      </a>
+      <a href="pages/fleet.html" class="service-card">
+        <div class="service-icon">🚛</div>
+        <h3>Fleet Orders</h3>
+        <p>Bulk fuel supply with monthly billing for registered businesses.</p>
+        <span class="service-arrow">→</span>
+      </a>
+      <a href="pages/services.html" class="service-card">
+        <div class="service-icon">🛒</div>
+        <h3>Mini Market</h3>
+        <p>Snacks, drinks, coffee and travel essentials — always stocked.</p>
+        <span class="service-arrow">→</span>
+      </a>
+      <a href="pages/services.html" class="service-card">
+        <div class="service-icon">🏆</div>
+        <h3>Loyalty Rewards</h3>
+        <p>Earn 2 points per litre. Redeem discounts and free services.</p>
+        <span class="service-arrow">→</span>
+      </a>
+    </div>
+  </div>
 </section>
 
-<section class="highlights">
-
-<h2>Why Choose RedFuel</h2>
-
-<div class="highlight-grid">
-
-<div class="card">
-<h3>24/7 Fuel Service</h3>
-<p>Open day and night for your convenience.</p>
-</div>
-
-<div class="card">
-<h3>Premium Fuel Quality</h3>
-<p>Certified high performance petrol and diesel.</p>
-</div>
-
-<div class="card">
-<h3>Fast Car Wash</h3>
-<p>Automatic cleaning in under 5 minutes.</p>
-</div>
-
-<div class="card">
-<h3>Loyalty Rewards</h3>
-<p>Earn points and receive discounts.</p>
-</div>
-
-</div>
-
+<!-- ── WHY REDFUEL ── -->
+<section class="section why-section">
+  <div class="container why-container">
+    <div class="why-left">
+      <span class="section-tag">Why RedFuel</span>
+      <h2>Built for Modern<br>Drivers & Businesses</h2>
+      <p>RedFuel operates 3 strategically located stations delivering premium fuel, smart services and real rewards to thousands of drivers every day.</p>
+      <a href="pages/services.html" class="btn btn-primary" style="margin-top:2rem;">Explore All Services</a>
+    </div>
+    <div class="why-right">
+      <div class="why-card">
+        <div class="why-icon">⚡</div>
+        <div>
+          <h4>24/7 Service</h4>
+          <p>All three stations open day and night, every day of the year.</p>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🏅</div>
+        <div>
+          <h4>Certified Fuel Quality</h4>
+          <p>Every batch tested. Every pump calibrated. No compromise.</p>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">📍</div>
+        <div>
+          <h4>3 Convenient Locations</h4>
+          <p>Strategically placed so there's always a RedFuel nearby.</p>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">💳</div>
+        <div>
+          <h4>Loyalty Rewards Program</h4>
+          <p>Earn points on every fill-up. Redeem them for real savings.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section class="news">
-
-<h2>Station Updates</h2>
-
-<div id="newsContainer"></div>
-
+<!-- ── LOCATIONS ── -->
+<section class="section locations-section" id="locations">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Our Network</span>
+      <h2>3 Stations Near You</h2>
+    </div>
+    <div class="locations-grid">
+      <div class="location-card">
+        <div class="location-num">01</div>
+        <h3>RedFuel City Centre</h3>
+        <p>123 Main Street, City Centre</p>
+        <ul>
+          <li>✓ Petrol & Diesel</li>
+          <li>✓ Car Wash</li>
+          <li>✓ Mini Market</li>
+        </ul>
+        <a href="pages/location.html" class="btn btn-outline btn-sm">Get Directions</a>
+      </div>
+      <div class="location-card featured">
+        <div class="location-badge">Flagship</div>
+        <div class="location-num">02</div>
+        <h3>RedFuel North Hub</h3>
+        <p>45 Industrial Road, North Zone</p>
+        <ul>
+          <li>✓ Petrol & Diesel</li>
+          <li>✓ Fleet Pumps</li>
+          <li>✓ Car Wash & Market</li>
+        </ul>
+        <a href="pages/location.html" class="btn btn-primary btn-sm">Get Directions</a>
+      </div>
+      <div class="location-card">
+        <div class="location-num">03</div>
+        <h3>RedFuel East Express</h3>
+        <p>78 Highway Boulevard, East</p>
+        <ul>
+          <li>✓ Petrol & Diesel</li>
+          <li>✓ Express Car Wash</li>
+          <li>✓ 24hr Market</li>
+        </ul>
+        <a href="pages/location.html" class="btn btn-outline btn-sm">Get Directions</a>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section>
-
-<h2>Post Station News</h2>
-
-<input type="text" id="newsTitle" placeholder="News title">
-
-<textarea id="newsText" placeholder="Write update"></textarea>
-
-<button onclick="postNews()">Publish</button>
-
+<!-- ── LOYALTY SECTION ── -->
+<section class="section loyalty-section">
+  <div class="container loyalty-container">
+    <div class="loyalty-content">
+      <span class="section-tag">Rewards Program</span>
+      <h2>Fuel Up. Earn Points.<br>Get Rewarded.</h2>
+      <p>Every litre earns you 2 points. Redeem for free washes, fuel discounts and exclusive member offers.</p>
+      <div class="loyalty-calc">
+        <label>Enter litres filled:</label>
+        <div class="loyalty-input-row">
+          <input type="number" id="fuelAmount" placeholder="e.g. 40" min="0">
+          <div class="points-result">
+            <span>Points earned: </span>
+            <strong id="points">0</strong>
+          </div>
+        </div>
+      </div>
+      <a href="pages/services.html" class="btn btn-primary">Join Loyalty Program</a>
+    </div>
+    <div class="loyalty-visual">
+      <div class="loyalty-card-visual">
+        <div class="lc-logo">REDFUEL</div>
+        <div class="lc-label">LOYALTY CARD</div>
+        <div class="lc-points-display"><span id="lcPoints">0</span><small>pts</small></div>
+        <div class="lc-name">Member</div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- first footer-->
+<!-- ── NEWS ── -->
+<section class="section news-section" id="news">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Latest</span>
+      <h2>Station Updates</h2>
+    </div>
+    <div class="news-grid" id="newsContainer">
+      <!-- Populated by Firebase/news.js -->
+      <div class="news-card skeleton"></div>
+      <div class="news-card skeleton"></div>
+      <div class="news-card skeleton"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
 <footer>
-
-<div class="footer-grid">
-
-<div>
-<h3>RedFuel Station</h3>
-<p>
-Your trusted local fuel station providing quality fuel,
-car wash services and convenience shopping.
-</p>
-</div>
-
-<div>
-<h3>Quick Links</h3>
-<ul>
-<li><a href="index.html">Home</a></li>
-<li><a href="services.html">Services</a></li>
-<li><a href="prices.html">Fuel Prices</a></li>
-<li><a href="carwash.html">Car Wash</a></li>
-<li><a href="location.html">Location</a></li>
-</ul>
-</div>
-
-<div>
-<h3>Contact</h3>
-<p>Email: info@redfuel.com</p>
-<p>Phone: +123 456 789</p>
-<p>Open 24 Hours</p>
-</div>
-
-</div>
-
-<p class="copyright">© 2026 RedFuel Smart Station</p>
-
+  <div class="footer-inner container">
+    <div class="footer-brand">
+      <div class="footer-logo">⛽ REDFUEL</div>
+      <p>Your trusted fuel network. Premium quality, smart service, always open — across all 3 stations.</p>
+      <div class="footer-socials">
+        <a href="#">FB</a>
+        <a href="#">IG</a>
+        <a href="#">TW</a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="pages/services.html">Services</a></li>
+        <li><a href="pages/prices.html">Fuel Prices</a></li>
+        <li><a href="pages/fleet.html">Fleet Orders</a></li>
+        <li><a href="pages/carwash.html">Car Wash</a></li>
+        <li><a href="pages/location.html">Locations</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="pages/services.html">Petrol & Diesel</a></li>
+        <li><a href="pages/carwash.html">Car Wash</a></li>
+        <li><a href="pages/fleet.html">Fleet Program</a></li>
+        <li><a href="pages/services.html">Loyalty Rewards</a></li>
+        <li><a href="pages/services.html">Mini Market</a></li>
+      </ul>
+    </div>
+    <div class="footer-contact">
+      <h4>Contact</h4>
+      <p>📧 info@redfuel.com</p>
+      <p>📞 +123 456 789</p>
+      <p>🕐 Open 24 Hours</p>
+      <p>📍 3 Locations</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 RedFuel Smart Station. All rights reserved.</p>
+    <a href="pages/admin.html" class="footer-admin-link">Admin Panel</a>
+  </div>
 </footer>
-
 
 <script src="js/theme.js"></script>
 <script src="js/script.js"></script>
 <script src="js/loyalty.js"></script>
 <script type="module" src="js/firebase.js"></script>
+<script type="module" src="js/news.js"></script>
 
-<!--Firebase script -->
-<!--
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+<script>
+// Sync ticker prices with Firebase prices display
+document.addEventListener('DOMContentLoaded', () => {
+  // Hero slideshow
+  const slides = document.querySelectorAll('.hero-slide');
+  let current = 0;
+  setInterval(() => {
+    slides[current].classList.remove('active');
+    current = (current + 1) % slides.length;
+    slides[current].classList.add('active');
+  }, 5000);
 
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyB-Q-MFZDCgHnaVgMRrgxEL9YPrIqZwUrU",
-    authDomain: "redfuel-a2152.firebaseapp.com",
-    projectId: "redfuel-a2152",
-    storageBucket: "redfuel-a2152.firebasestorage.app",
-    messagingSenderId: "782154176195",
-    appId: "1:782154176195:web:46af20e4252e415ba77476",
-    measurementId: "G-GGSJ28E0D7"
-  };
+  // Header shrink on scroll
+  const header = document.getElementById('mainHeader');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 60);
+  });
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-</script>-->
-
+  // Loyalty calc sync to card
+  const fuelInput = document.getElementById('fuelAmount');
+  const pointsEl = document.getElementById('points');
+  const lcPointsEl = document.getElementById('lcPoints');
+  if (fuelInput) {
+    fuelInput.addEventListener('input', () => {
+      const pts = Math.floor((parseFloat(fuelInput.value) || 0) * 2);
+      pointsEl.textContent = pts;
+      lcPointsEl.textContent = pts;
+    });
+  }
+});
+</script>
 </body>
 </html>

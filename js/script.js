@@ -1,75 +1,63 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  // ----- MOBILE MENU TOGGLE -----
-  const menu = document.querySelector(".menu-toggle");
-  const nav = document.querySelector(".main-nav");
+  // ── MOBILE MENU ──
+  const menuToggle = document.getElementById("menuToggle");
+  const nav = document.getElementById("mainNav");
 
-  if(menu && nav){
-    // Toggle menu on hamburger click
-    menu.addEventListener("click", () => {
+  if (menuToggle && nav) {
+    menuToggle.addEventListener("click", () => {
       nav.classList.toggle("active");
+      menuToggle.classList.toggle("open");
     });
 
-    // Close menu when a link is clicked (mobile-friendly)
     nav.querySelectorAll("a").forEach(link => {
       link.addEventListener("click", () => {
         nav.classList.remove("active");
+        menuToggle.classList.remove("open");
       });
+    });
+
+    // close on outside click
+    document.addEventListener("click", (e) => {
+      if (!nav.contains(e.target) && !menuToggle.contains(e.target)) {
+        nav.classList.remove("active");
+        menuToggle.classList.remove("open");
+      }
     });
   }
 
-  // ----- SCROLL ANIMATION -----
-  const sections = document.querySelectorAll("section");
+  // ── HEADER SCROLL SHRINK ──
+  const header = document.getElementById("mainHeader");
+  if (header) {
+    window.addEventListener("scroll", () => {
+      header.classList.toggle("scrolled", window.scrollY > 60);
+    });
+  }
 
-  const scrollAnimation = () => {
-    sections.forEach(section => {
-      const position = section.getBoundingClientRect().top;
-      const screenPosition = window.innerHeight / 1.3;
-      if(position < screenPosition){
-        section.classList.add("visible");
+  // ── SCROLL REVEAL ──
+  const sections = document.querySelectorAll("section");
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        revealObserver.unobserve(entry.target);
       }
     });
-  };
+  }, { threshold: 0.1 });
 
-  // Run on scroll
-  window.addEventListener("scroll", scrollAnimation);
+  sections.forEach(s => {
+    if (!s.classList.contains("hero")) {
+      revealObserver.observe(s);
+    }
+  });
 
-  // Run once on load in case sections are already visible
-  scrollAnimation();
+  // ── HAMBURGER ANIMATION ──
+  const style = document.createElement("style");
+  style.textContent = `
+    .menu-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .menu-toggle.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .menu-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  `;
+  document.head.appendChild(style);
 
 });
-
-/*
-// HERO BACKGROUND SLIDESHOW
-const hero = document.querySelector(".hero");
-
-// List of background images
-const heroImages = [
-  "images/hero1.jpg",
-  "images/hero2.jpg",
-  "images/hero3.jpg"
-];
-
-let currentHeroIndex = 0;
-
-// Preload images to avoid flash
-heroImages.forEach(src => {
-  const img = new Image();
-  img.src = src;
-});
-
-// Function to change hero background
-function changeHeroBackground() {
-  currentHeroIndex++;
-  if(currentHeroIndex >= heroImages.length) currentHeroIndex = 0;
-  hero.style.backgroundImage = `url('${heroImages[currentHeroIndex]}')`;
-}
-
-// Optional: start with random image
-currentHeroIndex = Math.floor(Math.random() * heroImages.length);
-hero.style.backgroundImage = `url('${heroImages[currentHeroIndex]}')`;
-
-// Change every 5 seconds
-setInterval(changeHeroBackground, 5000);
-
-*/
