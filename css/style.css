@@ -1,5 +1,5 @@
 /* ===================================================
-   REDFUEL — PREMIUM DARK CSS
+   NERO — PREMIUM DARK CSS
    Bold / Red / Black / Industrial
 =================================================== */
 
@@ -544,7 +544,7 @@ nav.main-nav a.nav-admin:hover {
 }
 .service-card:hover .service-arrow { transform: translateX(6px); }
 
-/* ── WHY REDFUEL ── */
+/* ── WHY NERO ── */
 .why-section {
   background: var(--dark);
   border-top: 1px solid rgba(255,255,255,0.06);

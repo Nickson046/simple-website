@@ -10,9 +10,9 @@ addDoc
 
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY",
-  authDomain: "redfuel-a2152.firebaseapp.com",
-  projectId: "redfuel-a2152",
-  storageBucket: "redfuel-a2152.firebasestorage.app",
+  authDomain: "NERO-a2152.firebaseapp.com",
+  projectId: "NERO-a2152",
+  storageBucket: "NERO-a2152.firebasestorage.app",
   messagingSenderId: "782154176195",
   appId: "1:782154176195:web:46af20e4252e415ba77476"
 };

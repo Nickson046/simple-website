@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         <div class="news-card-body">
           <div class="news-card-date">Mar 2026</div>
           <h3>New Pump Lane Open</h3>
-          <p>RedFuel North Hub has opened 2 additional pump lanes to reduce wait times during peak hours.</p>
+          <p>NERO North Hub has opened 2 additional pump lanes to reduce wait times during peak hours.</p>
         </div>
       </div>
       <div class="news-card">
@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         <div class="news-card-body">
           <div class="news-card-date">Jan 2026</div>
           <h3>Loyalty App Launching Soon</h3>
-          <p>Track your points, book car washes and check live fuel prices — all from the RedFuel app.</p>
+          <p>Track your points, book car washes and check live fuel prices — all from the NERO app.</p>
         </div>
       </div>`;
   }
