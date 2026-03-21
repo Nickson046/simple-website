@@ -9,493 +9,239 @@
 <meta name="apple-mobile-web-app-title" content="NERO Admin">
 <meta name="theme-color" content="#e8000d">
 <title>NERO Admin</title>
-
-<!-- PWA Manifest -->
 <link rel="manifest" href="admin-manifest.json">
-
-<!-- Apple touch icon (home screen icon on iOS) -->
 <link rel="apple-touch-icon" href="../images/nerologo2.png">
-
-<!-- Splash screen meta for iOS -->
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-
 <link rel="stylesheet" href="../css/style.css">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
-
 <style>
+:root {
+  --tab-h: 56px;
+  --appbar-h: 60px;
+}
 
-/* ══════════════════════════════
-   SPLASH SCREEN
-══════════════════════════════ */
+/* ══ SPLASH ══ */
 #splashScreen {
-  position: fixed; inset: 0; z-index: 99999;
-  background: var(--black);
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  gap: 1.5rem;
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  position:fixed;inset:0;z-index:99999;background:var(--black);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;
+  transition:opacity .6s ease,transform .6s ease;
 }
-#splashScreen.hidden {
-  opacity: 0; pointer-events: none; transform: scale(1.04);
-}
-.splash-logo {
-  font-family: var(--font-head);
-  font-size: 3.5rem; font-weight: 900;
-  letter-spacing: 0.1em; color: var(--white);
-}
-.splash-logo span { color: var(--red); }
-.splash-tagline {
-  font-family: var(--font-head);
-  font-size: 0.8rem; letter-spacing: 0.25em;
-  text-transform: uppercase; color: rgba(255,255,255,0.35);
-}
-.splash-bar-wrap {
-  width: 120px; height: 3px;
-  background: rgba(255,255,255,0.08);
-  border-radius: 3px; overflow: hidden;
-}
-.splash-bar {
-  height: 100%; width: 0%;
-  background: var(--red);
-  border-radius: 3px;
-  animation: splashLoad 1.6s ease forwards;
-}
-@keyframes splashLoad {
-  0%   { width: 0%; }
-  60%  { width: 75%; }
-  100% { width: 100%; }
-}
-.splash-version {
-  font-size: 0.7rem; color: rgba(255,255,255,0.2);
-  letter-spacing: 0.1em; font-family: var(--font-head);
-  position: absolute; bottom: 2.5rem;
-}
+#splashScreen.hidden{opacity:0;pointer-events:none;transform:scale(1.04);}
+.splash-logo{font-family:var(--font-head);font-size:3.5rem;font-weight:900;letter-spacing:.1em;color:var(--white);}
+.splash-logo span{color:var(--red);}
+.splash-tagline{font-family:var(--font-head);font-size:.8rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.35);}
+.splash-bar-wrap{width:120px;height:3px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden;}
+.splash-bar{height:100%;width:0%;background:var(--red);border-radius:3px;animation:splashLoad 1.6s ease forwards;}
+@keyframes splashLoad{0%{width:0%}60%{width:75%}100%{width:100%}}
+.splash-version{font-size:.7rem;color:rgba(255,255,255,.2);letter-spacing:.1em;font-family:var(--font-head);position:absolute;bottom:2.5rem;}
 
-/* ══════════════════════════════
-   LOGIN SCREEN
-══════════════════════════════ */
-#loginScreen {
-  position: fixed; inset: 0; z-index: 9999;
-  background: var(--black);
-  display: none; align-items: center; justify-content: center;
-  padding: 2rem;
-}
-.login-box {
-  width: 100%; max-width: 420px;
-  background: var(--dark);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-top: 3px solid var(--red);
-  border-radius: 12px;
-  padding: 3rem 2.5rem;
-  display: flex; flex-direction: column; gap: 1.5rem;
-}
-.login-logo {
-  font-family: var(--font-head); font-size: 2rem; font-weight: 900;
-  letter-spacing: 0.08em; color: var(--white); text-align: center;
-}
-.login-logo span { color: var(--red); }
-.login-title {
-  font-family: var(--font-head); font-size: 1.1rem; font-weight: 600;
-  text-transform: uppercase; letter-spacing: 0.15em;
-  text-align: center; color: var(--muted); margin-top: -1rem;
-}
-.login-field { display: flex; flex-direction: column; gap: 0.4rem; }
-.login-field label {
-  font-family: var(--font-head); font-size: 0.72rem;
-  letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted);
-}
-.login-field input {
-  background: var(--dark2); border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 6px; color: var(--white);
-  padding: 0.9rem 1rem; font-family: var(--font-body);
-  font-size: 1rem; width: 100%; margin: 0;
-  transition: border-color 0.3s;
-}
-.login-field input:focus { outline: none; border-color: var(--red); }
-#loginBtn {
-  width: 100%; padding: 1rem;
-  font-family: var(--font-head); font-size: 1.1rem; font-weight: 700;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  background: var(--red); color: var(--white);
-  border: none; border-radius: 6px; cursor: pointer;
-  transition: background 0.3s, transform 0.2s;
-}
-#loginBtn:hover { background: var(--red-dark); transform: translateY(-1px); }
-#loginBtn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-#loginError {
-  font-size: 0.85rem; color: #ff5555; text-align: center;
-  padding: 0.7rem 1rem;
-  background: rgba(255,50,50,0.08); border: 1px solid rgba(255,50,50,0.25);
-  border-radius: 6px; display: none;
-}
-.login-note {
-  font-size: 0.72rem; color: rgba(255,255,255,0.2);
-  text-align: center; letter-spacing: 0.05em;
-}
+/* ══ LOGIN ══ */
+#loginScreen{position:fixed;inset:0;z-index:9999;background:var(--black);display:none;align-items:center;justify-content:center;padding:2rem;}
+.login-box{width:100%;max-width:420px;background:var(--dark);border:1px solid rgba(255,255,255,.07);border-top:3px solid var(--red);border-radius:12px;padding:3rem 2.5rem;display:flex;flex-direction:column;gap:1.5rem;}
+.login-logo{font-family:var(--font-head);font-size:2rem;font-weight:900;letter-spacing:.08em;color:var(--white);text-align:center;}
+.login-logo span{color:var(--red);}
+.login-title{font-family:var(--font-head);font-size:1.1rem;font-weight:600;text-transform:uppercase;letter-spacing:.15em;text-align:center;color:var(--muted);margin-top:-1rem;}
+.login-field{display:flex;flex-direction:column;gap:.4rem;}
+.login-field label{font-family:var(--font-head);font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);}
+.login-field input{background:var(--dark2);border:1px solid rgba(255,255,255,.1);border-radius:6px;color:var(--white);padding:.9rem 1rem;font-family:var(--font-body);font-size:1rem;width:100%;margin:0;transition:border-color .3s;}
+.login-field input:focus{outline:none;border-color:var(--red);}
+#loginBtn{width:100%;padding:1rem;font-family:var(--font-head);font-size:1.1rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--red);color:#fff;border:none;border-radius:6px;cursor:pointer;transition:background .3s,transform .2s;}
+#loginBtn:hover{background:var(--red-dark);transform:translateY(-1px);}
+#loginBtn:disabled{opacity:.6;cursor:not-allowed;transform:none;}
+#loginError{font-size:.85rem;color:#ff5555;text-align:center;padding:.7rem 1rem;background:rgba(255,50,50,.08);border:1px solid rgba(255,50,50,.25);border-radius:6px;display:none;}
+.login-note{font-size:.72rem;color:rgba(255,255,255,.2);text-align:center;letter-spacing:.05em;}
 
-/* ══════════════════════════════
-   DASHBOARD
-══════════════════════════════ */
-#dashboard { display: none; }
+/* ══ DASHBOARD ══ */
+#dashboard{display:none;}
 
-/* ── Top App Bar (PWA style) ── */
-.app-bar {
-  position: sticky; top: 0; z-index: 500;
-  background: var(--dark);
-  border-bottom: 1px solid rgba(255,255,255,0.07);
-  display: flex; align-items: center;
-  justify-content: space-between;
-  padding: 0 1.5rem;
-  height: 60px;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.4);
-}
-.app-bar-logo {
-  font-family: var(--font-head); font-size: 1.4rem; font-weight: 900;
-  letter-spacing: 0.08em; color: var(--white);
-}
-.app-bar-logo span { color: var(--red); }
-.app-bar-title {
-  font-family: var(--font-head); font-size: 0.75rem;
-  letter-spacing: 0.2em; text-transform: uppercase;
-  color: rgba(255,255,255,0.35);
-  position: absolute; left: 50%; transform: translateX(-50%);
-}
-.app-bar-right {
-  display: flex; align-items: center; gap: 0.75rem;
-}
+/* ══ APP BAR ══ */
+.app-bar{position:sticky;top:0;z-index:500;background:var(--dark);border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;height:var(--appbar-h);box-shadow:0 2px 16px rgba(0,0,0,.4);}
+.app-bar-logo{font-family:var(--font-head);font-size:1.4rem;font-weight:900;letter-spacing:.08em;color:var(--white);}
+.app-bar-logo span{color:var(--red);}
+.app-bar-right{display:flex;align-items:center;gap:.75rem;}
+.user-pill{display:flex;align-items:center;gap:.5rem;background:var(--dark2);border:1px solid rgba(255,255,255,.08);border-radius:100px;padding:.35rem .9rem .35rem .5rem;font-size:.78rem;color:rgba(255,255,255,.5);max-width:220px;}
+.user-dot{width:7px;height:7px;flex-shrink:0;background:#22c55e;border-radius:50%;box-shadow:0 0 6px #22c55e;}
+.user-email{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:140px;color:rgba(255,255,255,.6);}
+#logoutBtn{display:flex;align-items:center;gap:.4rem;background:transparent;border:1px solid rgba(232,0,13,.3);color:rgba(232,0,13,.7);padding:.4rem .9rem;font-family:var(--font-head);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;border-radius:6px;cursor:pointer;transition:all .25s;}
+#logoutBtn:hover{background:rgba(232,0,13,.1);border-color:var(--red);color:var(--red);}
 
-/* ── User pill ── */
-.user-pill {
-  display: flex; align-items: center; gap: 0.5rem;
-  background: var(--dark2);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 100px;
-  padding: 0.35rem 0.9rem 0.35rem 0.5rem;
-  font-size: 0.78rem; color: rgba(255,255,255,0.5);
-  max-width: 200px;
-}
-.user-dot {
-  width: 7px; height: 7px; flex-shrink: 0;
-  background: #22c55e; border-radius: 50%;
-  box-shadow: 0 0 6px #22c55e;
-}
-.user-email {
-  white-space: nowrap; overflow: hidden;
-  text-overflow: ellipsis; max-width: 130px;
-  color: rgba(255,255,255,0.6);
-}
+/* ══ BANNERS ══ */
+#offlineBanner{display:none;background:#b45309;border-bottom:1px solid #92400e;padding:.6rem 1.5rem;font-family:var(--font-head);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:#fef3c7;text-align:center;}
+#installBanner{display:none;background:var(--dark2);border-bottom:1px solid rgba(232,0,13,.2);padding:.75rem 1.5rem;align-items:center;justify-content:space-between;gap:1rem;}
+.install-text{font-size:.85rem;color:rgba(255,255,255,.6);}
+.install-text strong{color:var(--white);}
+#installBtn{background:var(--red);color:#fff;border:none;padding:.45rem 1rem;border-radius:4px;font-family:var(--font-head);font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;}
+#dismissInstall{background:transparent;border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.35);padding:.45rem .75rem;border-radius:4px;font-size:.75rem;cursor:pointer;font-family:var(--font-head);}
+#notifBanner{display:none;background:rgba(232,0,13,.06);border-bottom:1px solid rgba(232,0,13,.15);padding:.75rem 1.5rem;align-items:center;justify-content:space-between;gap:1rem;}
+.notif-text{font-size:.85rem;color:rgba(255,255,255,.55);}
+.notif-text strong{color:var(--white);}
+#enableNotifBtn{background:var(--red);color:#fff;border:none;padding:.45rem 1rem;border-radius:4px;font-family:var(--font-head);font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;white-space:nowrap;}
+#dismissNotif{background:transparent;border:none;color:rgba(255,255,255,.25);font-size:1rem;cursor:pointer;}
 
-/* ── Logout button ── */
-#logoutBtn {
-  display: flex; align-items: center; gap: 0.4rem;
-  background: transparent;
-  border: 1px solid rgba(232,0,13,0.3);
-  color: rgba(232,0,13,0.7);
-  padding: 0.4rem 0.9rem;
-  font-family: var(--font-head); font-size: 0.75rem;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  border-radius: 6px; cursor: pointer; transition: all 0.25s;
-}
-#logoutBtn:hover {
-  background: rgba(232,0,13,0.1);
-  border-color: var(--red); color: var(--red);
-}
-#logoutBtn .logout-icon { font-size: 0.9rem; }
+/* ══ TAB NAV ══ */
+.tab-nav{position:sticky;top:var(--appbar-h);z-index:400;background:var(--dark);border-bottom:2px solid rgba(255,255,255,.06);display:flex;overflow-x:auto;scrollbar-width:none;}
+.tab-nav::-webkit-scrollbar{display:none;}
+.tab-btn{flex-shrink:0;padding:0 1.5rem;height:var(--tab-h);font-family:var(--font-head);font-size:.82rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);background:transparent;border:none;border-bottom:3px solid transparent;cursor:pointer;transition:all .25s;white-space:nowrap;display:flex;align-items:center;gap:.5rem;}
+.tab-btn:hover{color:rgba(255,255,255,.7);}
+.tab-btn.active{color:var(--white);border-bottom-color:var(--red);}
+.tab-count{background:var(--red);color:#fff;font-size:.65rem;padding:.15rem .45rem;border-radius:100px;font-weight:700;}
 
-/* ── Offline banner ── */
-#offlineBanner {
-  display: none;
-  background: #b45309;
-  border-bottom: 1px solid #92400e;
-  padding: 0.6rem 1.5rem;
-  font-family: var(--font-head); font-size: 0.78rem;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: #fef3c7; text-align: center;
-}
+/* ══ TAB CONTENT ══ */
+.tab-panel{display:none;padding:2rem 1.5rem 5rem;max-width:1100px;margin:0 auto;}
+.tab-panel.active{display:block;}
 
-/* ── Install prompt banner ── */
-#installBanner {
-  display: none;
-  background: var(--dark2);
-  border-bottom: 1px solid rgba(232,0,13,0.2);
-  padding: 0.75rem 1.5rem;
-  align-items: center; justify-content: space-between; gap: 1rem;
-}
-.install-text {
-  font-size: 0.85rem; color: rgba(255,255,255,0.6);
-}
-.install-text strong { color: var(--white); }
-.install-actions { display: flex; gap: 0.5rem; flex-shrink: 0; }
-#installBtn {
-  background: var(--red); color: #fff; border: none;
-  padding: 0.45rem 1rem; border-radius: 4px;
-  font-family: var(--font-head); font-size: 0.78rem;
-  font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-  cursor: pointer; transition: background 0.2s;
-}
-#installBtn:hover { background: var(--red-dark); }
-#dismissInstall {
-  background: transparent; border: 1px solid rgba(255,255,255,0.1);
-  color: rgba(255,255,255,0.35); padding: 0.45rem 0.75rem;
-  border-radius: 4px; font-size: 0.75rem; cursor: pointer;
-  font-family: var(--font-head); letter-spacing: 0.05em;
-  text-transform: uppercase; transition: all 0.2s;
-}
-#dismissInstall:hover { border-color: rgba(255,255,255,0.25); color: rgba(255,255,255,0.5); }
+/* ══ SECTION LABEL ══ */
+.cms-label{font-family:var(--font-head);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:1rem;display:flex;align-items:center;gap:.75rem;}
+.cms-label::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.06);}
 
-/* ── Notification permission prompt ── */
-#notifBanner {
-  display: none;
-  background: rgba(232,0,13,0.06);
-  border-bottom: 1px solid rgba(232,0,13,0.15);
-  padding: 0.75rem 1.5rem;
-  align-items: center; justify-content: space-between; gap: 1rem;
-}
-.notif-text { font-size: 0.85rem; color: rgba(255,255,255,0.55); }
-.notif-text strong { color: var(--white); }
-#enableNotifBtn {
-  background: var(--red); color: #fff; border: none;
-  padding: 0.45rem 1rem; border-radius: 4px;
-  font-family: var(--font-head); font-size: 0.78rem;
-  font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-  cursor: pointer; white-space: nowrap;
-}
-#dismissNotif {
-  background: transparent; border: none;
-  color: rgba(255,255,255,0.25); font-size: 1rem; cursor: pointer;
-}
+/* ══ PANEL ══ */
+.cms-panel{background:var(--dark);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:1.75rem;margin-bottom:1.5rem;}
+.cms-panel h2{font-size:1.15rem;margin-bottom:1.5rem;padding-bottom:.9rem;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:.5rem;}
 
-/* ══════════════════════════════
-   ADMIN CONTENT LAYOUT
-══════════════════════════════ */
-.admin-content {
-  max-width: 1100px; margin: 0 auto;
-  padding: 2rem 1.5rem 5rem;
-}
+/* ══ EXISTING ITEMS LIST ══ */
+.cms-list{display:flex;flex-direction:column;gap:.75rem;margin-bottom:1.5rem;}
+.cms-item{background:var(--dark2);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:1rem 1.25rem;display:flex;align-items:flex-start;gap:1rem;transition:border-color .2s;}
+.cms-item:hover{border-color:rgba(255,255,255,.15);}
+.cms-item-img{width:64px;height:48px;border-radius:6px;object-fit:cover;flex-shrink:0;background:var(--dark3);}
+.cms-item-img-placeholder{width:64px;height:48px;border-radius:6px;flex-shrink:0;background:rgba(232,0,13,.1);display:flex;align-items:center;justify-content:center;font-size:1.4rem;}
+.cms-item-body{flex:1;min-width:0;}
+.cms-item-title{font-family:var(--font-head);font-size:.95rem;font-weight:700;color:var(--white);margin-bottom:.25rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.cms-item-meta{font-size:.78rem;color:var(--muted);line-height:1.5;}
+.cms-item-text{font-size:.82rem;color:rgba(255,255,255,.45);margin-top:.3rem;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.cms-item-actions{display:flex;gap:.5rem;flex-shrink:0;flex-wrap:wrap;}
+.cms-item-badge{display:inline-block;font-family:var(--font-head);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .6rem;border-radius:4px;margin-bottom:.35rem;}
+.cms-item-badge.active{background:rgba(34,197,94,.12);color:#22c55e;border:1px solid rgba(34,197,94,.25);}
+.cms-item-badge.archived{background:rgba(255,255,255,.06);color:var(--muted);border:1px solid rgba(255,255,255,.1);}
 
-/* Section headings */
-.admin-section-label {
-  font-family: var(--font-head); font-size: 0.72rem;
-  letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--red); margin-bottom: 1rem;
-  display: flex; align-items: center; gap: 0.75rem;
-}
-.admin-section-label::after {
-  content: ''; flex: 1; height: 1px;
-  background: rgba(255,255,255,0.06);
-}
+/* ══ CMS ACTION BUTTONS ══ */
+.btn-cms{padding:.4rem .85rem;border-radius:4px;font-family:var(--font-head);font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border:1px solid;transition:all .2s;}
+.btn-edit{background:transparent;border-color:rgba(255,255,255,.15);color:rgba(255,255,255,.55);}
+.btn-edit:hover{border-color:rgba(255,255,255,.4);color:var(--white);}
+.btn-archive{background:transparent;border-color:rgba(234,179,8,.3);color:#eab308;}
+.btn-archive:hover{background:rgba(234,179,8,.1);}
+.btn-unarchive{background:transparent;border-color:rgba(34,197,94,.3);color:#22c55e;}
+.btn-unarchive:hover{background:rgba(34,197,94,.1);}
+.btn-delete{background:transparent;border-color:rgba(239,68,68,.3);color:#ef4444;}
+.btn-delete:hover{background:rgba(239,68,68,.1);}
 
-.admin-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 1.25rem; margin-bottom: 1.25rem;
-}
-.admin-grid.single { grid-template-columns: 1fr; }
+/* ══ EMPTY STATE ══ */
+.cms-empty{text-align:center;padding:2.5rem;color:var(--muted);font-size:.88rem;border:1px dashed rgba(255,255,255,.08);border-radius:8px;}
+.cms-empty-icon{font-size:2.5rem;margin-bottom:.75rem;}
 
-.admin-panel {
-  background: var(--dark);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 12px; padding: 1.75rem;
-}
-.admin-panel h2 {
-  font-size: 1.15rem; margin-bottom: 1.5rem;
-  padding-bottom: 0.9rem;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  display: flex; align-items: center; gap: 0.5rem;
-}
+/* ══ INLINE EDIT FORM ══ */
+.cms-edit-form{background:rgba(232,0,13,.04);border:1px solid rgba(232,0,13,.2);border-radius:8px;padding:1.25rem;margin-top:.75rem;display:none;flex-direction:column;gap:.75rem;}
+.cms-edit-form.open{display:flex;}
 
-/* ══════════════════════════════
-   DROP ZONE
-══════════════════════════════ */
-.drop-zone {
-  border: 2px dashed rgba(255,255,255,0.12);
-  border-radius: 8px; padding: 1.75rem 1.25rem;
-  text-align: center; cursor: pointer;
-  transition: all 0.25s ease;
-  background: var(--dark2); position: relative;
-  margin-bottom: 0.75rem;
-}
-.drop-zone:hover, .drop-zone.dragover {
-  border-color: var(--red); background: rgba(232,0,13,0.04);
-}
-.drop-zone input[type="file"] {
-  position: absolute; inset: 0; opacity: 0;
-  cursor: pointer; width: 100%; height: 100%;
-  margin: 0; padding: 0; border: none;
-}
-.drop-zone-icon { font-size: 1.75rem; margin-bottom: 0.4rem; }
-.drop-zone-label {
-  font-family: var(--font-head); font-size: 0.8rem;
-  letter-spacing: 0.08em; text-transform: uppercase;
-  color: rgba(255,255,255,0.35);
-}
-.drop-zone-sub { font-size: 0.72rem; color: var(--muted); margin-top: 0.25rem; }
+/* ══ DROP ZONE ══ */
+.drop-zone{border:2px dashed rgba(255,255,255,.12);border-radius:8px;padding:1.75rem 1.25rem;text-align:center;cursor:pointer;transition:all .25s;background:var(--dark2);position:relative;margin-bottom:.75rem;}
+.drop-zone:hover,.drop-zone.dragover{border-color:var(--red);background:rgba(232,0,13,.04);}
+.drop-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;margin:0;padding:0;border:none;}
+.drop-zone-icon{font-size:1.75rem;margin-bottom:.4rem;}
+.drop-zone-label{font-family:var(--font-head);font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.35);}
+.drop-zone-sub{font-size:.72rem;color:var(--muted);margin-top:.25rem;}
 
-/* ══════════════════════════════
-   PREVIEW
-══════════════════════════════ */
-.preview-wrap {
-  display: none; position: relative;
-  border-radius: 8px; overflow: hidden;
-  margin-bottom: 0.75rem;
-  border: 1px solid rgba(255,255,255,0.08);
-}
-.preview-wrap img {
-  width: 100%; max-height: 180px; object-fit: cover; display: block;
-}
-.preview-remove {
-  position: absolute; top: 0.5rem; right: 0.5rem;
-  background: rgba(0,0,0,0.8); color: #fff; border: none;
-  border-radius: 4px; padding: 0.3rem 0.65rem;
-  font-size: 0.7rem; cursor: pointer;
-  font-family: var(--font-head); letter-spacing: 0.05em;
-  text-transform: uppercase; transition: background 0.2s;
-}
-.preview-remove:hover { background: var(--red); }
-.preview-filename {
-  padding: 0.4rem 0.75rem; font-size: 0.72rem;
-  color: var(--muted); background: var(--dark2);
-  font-family: var(--font-head); letter-spacing: 0.04em;
-}
+/* ══ PREVIEW ══ */
+.preview-wrap{display:none;position:relative;border-radius:8px;overflow:hidden;margin-bottom:.75rem;border:1px solid rgba(255,255,255,.08);}
+.preview-wrap img{width:100%;max-height:180px;object-fit:cover;display:block;}
+.preview-remove{position:absolute;top:.5rem;right:.5rem;background:rgba(0,0,0,.8);color:#fff;border:none;border-radius:4px;padding:.3rem .65rem;font-size:.7rem;cursor:pointer;font-family:var(--font-head);letter-spacing:.05em;text-transform:uppercase;transition:background .2s;}
+.preview-remove:hover{background:var(--red);}
+.preview-filename{padding:.4rem .75rem;font-size:.72rem;color:var(--muted);background:var(--dark2);font-family:var(--font-head);}
 
-/* ══════════════════════════════
-   PROGRESS BAR
-══════════════════════════════ */
-.upload-progress { display: none; margin-bottom: 0.75rem; }
-.upload-progress-bar-wrap {
-  background: var(--dark2); border-radius: 4px;
-  height: 5px; overflow: hidden; margin-bottom: 0.35rem;
-}
-.upload-progress-bar {
-  height: 100%; width: 0%; background: var(--red);
-  border-radius: 4px; transition: width 0.2s ease;
-  box-shadow: 0 0 8px var(--red-glow);
-}
-.upload-progress-label {
-  font-family: var(--font-head); font-size: 0.7rem;
-  letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
-}
+/* ══ PROGRESS ══ */
+.upload-progress{display:none;margin-bottom:.75rem;}
+.upload-progress-bar-wrap{background:var(--dark2);border-radius:4px;height:5px;overflow:hidden;margin-bottom:.35rem;}
+.upload-progress-bar{height:100%;width:0%;background:var(--red);border-radius:4px;transition:width .2s;box-shadow:0 0 8px var(--red-glow);}
+.upload-progress-label{font-family:var(--font-head);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
 
-/* ══════════════════════════════
-   HERO SLIDES
-══════════════════════════════ */
-.hero-slides-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 0.85rem; margin-bottom: 1rem;
-}
-.hero-slide-slot {
-  border: 2px dashed rgba(255,255,255,0.1);
-  border-radius: 8px; aspect-ratio: 16/9;
-  background: var(--dark2); position: relative;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; transition: all 0.25s; overflow: hidden;
-}
-.hero-slide-slot:hover, .hero-slide-slot.dragover {
-  border-color: var(--red); background: rgba(232,0,13,0.05);
-}
-.hero-slide-slot input[type="file"] {
-  position: absolute; inset: 0; opacity: 0;
-  cursor: pointer; width: 100%; height: 100%;
-  margin: 0; padding: 0; border: none;
-}
-.hero-slide-slot img {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%; object-fit: cover;
-}
-.slot-label {
-  font-family: var(--font-head); font-size: 0.7rem;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: rgba(255,255,255,0.25); text-align: center; z-index: 1;
-  pointer-events: none;
-}
-.slot-overlay {
-  position: absolute; inset: 0; background: rgba(0,0,0,0.6);
-  display: none; align-items: center; justify-content: center; z-index: 2;
-}
-.hero-slide-slot:hover .slot-overlay { display: flex; }
-.slot-overlay button {
-  background: var(--red); color: #fff; border: none;
-  padding: 0.35rem 0.85rem; border-radius: 4px;
-  font-family: var(--font-head); font-size: 0.72rem;
-  letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer;
-}
+/* ══ SECTION PHOTOS GRID ══ */
+.section-photos-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.25rem;}
+.section-photo-slot{background:var(--dark2);border:1px solid rgba(255,255,255,.07);border-radius:10px;overflow:hidden;transition:border-color .25s;}
+.section-photo-slot:hover{border-color:rgba(232,0,13,.3);}
+.section-photo-preview{width:100%;height:140px;object-fit:cover;display:block;background:var(--dark3);}
+.section-photo-placeholder{width:100%;height:140px;display:flex;align-items:center;justify-content:center;font-size:2.5rem;background:linear-gradient(135deg,rgba(232,0,13,.1),rgba(0,0,0,.3));}
+.section-photo-body{padding:1rem;}
+.section-photo-name{font-family:var(--font-head);font-size:.82rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--white);margin-bottom:.5rem;}
+.section-photo-desc{font-size:.75rem;color:var(--muted);margin-bottom:.75rem;line-height:1.5;}
+.section-photo-drop{border:1.5px dashed rgba(255,255,255,.1);border-radius:6px;padding:.75rem;text-align:center;cursor:pointer;position:relative;transition:all .25s;background:var(--dark);}
+.section-photo-drop:hover,.section-photo-drop.dragover{border-color:var(--red);background:rgba(232,0,13,.04);}
+.section-photo-drop input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;margin:0;border:none;}
+.section-photo-drop-label{font-family:var(--font-head);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);}
+.section-photo-progress{height:4px;background:var(--dark2);border-radius:2px;overflow:hidden;margin-top:.5rem;display:none;}
+.section-photo-bar{height:100%;width:0%;background:var(--red);border-radius:2px;transition:width .2s;}
 
-/* ══════════════════════════════
-   CAR WASH PACKAGES
-══════════════════════════════ */
-.carwash-packages {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 1rem; margin-bottom: 1.25rem;
-}
-.carwash-pkg {
-  background: var(--dark2); border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 8px; padding: 1.1rem;
-  display: flex; flex-direction: column; gap: 0.65rem;
-}
-.carwash-pkg-title {
-  font-family: var(--font-head); font-size: 0.82rem;
-  font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--white);
-}
+/* ══ STATUS SELECTS ══ */
+.status-select-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+.status-select-box{background:var(--dark2);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:1.25rem;display:flex;flex-direction:column;gap:.6rem;}
+.status-select-name{font-family:var(--font-head);font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--white);}
 
-/* ══════════════════════════════
-   STATUS TOAST
-══════════════════════════════ */
-#statusToast {
-  position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(100px);
-  background: var(--dark); border: 1px solid rgba(34,197,94,0.35);
-  border-left: 3px solid #22c55e;
-  border-radius: 8px; padding: 0.85rem 1.5rem;
-  font-family: var(--font-head); font-size: 0.85rem;
-  letter-spacing: 0.08em; text-transform: uppercase;
-  color: #22c55e; white-space: nowrap;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-  transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s;
-  z-index: 8000; opacity: 0;
-}
-#statusToast.show {
-  transform: translateX(-50%) translateY(0); opacity: 1;
-}
+/* ══ TOAST ══ */
+#statusToast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:var(--dark);border:1px solid rgba(34,197,94,.35);border-left:3px solid #22c55e;border-radius:8px;padding:.85rem 1.5rem;font-family:var(--font-head);font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;color:#22c55e;white-space:nowrap;box-shadow:0 8px 32px rgba(0,0,0,.5);transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .3s;z-index:8000;opacity:0;}
+#statusToast.show{transform:translateX(-50%) translateY(0);opacity:1;}
 
-/* ══════════════════════════════
-   MOBILE RESPONSIVE
-══════════════════════════════ */
-@media(max-width: 700px) {
-  .admin-grid { grid-template-columns: 1fr; }
-  .hero-slides-grid { grid-template-columns: 1fr 1fr; }
-  .carwash-packages { grid-template-columns: 1fr; }
-  .app-bar-title { display: none; }
-  .user-email { max-width: 80px; }
-  .admin-content { padding: 1.25rem 1rem 5rem; }
-}
-@media(max-width: 400px) {
-  .hero-slides-grid { grid-template-columns: 1fr; }
-  .user-pill { display: none; }
+/* ══ RE-AUTH MODAL ══ */
+#reAuthModal{position:fixed;inset:0;z-index:99997;background:rgba(0,0,0,.88);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:2rem;}
+.reauth-box{width:100%;max-width:400px;background:var(--dark);border:1px solid rgba(255,255,255,.08);border-top:3px solid var(--red);border-radius:12px;padding:2.25rem 2rem;display:flex;flex-direction:column;gap:1.25rem;}
+.reauth-icon{font-size:2rem;text-align:center;}
+.reauth-title{font-family:var(--font-head);font-size:1.2rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--white);text-align:center;}
+.reauth-desc{font-size:.85rem;color:var(--muted);text-align:center;line-height:1.6;}
+.reauth-action-label{font-family:var(--font-head);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--red);text-align:center;}
+#reAuthPassword{background:var(--dark2);border:1px solid rgba(255,255,255,.1);border-radius:6px;color:var(--white);padding:.85rem 1rem;font-family:var(--font-body);font-size:1rem;width:100%;margin:0;transition:border-color .3s;text-align:center;letter-spacing:.08em;}
+#reAuthPassword:focus{outline:none;border-color:var(--red);}
+#reAuthError{font-size:.82rem;color:#ff5555;text-align:center;padding:.5rem;background:rgba(255,50,50,.08);border:1px solid rgba(255,50,50,.2);border-radius:4px;display:none;}
+.reauth-buttons{display:flex;gap:.75rem;}
+#reAuthConfirmBtn{flex:1;padding:.85rem;font-family:var(--font-head);font-size:.95rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--red);color:#fff;border:none;border-radius:6px;cursor:pointer;transition:background .2s;}
+#reAuthConfirmBtn:hover{background:var(--red-dark);}
+#reAuthConfirmBtn:disabled{opacity:.6;cursor:not-allowed;}
+#reAuthCancelBtn{flex:1;padding:.85rem;font-family:var(--font-head);font-size:.95rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:transparent;color:rgba(255,255,255,.35);border:1px solid rgba(255,255,255,.1);border-radius:6px;cursor:pointer;transition:all .2s;}
+#reAuthCancelBtn:hover{border-color:rgba(255,255,255,.25);color:rgba(255,255,255,.55);}
+@keyframes reAuthShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+
+/* ══ INACTIVITY MODAL ══ */
+#inactivityModal{position:fixed;inset:0;z-index:99998;background:rgba(0,0,0,.85);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:2rem;}
+.ia-box{background:var(--dark);border:1px solid rgba(232,0,13,.4);border-top:3px solid var(--red);border-radius:12px;padding:2.5rem 2rem;max-width:380px;width:100%;text-align:center;display:flex;flex-direction:column;gap:1.25rem;}
+.ia-ring-wrap{position:relative;width:80px;height:80px;margin:0 auto;}
+.ia-ring-wrap svg{transform:rotate(-90deg);}
+#iaCountdownNum{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:1.6rem;font-weight:900;color:var(--white);}
+.ia-title{font-family:var(--font-head);font-size:1.2rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--white);}
+.ia-desc{font-size:.88rem;color:var(--muted);margin:0;}
+.ia-buttons{display:flex;gap:.75rem;}
+.ia-stay{flex:1;padding:.85rem;font-family:var(--font-head);font-size:.95rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--red);color:#fff;border:none;border-radius:6px;cursor:pointer;}
+.ia-out{flex:1;padding:.85rem;font-family:var(--font-head);font-size:.95rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:transparent;color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.12);border-radius:6px;cursor:pointer;}
+
+/* ══ CONFIRM MODAL ══ */
+#confirmModal{position:fixed;inset:0;z-index:99996;background:rgba(0,0,0,.8);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:2rem;}
+.confirm-box{background:var(--dark);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:2rem;max-width:360px;width:100%;text-align:center;display:flex;flex-direction:column;gap:1rem;}
+.confirm-icon{font-size:2.5rem;}
+.confirm-title{font-family:var(--font-head);font-size:1.1rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--white);}
+.confirm-desc{font-size:.85rem;color:var(--muted);line-height:1.6;}
+.confirm-buttons{display:flex;gap:.75rem;margin-top:.5rem;}
+#confirmYesBtn{flex:1;padding:.8rem;font-family:var(--font-head);font-size:.9rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:#ef4444;color:#fff;border:none;border-radius:6px;cursor:pointer;}
+#confirmNoBtn{flex:1;padding:.8rem;font-family:var(--font-head);font-size:.9rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:transparent;color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.12);border-radius:6px;cursor:pointer;}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:768px){
+  .app-bar{padding:0 1rem;}
+  .user-pill{display:none;}
+  .tab-btn{padding:0 1rem;font-size:.75rem;}
+  .status-select-grid{grid-template-columns:1fr;}
+  .reauth-buttons,.ia-buttons,.confirm-buttons{flex-direction:column;}
 }
 </style>
 </head>
 <body>
 
-<!-- ══════════════════════════════
-     SPLASH SCREEN
-══════════════════════════════ -->
+<!-- ══ SPLASH ══ -->
 <div id="splashScreen">
   <div class="splash-logo">NE<span>RO</span></div>
   <div class="splash-tagline">Admin Panel</div>
-  <div class="splash-bar-wrap">
-    <div class="splash-bar"></div>
-  </div>
-  <div class="splash-version">v1.0 · Drive Further. Pay Less.</div>
+  <div class="splash-bar-wrap"><div class="splash-bar"></div></div>
+  <div class="splash-version">v2.0 · Drive Further. Pay Less.</div>
 </div>
 
-
-<!-- ══════════════════════════════
-     LOGIN SCREEN
-══════════════════════════════ -->
+<!-- ══ LOGIN ══ -->
 <div id="loginScreen">
   <div class="login-box">
     <div class="login-logo">NE<span>RO</span></div>
     <div class="login-title">Admin Access</div>
-
     <div class="login-field">
       <label>Email Address</label>
       <input type="email" id="loginEmail" placeholder="admin@nero.com" autocomplete="email">
@@ -504,580 +250,1115 @@
       <label>Password</label>
       <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password">
     </div>
-
     <div id="loginError"></div>
     <button id="loginBtn">Sign In</button>
     <p class="login-note">⛽ Restricted to authorised NERO staff only.</p>
   </div>
 </div>
 
-
-<!-- ══════════════════════════════
-     DASHBOARD
-══════════════════════════════ -->
+<!-- ══ DASHBOARD ══ -->
 <div id="dashboard">
 
-  <!-- APP BAR -->
+  <!-- App Bar -->
   <div class="app-bar">
-    <div class="app-bar-logo">NE<span>RO</span></div>
-    <div class="app-bar-title">Admin Panel</div>
+    <div class="app-bar-logo">NE<span>RO</span> <span style="font-size:.7rem;color:var(--muted);letter-spacing:.15em;font-weight:400;">ADMIN</span></div>
     <div class="app-bar-right">
-      <!-- Online user pill -->
-      <div class="user-pill">
-        <div class="user-dot"></div>
-        <span class="user-email" id="adminEmailDisplay"></span>
-      </div>
-      <!-- LOGOUT BUTTON -->
-      <button id="logoutBtn">
-        <span class="logout-icon">⏻</span> Sign Out
-      </button>
+      <div class="user-pill"><div class="user-dot"></div><span class="user-email" id="adminEmailDisplay"></span></div>
+      <button id="logoutBtn">⏻ Sign Out</button>
     </div>
   </div>
 
-  <!-- OFFLINE BANNER -->
+  <!-- Banners -->
   <div id="offlineBanner">⚠ You are offline — changes will sync when reconnected</div>
-
-  <!-- INSTALL PROMPT BANNER -->
   <div id="installBanner">
-    <div class="install-text">
-      <strong>Install NERO Admin</strong> — add it to your home screen for quick access
-    </div>
-    <div class="install-actions">
+    <div class="install-text"><strong>Install NERO Admin</strong> — add it to your home screen for quick access</div>
+    <div style="display:flex;gap:.5rem;">
       <button id="installBtn">Install App</button>
       <button id="dismissInstall">Not now</button>
     </div>
   </div>
-
-  <!-- NOTIFICATION PERMISSION BANNER -->
   <div id="notifBanner">
-    <div class="notif-text">
-      <strong>Enable notifications</strong> — get alerts when prices need updating
-    </div>
-    <div style="display:flex;gap:0.5rem;align-items:center;">
+    <div class="notif-text"><strong>Enable notifications</strong> — get alerts for station updates</div>
+    <div style="display:flex;gap:.5rem;align-items:center;">
       <button id="enableNotifBtn">Enable</button>
       <button id="dismissNotif">✕</button>
     </div>
   </div>
 
-  <!-- MAIN CONTENT -->
-  <div class="admin-content">
+  <!-- Tab Navigation -->
+  <nav class="tab-nav" id="tabNav">
+    <button class="tab-btn active" data-tab="news">📰 News <span class="tab-count" id="newsCount">0</span></button>
+    <button class="tab-btn" data-tab="promos">🎁 Promotions <span class="tab-count" id="promosCount">0</span></button>
+    <button class="tab-btn" data-tab="prices">⛽ Prices</button>
+    <button class="tab-btn" data-tab="status">📍 Station Status</button>
+    <button class="tab-btn" data-tab="photos">🖼️ Photos</button>
+    <button class="tab-btn" data-tab="carwash">🚗 Car Wash</button>
+  </nav>
 
-    <!-- Status Toast -->
-    <div id="statusToast"></div>
+  <!-- ════════════════════════════
+       TAB: NEWS
+  ════════════════════════════ -->
+  <div class="tab-panel active" id="tab-news">
 
-    <!-- ── ROW 1: Prices + News ── -->
-    <div class="admin-section-label">Station Management</div>
-    <div class="admin-grid">
-
-      <!-- FUEL PRICES -->
-      <div class="admin-panel" id="prices">
-        <h2>⛽ Fuel Prices</h2>
-        <form id="priceForm">
-          <div class="form-group">
-            <label>Petrol Price ($)</label>
-            <input type="number" step="0.01" id="petrolInput" placeholder="e.g. 1.45" inputmode="decimal" required>
-          </div>
-          <div class="form-group">
-            <label>Diesel Price ($)</label>
-            <input type="number" step="0.01" id="dieselInput" placeholder="e.g. 1.38" inputmode="decimal" required>
-          </div>
-          <button type="submit" class="btn btn-primary" style="width:100%;margin-top:0.5rem;">
-            Update Prices
-          </button>
-        </form>
-      </div>
-
-      <!-- NEWS POST -->
-      <div class="admin-panel" id="news">
-        <h2>📰 Post News</h2>
-
-        <div class="form-group">
-          <label>News Image</label>
-          <div class="drop-zone" id="newsDrop">
-            <input type="file" id="newsFile" accept="image/*">
-            <div class="drop-zone-icon">🖼️</div>
-            <div class="drop-zone-label">Drag & drop or tap to browse</div>
-            <div class="drop-zone-sub">JPG · PNG · WEBP</div>
-          </div>
-          <div class="upload-progress" id="newsProgress">
-            <div class="upload-progress-bar-wrap">
-              <div class="upload-progress-bar" id="newsProgressBar"></div>
-            </div>
-            <div class="upload-progress-label">Uploading… <span id="newsProgressPct">0</span>%</div>
-          </div>
-          <div class="preview-wrap" id="newsPreview">
-            <img id="newsPreviewImg" src="" alt="">
-            <div class="preview-filename" id="newsPreviewName"></div>
-            <button class="preview-remove" id="newsPreviewRemove">✕ Remove</button>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Title</label>
-          <input type="text" id="newsTitle" placeholder="e.g. New pump lane open">
-        </div>
-        <div class="form-group">
-          <label>Content</label>
-          <textarea id="newsText" placeholder="Write your update…" style="min-height:90px;"></textarea>
-        </div>
-        <button id="publishBtn" class="btn btn-primary" style="width:100%;">
-          Publish Update
-        </button>
-      </div>
-
-    </div><!-- /row 1 -->
-
-
-    <!-- ── ROW 2: Hero Slideshow ── -->
-    <div class="admin-section-label" style="margin-top:2rem;">Hero Slideshow</div>
-    <div class="admin-grid single">
-      <div class="admin-panel">
-        <h2>🖼️ Slideshow Images</h2>
-        <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.25rem;">
-          Drag & drop or tap each slot to replace homepage slideshow images. Changes go live immediately.
-        </p>
-        <div class="hero-slides-grid">
-          <div class="hero-slide-slot" id="heroSlot0">
-            <input type="file" accept="image/*" data-slot="0">
-            <div class="slot-label">Slide 1<br><small style="opacity:.5;font-size:.6rem;">tap to change</small></div>
-            <div class="slot-overlay"><button onclick="triggerSlotUpload(0)">Replace</button></div>
-          </div>
-          <div class="hero-slide-slot" id="heroSlot1">
-            <input type="file" accept="image/*" data-slot="1">
-            <div class="slot-label">Slide 2<br><small style="opacity:.5;font-size:.6rem;">tap to change</small></div>
-            <div class="slot-overlay"><button onclick="triggerSlotUpload(1)">Replace</button></div>
-          </div>
-          <div class="hero-slide-slot" id="heroSlot2">
-            <input type="file" accept="image/*" data-slot="2">
-            <div class="slot-label">Slide 3<br><small style="opacity:.5;font-size:.6rem;">tap to change</small></div>
-            <div class="slot-overlay"><button onclick="triggerSlotUpload(2)">Replace</button></div>
-          </div>
-        </div>
-        <div id="heroUploadStatus" style="display:none;font-family:var(--font-head);font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);">
-          Uploading… <span id="heroPct">0</span>%
-          <div class="upload-progress-bar-wrap" style="margin-top:0.5rem;">
-            <div class="upload-progress-bar" id="heroProgressBar"></div>
-          </div>
-        </div>
+    <!-- Existing posts -->
+    <div class="cms-label" style="margin-top:1.5rem;">Existing News Posts</div>
+    <div class="cms-panel">
+      <h2>📰 All Station Updates</h2>
+      <div id="newsList" class="cms-list">
+        <div class="cms-empty"><div class="cms-empty-icon">⏳</div>Loading posts…</div>
       </div>
     </div>
 
-
-    <!-- ── ROW 3: Car Wash ── -->
-    <div class="admin-section-label" style="margin-top:2rem;">Car Wash</div>
-    <div class="admin-grid single">
-      <div class="admin-panel">
-        <h2>🚗 Package Images</h2>
-        <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.25rem;">
-          Upload a photo for each package — displayed on the Car Wash page.
-        </p>
-        <div class="carwash-packages">
-          <div class="carwash-pkg">
-            <div class="carwash-pkg-title">⚡ Quick Wash</div>
-            <div class="drop-zone" id="cwDrop0" style="padding:1rem;">
-              <input type="file" id="cwFile0" accept="image/*" data-pkg="0">
-              <div class="drop-zone-icon" style="font-size:1.4rem;">🖼️</div>
-              <div class="drop-zone-label" style="font-size:0.72rem;">Drop image</div>
-            </div>
-            <div class="upload-progress" id="cwProgress0">
-              <div class="upload-progress-bar-wrap"><div class="upload-progress-bar" id="cwProgressBar0"></div></div>
-              <div class="upload-progress-label"><span id="cwPct0">0</span>%</div>
-            </div>
-            <div class="preview-wrap" id="cwPreview0">
-              <img id="cwPreviewImg0" src="" alt="">
-              <div class="preview-filename" id="cwPreviewName0"></div>
-              <button class="preview-remove" onclick="removePreview('cw',0)">✕</button>
-            </div>
-          </div>
-          <div class="carwash-pkg">
-            <div class="carwash-pkg-title">🚗 Full Service</div>
-            <div class="drop-zone" id="cwDrop1" style="padding:1rem;">
-              <input type="file" id="cwFile1" accept="image/*" data-pkg="1">
-              <div class="drop-zone-icon" style="font-size:1.4rem;">🖼️</div>
-              <div class="drop-zone-label" style="font-size:0.72rem;">Drop image</div>
-            </div>
-            <div class="upload-progress" id="cwProgress1">
-              <div class="upload-progress-bar-wrap"><div class="upload-progress-bar" id="cwProgressBar1"></div></div>
-              <div class="upload-progress-label"><span id="cwPct1">0</span>%</div>
-            </div>
-            <div class="preview-wrap" id="cwPreview1">
-              <img id="cwPreviewImg1" src="" alt="">
-              <div class="preview-filename" id="cwPreviewName1"></div>
-              <button class="preview-remove" onclick="removePreview('cw',1)">✕</button>
-            </div>
-          </div>
-          <div class="carwash-pkg">
-            <div class="carwash-pkg-title">✨ Premium Detail</div>
-            <div class="drop-zone" id="cwDrop2" style="padding:1rem;">
-              <input type="file" id="cwFile2" accept="image/*" data-pkg="2">
-              <div class="drop-zone-icon" style="font-size:1.4rem;">🖼️</div>
-              <div class="drop-zone-label" style="font-size:0.72rem;">Drop image</div>
-            </div>
-            <div class="upload-progress" id="cwProgress2">
-              <div class="upload-progress-bar-wrap"><div class="upload-progress-bar" id="cwProgressBar2"></div></div>
-              <div class="upload-progress-label"><span id="cwPct2">0</span>%</div>
-            </div>
-            <div class="preview-wrap" id="cwPreview2">
-              <img id="cwPreviewImg2" src="" alt="">
-              <div class="preview-filename" id="cwPreviewName2"></div>
-              <button class="preview-remove" onclick="removePreview('cw',2)">✕</button>
-            </div>
-          </div>
+    <!-- Post new -->
+    <div class="cms-label">Post New Update</div>
+    <div class="cms-panel">
+      <h2>✏️ Write New Post</h2>
+      <div class="form-group">
+        <label>News Image</label>
+        <div class="drop-zone" id="newsDrop">
+          <input type="file" id="newsFile" accept="image/*">
+          <div class="drop-zone-icon">🖼️</div>
+          <div class="drop-zone-label">Drag & drop or tap to browse</div>
+          <div class="drop-zone-sub">JPG · PNG · WEBP</div>
         </div>
-        <button id="saveCarwashBtn" class="btn btn-primary">Save Car Wash Images</button>
+        <div class="upload-progress" id="newsProgress">
+          <div class="upload-progress-bar-wrap"><div class="upload-progress-bar" id="newsProgressBar"></div></div>
+          <div class="upload-progress-label">Uploading… <span id="newsProgressPct">0</span>%</div>
+        </div>
+        <div class="preview-wrap" id="newsPreview">
+          <img id="newsPreviewImg" src="" alt="">
+          <div class="preview-filename" id="newsPreviewName"></div>
+          <button class="preview-remove" id="newsPreviewRemove">✕ Remove</button>
+        </div>
+      </div>
+      <div class="form-group"><label>Title</label><input type="text" id="newsTitle" placeholder="e.g. New pump lane open"></div>
+      <div class="form-group"><label>Content</label><textarea id="newsText" placeholder="Write your update…" style="min-height:90px;"></textarea></div>
+      <button id="publishBtn" class="btn btn-primary" style="width:100%;">Publish Update</button>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════
+       TAB: PROMOTIONS
+  ════════════════════════════ -->
+  <div class="tab-panel" id="tab-promos">
+
+    <div class="cms-label" style="margin-top:1.5rem;">Active &amp; Archived Promotions</div>
+    <div class="cms-panel">
+      <h2>🎁 All Promotions</h2>
+      <div id="promosList" class="cms-list">
+        <div class="cms-empty"><div class="cms-empty-icon">⏳</div>Loading promotions…</div>
       </div>
     </div>
 
-  </div><!-- /admin-content -->
+    <div class="cms-label">Create New Promotion</div>
+    <div class="cms-panel">
+      <h2>➕ New Promotion</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;">
+        <div class="form-group"><label>Promotion Title</label><input type="text" id="promoTitle" placeholder="e.g. Free Wash with 40L Fill"></div>
+        <div class="form-group"><label>Badge Label</label><input type="text" id="promoBadgeInput" placeholder="e.g. Weekend Deal"></div>
+        <div class="form-group"><label>Emoji Icon</label><input type="text" id="promoEmoji" placeholder="🎁" maxlength="4"></div>
+        <div class="form-group"><label>Expiry Date (optional)</label><input type="date" id="promoExpiry"></div>
+        <div class="form-group" style="grid-column:1/-1;"><label>Description</label><textarea id="promoDesc" placeholder="Describe the offer…" style="min-height:80px;"></textarea></div>
+        <div class="form-group" style="grid-column:1/-1;">
+          <label>Promo Image (optional)</label>
+          <div class="drop-zone" id="promoDrop"><input type="file" id="promoFile" accept="image/*"><div class="drop-zone-icon">🖼️</div><div class="drop-zone-label">Drag & drop or tap to browse</div></div>
+          <div class="upload-progress" id="promoProgress"><div class="upload-progress-bar-wrap"><div class="upload-progress-bar" id="promoProgressBar"></div></div><div class="upload-progress-label">Uploading… <span id="promoProgressPct">0</span>%</div></div>
+          <div class="preview-wrap" id="promoPreview"><img id="promoPreviewImg" src="" alt=""><div class="preview-filename" id="promoPreviewName"></div><button class="preview-remove" id="promoPreviewRemove">✕ Remove</button></div>
+        </div>
+      </div>
+      <button id="publishPromoBtn" class="btn btn-primary" style="margin-top:.5rem;">Publish Promotion</button>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════
+       TAB: FUEL PRICES
+  ════════════════════════════ -->
+  <div class="tab-panel" id="tab-prices">
+    <div class="cms-label" style="margin-top:1.5rem;">Live Fuel Prices</div>
+    <div class="cms-panel">
+      <h2>⛽ Update Fuel Prices</h2>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:1.5rem;">These prices update live on the website the moment you save them.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;max-width:480px;">
+        <div class="form-group"><label>Petrol Price (UGX per litre)</label><input type="number" step="1" id="petrolInput" placeholder="e.g. 5400" inputmode="numeric"></div>
+        <div class="form-group"><label>Diesel Price (UGX per litre)</label><input type="number" step="1" id="dieselInput" placeholder="e.g. 4900" inputmode="numeric"></div>
+      </div>
+      <div style="background:var(--dark2);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:1rem 1.25rem;margin-bottom:1.5rem;max-width:480px;">
+        <div style="font-family:var(--font-head);font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;">Currently Live on Website</div>
+        <div style="display:flex;gap:2rem;">
+          <div><div style="font-size:.8rem;color:var(--muted);">Petrol</div><div style="font-family:var(--font-head);font-size:1.4rem;font-weight:900;color:var(--red);" id="currentPetrol">—</div></div>
+          <div><div style="font-size:.8rem;color:var(--muted);">Diesel</div><div style="font-family:var(--font-head);font-size:1.4rem;font-weight:900;color:var(--red);" id="currentDiesel">—</div></div>
+          <div><div style="font-size:.8rem;color:var(--muted);">Last Updated</div><div style="font-size:.82rem;color:rgba(255,255,255,.5);margin-top:.25rem;" id="pricesUpdatedAt">—</div></div>
+        </div>
+      </div>
+      <button id="savePricesBtn" class="btn btn-primary">Update Live Prices</button>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════
+       TAB: STATION STATUS
+  ════════════════════════════ -->
+  <div class="tab-panel" id="tab-status">
+    <div class="cms-label" style="margin-top:1.5rem;">Live Station Busyness</div>
+    <div class="cms-panel">
+      <h2>📍 Station Status</h2>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:1.5rem;">Set the current busyness level for each station. Customers see this live on the homepage.</p>
+      <div class="status-select-grid">
+        <div class="status-select-box">
+          <div class="status-select-name">Kiwoko</div>
+          <select id="stationStatus0" style="margin:0;">
+            <option value="green">🟢 Open — Quiet</option>
+            <option value="yellow">🟡 Busy</option>
+            <option value="red">🔴 Very Busy</option>
+          </select>
+        </div>
+        <div class="status-select-box">
+          <div class="status-select-name">Nakaseke</div>
+          <select id="stationStatus1" style="margin:0;">
+            <option value="green">🟢 Open — Quiet</option>
+            <option value="yellow">🟡 Busy</option>
+            <option value="red">🔴 Very Busy</option>
+          </select>
+        </div>
+        <div class="status-select-box">
+          <div class="status-select-name">Butalangu</div>
+          <select id="stationStatus2" style="margin:0;">
+            <option value="green">🟢 Open — Quiet</option>
+            <option value="yellow">🟡 Busy</option>
+            <option value="red">🔴 Very Busy</option>
+          </select>
+        </div>
+      </div>
+      <button id="saveStatusBtn" class="btn btn-primary" style="margin-top:1.25rem;">Update Station Status</button>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════
+       TAB: SECTION PHOTOS
+  ════════════════════════════ -->
+  <div class="tab-panel" id="tab-photos">
+    <div class="cms-label" style="margin-top:1.5rem;">Website Section Photos</div>
+    <div class="cms-panel">
+      <h2>🖼️ Manage All Section Images</h2>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:1.75rem;">Drag & drop or tap any slot to replace a photo across the website. Changes go live immediately — no code needed.</p>
+
+      <div class="section-photos-grid" id="sectionPhotosGrid">
+
+        <div class="section-photo-slot" data-key="hero_slide0">
+          <img class="section-photo-preview" id="sphoto_hero_slide0" src="" alt="" style="display:none;">
+          <div class="section-photo-placeholder" id="sphoto_ph_hero_slide0">🏠</div>
+          <div class="section-photo-body">
+            <div class="section-photo-name">Hero — Slide 1</div>
+            <div class="section-photo-desc">First background image on the homepage hero slideshow</div>
+            <div class="section-photo-drop" data-key="hero_slide0"><input type="file" accept="image/*"><div class="section-photo-drop-label">📷 Tap or drag to replace</div></div>
+            <div class="section-photo-progress"><div class="section-photo-bar"></div></div>
+          </div>
+        </div>
+
+        <div class="section-photo-slot" data-key="hero_slide1">
+          <img class="section-photo-preview" id="sphoto_hero_slide1" src="" alt="" style="display:none;">
+          <div class="section-photo-placeholder" id="sphoto_ph_hero_slide1">🏠</div>
+          <div class="section-photo-body">
+            <div class="section-photo-name">Hero — Slide 2</div>
+            <div class="section-photo-desc">Second background image on the homepage hero</div>
+            <div class="section-photo-drop" data-key="hero_slide1"><input type="file" accept="image/*"><div class="section-photo-drop-label">📷 Tap or drag to replace</div></div>
+            <div class="section-photo-progress"><div class="section-photo-bar"></div></div>
+          </div>
+        </div>
+
+        <div class="section-photo-slot" data-key="hero_slide2">
+          <img class="section-photo-preview" id="sphoto_hero_slide2" src="" alt="" style="display:none;">
+          <div class="section-photo-placeholder" id="sphoto_ph_hero_slide2">🏠</div>
+          <div class="section-photo-body">
+            <div class="section-photo-name">Hero — Slide 3</div>
+            <div class="section-photo-desc">Third background image on the homepage hero</div>
+            <div class="section-photo-drop" data-key="hero_slide2"><input type="file" accept="image/*"><div class="section-photo-drop-label">📷 Tap or drag to replace</div></div>
+            <div class="section-photo-progress"><div class="section-photo-bar"></div></div>
+          </div>
+        </div>
+
+        <div class="section-photo-slot" data-key="carwash_quick">
+          <img class="section-photo-preview" id="sphoto_carwash_quick" src="" alt="" style="display:none;">
+          <div class="section-photo-placeholder" id="sphoto_ph_carwash_quick">🚗</div>
+          <div class="section-photo-body">
+            <div class="section-photo-name">Car Wash — Quick</div>
+            <div class="section-photo-desc">Photo for the Quick Wash package card</div>
+            <div class="section-photo-drop" data-key="carwash_quick"><input type="file" accept="image/*"><div class="section-photo-drop-label">📷 Tap or drag to replace</div></div>
+            <div class="section-photo-progress"><div class="section-photo-bar"></div></div>
+          </div>
+        </div>
+
+        <div class="section-photo-slot" data-key="carwash_full">
+          <img class="section-photo-preview" id="sphoto_carwash_full" src="" alt="" style="display:none;">
+          <div class="section-photo-placeholder" id="sphoto_ph_carwash_full">🚗</div>
+          <div class="section-photo-body">
+            <div class="section-photo-name">Car Wash — Full Service</div>
+            <div class="section-photo-desc">Photo for the Full Service wash package</div>
+            <div class="section-photo-drop" data-key="carwash_full"><input type="file" accept="image/*"><div class="section-photo-drop-label">📷 Tap or drag to replace</div></div>
+            <div class="section-photo-progress"><div class="section-photo-bar"></div></div>
+          </div>
+        </div>
+
+        <div class="section-photo-slot" data-key="carwash_premium">
+          <img class="section-photo-preview" id="sphoto_carwash_premium" src="" alt="" style="display:none;">
+          <div class="section-photo-placeholder" id="sphoto_ph_carwash_premium">✨</div>
+          <div class="section-photo-body">
+            <div class="section-photo-name">Car Wash — Premium</div>
+            <div class="section-photo-desc">Photo for the Premium Detail package</div>
+            <div class="section-photo-drop" data-key="carwash_premium"><input type="file" accept="image/*"><div class="section-photo-drop-label">📷 Tap or drag to replace</div></div>
+            <div class="section-photo-progress"><div class="section-photo-bar"></div></div>
+          </div>
+        </div>
+
+        <div class="section-photo-slot" data-key="services_petrol">
+          <img class="section-photo-preview" id="sphoto_services_petrol" src="" alt="" style="display:none;">
+          <div class="section-photo-placeholder" id="sphoto_ph_services_petrol">⛽</div>
+          <div class="section-photo-body">
+            <div class="section-photo-name">Services — Petrol Card</div>
+            <div class="section-photo-desc">Background photo on the Petrol service card</div>
+            <div class="section-photo-drop" data-key="services_petrol"><input type="file" accept="image/*"><div class="section-photo-drop-label">📷 Tap or drag to replace</div></div>
+            <div class="section-photo-progress"><div class="section-photo-bar"></div></div>
+          </div>
+        </div>
+
+        <div class="section-photo-slot" data-key="services_diesel">
+          <img class="section-photo-preview" id="sphoto_services_diesel" src="" alt="" style="display:none;">
+          <div class="section-photo-placeholder" id="sphoto_ph_services_diesel">🛢</div>
+          <div class="section-photo-body">
+            <div class="section-photo-name">Services — Diesel Card</div>
+            <div class="section-photo-desc">Background photo on the Diesel service card</div>
+            <div class="section-photo-drop" data-key="services_diesel"><input type="file" accept="image/*"><div class="section-photo-drop-label">📷 Tap or drag to replace</div></div>
+            <div class="section-photo-progress"><div class="section-photo-bar"></div></div>
+          </div>
+        </div>
+
+        <div class="section-photo-slot" data-key="services_fleet">
+          <img class="section-photo-preview" id="sphoto_services_fleet" src="" alt="" style="display:none;">
+          <div class="section-photo-placeholder" id="sphoto_ph_services_fleet">🚛</div>
+          <div class="section-photo-body">
+            <div class="section-photo-name">Services — Fleet Card</div>
+            <div class="section-photo-desc">Background photo on the Fleet Orders service card</div>
+            <div class="section-photo-drop" data-key="services_fleet"><input type="file" accept="image/*"><div class="section-photo-drop-label">📷 Tap or drag to replace</div></div>
+            <div class="section-photo-progress"><div class="section-photo-bar"></div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════
+       TAB: CAR WASH
+  ════════════════════════════ -->
+  <div class="tab-panel" id="tab-carwash">
+    <div class="cms-label" style="margin-top:1.5rem;">Car Wash Packages</div>
+    <div class="cms-panel">
+      <h2>🚗 Package Images</h2>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:1.5rem;">Upload photos for each car wash package. These display on the Car Wash page.</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;" id="carwashPackages">
+
+        <div style="background:var(--dark2);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:1.1rem;display:flex;flex-direction:column;gap:.75rem;">
+          <div style="font-family:var(--font-head);font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--white);">⚡ Quick Wash</div>
+          <div class="drop-zone" id="cwDrop0" style="padding:1rem;"><input type="file" id="cwFile0" accept="image/*"><div class="drop-zone-icon" style="font-size:1.4rem;">🖼️</div><div class="drop-zone-label" style="font-size:.72rem;">Drop image</div></div>
+          <div class="upload-progress" id="cwProgress0"><div class="upload-progress-bar-wrap"><div class="upload-progress-bar" id="cwProgressBar0"></div></div><div class="upload-progress-label"><span id="cwPct0">0</span>%</div></div>
+          <div class="preview-wrap" id="cwPreview0"><img id="cwPreviewImg0" src="" alt=""><div class="preview-filename" id="cwPreviewName0"></div><button class="preview-remove" onclick="_cwRemove(0)">✕</button></div>
+        </div>
+
+        <div style="background:var(--dark2);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:1.1rem;display:flex;flex-direction:column;gap:.75rem;">
+          <div style="font-family:var(--font-head);font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--white);">🚗 Full Service</div>
+          <div class="drop-zone" id="cwDrop1" style="padding:1rem;"><input type="file" id="cwFile1" accept="image/*"><div class="drop-zone-icon" style="font-size:1.4rem;">🖼️</div><div class="drop-zone-label" style="font-size:.72rem;">Drop image</div></div>
+          <div class="upload-progress" id="cwProgress1"><div class="upload-progress-bar-wrap"><div class="upload-progress-bar" id="cwProgressBar1"></div></div><div class="upload-progress-label"><span id="cwPct1">0</span>%</div></div>
+          <div class="preview-wrap" id="cwPreview1"><img id="cwPreviewImg1" src="" alt=""><div class="preview-filename" id="cwPreviewName1"></div><button class="preview-remove" onclick="_cwRemove(1)">✕</button></div>
+        </div>
+
+        <div style="background:var(--dark2);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:1.1rem;display:flex;flex-direction:column;gap:.75rem;">
+          <div style="font-family:var(--font-head);font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--white);">✨ Premium Detail</div>
+          <div class="drop-zone" id="cwDrop2" style="padding:1rem;"><input type="file" id="cwFile2" accept="image/*"><div class="drop-zone-icon" style="font-size:1.4rem;">🖼️</div><div class="drop-zone-label" style="font-size:.72rem;">Drop image</div></div>
+          <div class="upload-progress" id="cwProgress2"><div class="upload-progress-bar-wrap"><div class="upload-progress-bar" id="cwProgressBar2"></div></div><div class="upload-progress-label"><span id="cwPct2">0</span>%</div></div>
+          <div class="preview-wrap" id="cwPreview2"><img id="cwPreviewImg2" src="" alt=""><div class="preview-filename" id="cwPreviewName2"></div><button class="preview-remove" onclick="_cwRemove(2)">✕</button></div>
+        </div>
+
+      </div>
+      <button id="saveCarwashBtn" class="btn btn-primary" style="margin-top:1.25rem;">Save Car Wash Images</button>
+    </div>
+  </div>
+
+  <!-- Status toast -->
+  <div id="statusToast"></div>
+
 </div><!-- /dashboard -->
 
+<!-- ══ RE-AUTH MODAL ══ -->
+<div id="reAuthModal">
+  <div class="reauth-box">
+    <div class="reauth-icon" id="reAuthIcon">🔒</div>
+    <div class="reauth-title" id="reAuthTitle">Confirm Action</div>
+    <p class="reauth-desc" id="reAuthDesc">Re-enter your password to confirm.</p>
+    <div class="reauth-action-label" id="reAuthActionLabel"></div>
+    <input type="password" id="reAuthPassword" placeholder="Enter your password" autocomplete="current-password">
+    <div id="reAuthError"></div>
+    <div class="reauth-buttons">
+      <button id="reAuthConfirmBtn">Confirm</button>
+      <button id="reAuthCancelBtn">Cancel</button>
+    </div>
+  </div>
+</div>
 
-<!-- ══════════════════════════════
+<!-- ══ CONFIRM DELETE MODAL ══ -->
+<div id="confirmModal">
+  <div class="confirm-box">
+    <div class="confirm-icon" id="confirmIcon">🗑️</div>
+    <div class="confirm-title" id="confirmTitle">Are you sure?</div>
+    <p class="confirm-desc" id="confirmDesc">This action cannot be undone.</p>
+    <div class="confirm-buttons">
+      <button id="confirmYesBtn">Yes, Delete</button>
+      <button id="confirmNoBtn">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ INACTIVITY MODAL ══ -->
+<div id="inactivityModal">
+  <div class="ia-box">
+    <div class="ia-ring-wrap">
+      <svg width="80" height="80" style="transform:rotate(-90deg);">
+        <circle cx="40" cy="40" r="34" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="5"/>
+        <circle id="iaRing" cx="40" cy="40" r="34" fill="none" stroke="#e8000d" stroke-width="5"
+          stroke-dasharray="213.6" stroke-dashoffset="0" stroke-linecap="round"
+          style="transition:stroke-dashoffset 1s linear;"/>
+      </svg>
+      <div id="iaCountdownNum">60</div>
+    </div>
+    <div class="ia-title">Still there?</div>
+    <p class="ia-desc">You've been inactive. You'll be signed out in <strong style="color:var(--red);" id="iaCountdownText">60</strong> seconds.</p>
+    <div class="ia-buttons">
+      <button class="ia-stay" id="iaStayBtn">Stay Signed In</button>
+      <button class="ia-out" id="iaSignOutBtn">Sign Out</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
      SCRIPTS
-══════════════════════════════ -->
+════════════════════════════════ -->
 <script src="../js/theme.js"></script>
 
-<!-- Register Service Worker -->
 <script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("../sw.js")
-      .then(reg => console.log("SW registered:", reg.scope))
-      .catch(err => console.log("SW error:", err));
-  });
-}
+/* ── Splash ── */
+window.addEventListener("load", () => setTimeout(() => document.getElementById("splashScreen").classList.add("hidden"), 1800));
 
-// Offline / online detection
-window.addEventListener("offline", () => {
-  document.getElementById("offlineBanner").style.display = "block";
-});
-window.addEventListener("online", () => {
-  document.getElementById("offlineBanner").style.display = "none";
-});
+/* ── Offline ── */
+window.addEventListener("offline", () => document.getElementById("offlineBanner").style.display = "block");
+window.addEventListener("online",  () => document.getElementById("offlineBanner").style.display = "none");
 
-// PWA install prompt
-let deferredInstallPrompt = null;
+/* ── PWA Install ── */
+let _deferredInstall = null;
 window.addEventListener("beforeinstallprompt", e => {
-  e.preventDefault();
-  deferredInstallPrompt = e;
-  const banner = document.getElementById("installBanner");
-  if (!localStorage.getItem("installDismissed")) {
-    banner.style.display = "flex";
-  }
+  e.preventDefault(); _deferredInstall = e;
+  if (!localStorage.getItem("installDismissed")) document.getElementById("installBanner").style.display = "flex";
 });
-
 document.getElementById("installBtn").addEventListener("click", async () => {
-  if (!deferredInstallPrompt) return;
-  deferredInstallPrompt.prompt();
-  const { outcome } = await deferredInstallPrompt.userChoice;
-  deferredInstallPrompt = null;
+  if (!_deferredInstall) return;
+  _deferredInstall.prompt();
+  const { outcome } = await _deferredInstall.userChoice;
+  _deferredInstall = null;
   document.getElementById("installBanner").style.display = "none";
-  if (outcome === "accepted") showToast("App installed! ✓");
+  if (outcome === "accepted") _showToast("App installed ✓");
 });
-
 document.getElementById("dismissInstall").addEventListener("click", () => {
   document.getElementById("installBanner").style.display = "none";
-  localStorage.setItem("installDismissed", "1");
+  localStorage.setItem("installDismissed","1");
 });
 
-// Splash screen — hide after 1.8s
-window.addEventListener("load", () => {
-  setTimeout(() => {
-    document.getElementById("splashScreen").classList.add("hidden");
-  }, 1800);
+/* ── Service Worker ── */
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("../sw.js").catch(() => {});
+}
+
+/* ── Tabs ── */
+document.querySelectorAll(".tab-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById("tab-" + btn.dataset.tab).classList.add("active");
+  });
 });
 
-// Global helpers exposed for inline onclick
-window.triggerSlotUpload = i => {
-  document.querySelector(`#heroSlot${i} input[type=file]`).click();
-};
-window.removePreview = (type, i) => {
-  if (type === "cw") {
-    document.getElementById(`cwPreviewImg${i}`).src = "";
-    document.getElementById(`cwPreview${i}`).style.display  = "none";
-    document.getElementById(`cwDrop${i}`).style.display     = "block";
-    document.getElementById(`cwFile${i}`).value             = "";
-    if (window._cwFiles) window._cwFiles[i] = null;
-  }
+/* ── Global toast ── */
+function _showToast(msg, isError) {
+  const t = document.getElementById("statusToast");
+  t.textContent = msg;
+  t.style.borderLeftColor = isError ? "#ef4444" : "#22c55e";
+  t.style.color           = isError ? "#ef4444" : "#22c55e";
+  t.style.borderColor     = isError ? "rgba(239,68,68,.35)" : "rgba(34,197,94,.35)";
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 3500);
+}
+
+/* ── Confirm dialog ── */
+function _confirm(icon, title, desc, onYes) {
+  document.getElementById("confirmIcon").textContent  = icon;
+  document.getElementById("confirmTitle").textContent = title;
+  document.getElementById("confirmDesc").textContent  = desc;
+  const modal = document.getElementById("confirmModal");
+  modal.style.display = "flex";
+  const yes = document.getElementById("confirmYesBtn");
+  const no  = document.getElementById("confirmNoBtn");
+  const freshYes = yes.cloneNode(true);
+  const freshNo  = no.cloneNode(true);
+  yes.replaceWith(freshYes); no.replaceWith(freshNo);
+  freshYes.addEventListener("click", () => { modal.style.display = "none"; onYes(); });
+  freshNo.addEventListener("click",  () => { modal.style.display = "none"; });
+}
+
+/* ── Car wash remove helpers (global) ── */
+window._cwRemove = i => {
+  document.getElementById(`cwPreviewImg${i}`).src   = "";
+  document.getElementById(`cwPreview${i}`).style.display = "none";
+  document.getElementById(`cwDrop${i}`).style.display    = "block";
+  document.getElementById(`cwFile${i}`).value            = "";
+  if (window._cwFiles) window._cwFiles[i] = null;
 };
 </script>
 
-<!-- Firebase Module -->
 <script type="module">
-import { initializeApp }   from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged }
-                            from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-import { getFirestore, doc, setDoc, collection, addDoc }
-                            from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, EmailAuthProvider, reauthenticateWithCredential }
+  from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc, collection, addDoc, getDocs, updateDoc, deleteDoc, query, orderBy, limit }
+  from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL }
-                            from "https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
+  from "https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
 
-const app = initializeApp({
-  apiKey:            "AIzaSyB-Q-MFZDCgHnaVgMRrgxEL9YPrIqZwUrU",
-  authDomain:        "redfuel-a2152.firebaseapp.com",
-  projectId:         "redfuel-a2152",
-  storageBucket:     "redfuel-a2152.firebasestorage.app",
-  messagingSenderId: "782154176195",
-  appId:             "1:782154176195:web:46af20e4252e415ba77476"
+const app  = getApps().length ? getApps()[0] : initializeApp({
+  apiKey:"AIzaSyB-Q-MFZDCgHnaVgMRrgxEL9YPrIqZwUrU",authDomain:"redfuel-a2152.firebaseapp.com",
+  projectId:"redfuel-a2152",storageBucket:"redfuel-a2152.firebasestorage.app",
+  messagingSenderId:"782154176195",appId:"1:782154176195:web:46af20e4252e415ba77476"
 });
 const auth    = getAuth(app);
 const db      = getFirestore(app);
 const storage = getStorage(app);
 
-/* ── Auth state ── */
+/* ══════════════════════════════════
+   AUTH
+══════════════════════════════════ */
 const loginScreen = document.getElementById("loginScreen");
 const dashboard   = document.getElementById("dashboard");
-const splashEl    = document.getElementById("splashScreen");
+const loginBtn    = document.getElementById("loginBtn");
+const loginError  = document.getElementById("loginError");
 
 onAuthStateChanged(auth, user => {
-  // Always hide splash first
-  splashEl.classList.add("hidden");
-
+  document.getElementById("splashScreen").classList.add("hidden");
   if (user) {
     loginScreen.style.display = "none";
     dashboard.style.display   = "block";
     document.getElementById("adminEmailDisplay").textContent = user.email;
-    // Show notification prompt if not already granted/denied
+    _iaStart();
+    loadAllData();
     if (Notification.permission === "default" && !localStorage.getItem("notifAsked")) {
-      setTimeout(() => {
-        document.getElementById("notifBanner").style.display = "flex";
-      }, 2000);
+      setTimeout(() => { document.getElementById("notifBanner").style.display = "flex"; }, 2000);
     }
   } else {
     loginScreen.style.display = "flex";
     dashboard.style.display   = "none";
+    _iaStop();
   }
 });
-
-/* ── Login ── */
-const loginBtn   = document.getElementById("loginBtn");
-const loginError = document.getElementById("loginError");
 
 loginBtn.addEventListener("click", async () => {
   const email = document.getElementById("loginEmail").value.trim();
   const pass  = document.getElementById("loginPassword").value;
   loginError.style.display = "none";
-  if (!email || !pass) { showLoginError("Please enter your email and password."); return; }
+  if (!email || !pass) { _loginErr("Please enter your email and password."); return; }
   loginBtn.disabled = true; loginBtn.textContent = "Signing in…";
   try {
     await signInWithEmailAndPassword(auth, email, pass);
-  } catch (err) {
+  } catch(err) {
     const bad = ["auth/invalid-credential","auth/wrong-password","auth/user-not-found","auth/invalid-email"];
-    showLoginError(bad.includes(err.code)
-      ? "Incorrect email or password."
-      : "Login failed. Check your connection.");
+    _loginErr(bad.includes(err.code) ? "Incorrect email or password." : "Login failed. Check your connection.");
   } finally { loginBtn.disabled = false; loginBtn.textContent = "Sign In"; }
 });
-document.getElementById("loginPassword").addEventListener("keydown", e => {
-  if (e.key === "Enter") loginBtn.click();
-});
+document.getElementById("loginPassword").addEventListener("keydown", e => { if (e.key==="Enter") loginBtn.click(); });
 
-/* ── LOGOUT ── */
 document.getElementById("logoutBtn").addEventListener("click", async () => {
-  if (confirm("Sign out of NERO Admin?")) {
-    await signOut(auth);
-    showToast("Signed out successfully");
-  }
+  if (confirm("Sign out of NERO Admin?")) { await signOut(auth); _showToast("Signed out"); }
 });
 
-/* ── Push Notifications ── */
 document.getElementById("enableNotifBtn").addEventListener("click", async () => {
-  const permission = await Notification.requestPermission();
-  localStorage.setItem("notifAsked", "1");
+  const p = await Notification.requestPermission();
+  localStorage.setItem("notifAsked","1");
   document.getElementById("notifBanner").style.display = "none";
-  if (permission === "granted") showToast("Notifications enabled ✓");
+  if (p==="granted") _showToast("Notifications enabled ✓");
 });
 document.getElementById("dismissNotif").addEventListener("click", () => {
   document.getElementById("notifBanner").style.display = "none";
-  localStorage.setItem("notifAsked", "1");
+  localStorage.setItem("notifAsked","1");
 });
 
-/* ── Upload helper ── */
-function uploadFile(file, path, barEl, pctEl, wrapEl) {
+/* ══════════════════════════════════
+   LOAD ALL DATA ON LOGIN
+══════════════════════════════════ */
+async function loadAllData() {
+  await Promise.all([loadNews(), loadPromos(), loadCurrentPrices(), loadCurrentStatus(), loadSectionPhotos()]);
+}
+
+/* ══════════════════════════════════
+   NEWS — LOAD & RENDER LIST
+══════════════════════════════════ */
+async function loadNews() {
+  const list = document.getElementById("newsList");
+  const countEl = document.getElementById("newsCount");
+  list.innerHTML = `<div class="cms-empty"><div class="cms-empty-icon">⏳</div>Loading…</div>`;
+  try {
+    const q    = query(collection(db,"updates"), orderBy("date","desc"), limit(20));
+    const snap = await getDocs(q);
+    if (snap.empty) { list.innerHTML = `<div class="cms-empty"><div class="cms-empty-icon">📭</div>No news posts yet.</div>`; return; }
+    list.innerHTML = "";
+    let count = 0;
+    snap.forEach(d => {
+      const data = d.data();
+      if (data.status !== "archived") count++;
+      const date = data.date?.toDate?.() || new Date();
+      const fmt  = date.toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"});
+      const isArchived = data.status === "archived";
+      const el = document.createElement("div");
+      el.className = "cms-item";
+      el.innerHTML = `
+        ${data.image
+          ? `<img class="cms-item-img" src="${data.image}" alt="" onerror="this.style.display='none'">`
+          : `<div class="cms-item-img-placeholder">📰</div>`}
+        <div class="cms-item-body">
+          <div class="cms-item-title">${data.title || "Untitled"}</div>
+          <div class="cms-item-meta">
+            <span class="cms-item-badge ${isArchived ? "archived" : "active"}">${isArchived ? "Archived" : "Live"}</span>
+            &nbsp;${fmt}
+          </div>
+          <div class="cms-item-text">${data.text || ""}</div>
+          <!-- Inline edit form -->
+          <div class="cms-edit-form" id="editNews_${d.id}">
+            <div class="form-group"><label>Edit Title</label><input type="text" id="editNewsTitle_${d.id}" value="${(data.title||"").replace(/"/g,"&quot;")}"></div>
+            <div class="form-group"><label>Edit Content</label><textarea id="editNewsText_${d.id}" style="min-height:70px;">${data.text||""}</textarea></div>
+            <div style="display:flex;gap:.75rem;">
+              <button class="btn btn-primary btn-sm" onclick="_saveNewsEdit('${d.id}')">Save Changes</button>
+              <button class="btn-cms btn-edit" onclick="document.getElementById('editNews_${d.id}').classList.remove('open')">Cancel</button>
+            </div>
+          </div>
+        </div>
+        <div class="cms-item-actions">
+          <button class="btn-cms btn-edit" onclick="document.getElementById('editNews_${d.id}').classList.toggle('open')">✏️ Edit</button>
+          ${isArchived
+            ? `<button class="btn-cms btn-unarchive" onclick="_unarchiveNews('${d.id}')">♻️ Restore</button>`
+            : `<button class="btn-cms btn-archive" onclick="_archiveNews('${d.id}')">📦 Archive</button>`}
+          <button class="btn-cms btn-delete" onclick="_deleteNews('${d.id}','${(data.title||"").replace(/'/g,"\\'")}')">🗑️ Delete</button>
+        </div>`;
+      list.appendChild(el);
+    });
+    if (countEl) countEl.textContent = count;
+  } catch(e) { list.innerHTML = `<div class="cms-empty"><div class="cms-empty-icon">⚠️</div>Failed to load. Check connection.</div>`; }
+}
+
+window._saveNewsEdit = async (id) => {
+  const title = document.getElementById(`editNewsTitle_${id}`)?.value.trim();
+  const text  = document.getElementById(`editNewsText_${id}`)?.value.trim();
+  if (!title) { _showToast("Title cannot be empty", true); return; }
+  requireReAuth({ icon:"✏️", title:"Confirm Edit", desc:"Save changes to this news post?", action:`"${title}"`,
+    onConfirmed: async () => {
+      await updateDoc(doc(db,"updates",id), { title, text, editedAt: new Date() });
+      _showToast("Post updated ✓");
+      loadNews();
+    }
+  });
+};
+window._archiveNews = id => requireReAuth({ icon:"📦", title:"Archive Post", desc:"This post will be hidden from the website but not deleted. You can restore it anytime.", action:"",
+  onConfirmed: async () => { await updateDoc(doc(db,"updates",id), { status:"archived" }); _showToast("Post archived ✓"); loadNews(); }
+});
+window._unarchiveNews = id => requireReAuth({ icon:"♻️", title:"Restore Post", desc:"This post will appear live on the website again.", action:"",
+  onConfirmed: async () => { await updateDoc(doc(db,"updates",id), { status:"active" }); _showToast("Post restored ✓"); loadNews(); }
+});
+window._deleteNews = (id, title) => _confirm("🗑️","Delete Post?",`"${title}" will be permanently deleted. This cannot be undone.`, () =>
+  requireReAuth({ icon:"🗑️", title:"Confirm Delete", desc:"Permanently delete this post?", action:`"${title}"`,
+    onConfirmed: async () => { await deleteDoc(doc(db,"updates",id)); _showToast("Post deleted ✓"); loadNews(); }
+  })
+);
+
+/* ── Publish new news ── */
+let _newsFile = null, _newsURL = null;
+_initDrop(document.getElementById("newsDrop"), document.getElementById("newsFile"),
+  document.getElementById("newsPreview"), document.getElementById("newsPreviewImg"),
+  document.getElementById("newsPreviewName"), f => { _newsFile = f; _newsURL = null; });
+document.getElementById("newsPreviewRemove").addEventListener("click", () => {
+  _newsFile = null; _newsURL = null;
+  document.getElementById("newsPreviewImg").src = "";
+  document.getElementById("newsPreview").style.display = "none";
+  document.getElementById("newsDrop").style.display    = "block";
+  document.getElementById("newsFile").value            = "";
+});
+document.getElementById("publishBtn").addEventListener("click", () => {
+  const title = document.getElementById("newsTitle").value.trim();
+  const text  = document.getElementById("newsText").value.trim();
+  if (!title || !text) { _showToast("Please fill in title and content", true); return; }
+  requireReAuth({ icon:"📰", title:"Confirm Publish", desc:"This update will go live on the website immediately.", action:`"${title}"`,
+    onConfirmed: async () => {
+      const btn = document.getElementById("publishBtn");
+      btn.disabled = true; btn.textContent = "Publishing…";
+      try {
+        if (_newsFile && !_newsURL) _newsURL = await _upload(_newsFile,`news/${Date.now()}_${_newsFile.name}`,
+          document.getElementById("newsProgressBar"), document.getElementById("newsProgressPct"), document.getElementById("newsProgress"));
+        await addDoc(collection(db,"updates"),{ title, text, image:_newsURL||null, date:new Date(), status:"active" });
+        _showToast("Post published ✓");
+        document.getElementById("newsTitle").value = "";
+        document.getElementById("newsText").value  = "";
+        document.getElementById("newsPreviewRemove").click();
+        loadNews();
+      } catch(e) { _showToast("Error: "+e.message, true); }
+      finally { btn.disabled = false; btn.textContent = "Publish Update"; }
+    }
+  });
+});
+
+/* ══════════════════════════════════
+   PROMOTIONS — LOAD & RENDER
+══════════════════════════════════ */
+async function loadPromos() {
+  const list = document.getElementById("promosList");
+  const countEl = document.getElementById("promosCount");
+  list.innerHTML = `<div class="cms-empty"><div class="cms-empty-icon">⏳</div>Loading…</div>`;
+  try {
+    const q    = query(collection(db,"promotions"), orderBy("createdAt","desc"), limit(20));
+    const snap = await getDocs(q);
+    if (snap.empty) { list.innerHTML = `<div class="cms-empty"><div class="cms-empty-icon">🎁</div>No promotions yet.</div>`; return; }
+    list.innerHTML = "";
+    let count = 0;
+    snap.forEach(d => {
+      const p = d.data();
+      const isArchived = p.status === "archived";
+      if (!isArchived) count++;
+      const exp = p.expiresAt?.toDate?.();
+      const expStr = exp ? `Expires ${exp.toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"})}` : "No expiry";
+      const el = document.createElement("div");
+      el.className = "cms-item";
+      el.innerHTML = `
+        ${p.image
+          ? `<img class="cms-item-img" src="${p.image}" alt="" onerror="this.style.display='none'">`
+          : `<div class="cms-item-img-placeholder">${p.emoji||"🎁"}</div>`}
+        <div class="cms-item-body">
+          <div class="cms-item-title">${p.title||"Untitled"}</div>
+          <div class="cms-item-meta">
+            <span class="cms-item-badge ${isArchived?"archived":"active"}">${isArchived?"Archived":"Live"}</span>
+            &nbsp;${p.badge||"Offer"} · ${expStr}
+          </div>
+          <div class="cms-item-text">${p.description||""}</div>
+          <div class="cms-edit-form" id="editPromo_${d.id}">
+            <div class="form-group"><label>Edit Title</label><input type="text" id="editPromoTitle_${d.id}" value="${(p.title||"").replace(/"/g,"&quot;")}"></div>
+            <div class="form-group"><label>Edit Description</label><textarea id="editPromoDesc_${d.id}" style="min-height:60px;">${p.description||""}</textarea></div>
+            <div style="display:flex;gap:.75rem;">
+              <button class="btn btn-primary btn-sm" onclick="_savePromoEdit('${d.id}')">Save</button>
+              <button class="btn-cms btn-edit" onclick="document.getElementById('editPromo_${d.id}').classList.remove('open')">Cancel</button>
+            </div>
+          </div>
+        </div>
+        <div class="cms-item-actions">
+          <button class="btn-cms btn-edit" onclick="document.getElementById('editPromo_${d.id}').classList.toggle('open')">✏️ Edit</button>
+          ${isArchived
+            ? `<button class="btn-cms btn-unarchive" onclick="_unarchivePromo('${d.id}')">♻️ Restore</button>`
+            : `<button class="btn-cms btn-archive" onclick="_archivePromo('${d.id}')">📦 Archive</button>`}
+          <button class="btn-cms btn-delete" onclick="_deletePromo('${d.id}','${(p.title||"").replace(/'/g,"\\'")}')">🗑️ Delete</button>
+        </div>`;
+      list.appendChild(el);
+    });
+    if (countEl) countEl.textContent = count;
+  } catch(e) { list.innerHTML = `<div class="cms-empty"><div class="cms-empty-icon">⚠️</div>Failed to load.</div>`; }
+}
+window._savePromoEdit = async id => {
+  const title = document.getElementById(`editPromoTitle_${id}`)?.value.trim();
+  const desc  = document.getElementById(`editPromoDesc_${id}`)?.value.trim();
+  requireReAuth({ icon:"✏️", title:"Confirm Edit", desc:"Save changes to this promotion?", action:`"${title}"`,
+    onConfirmed: async () => { await updateDoc(doc(db,"promotions",id),{title,description:desc,editedAt:new Date()}); _showToast("Promo updated ✓"); loadPromos(); }
+  });
+};
+window._archivePromo = id => requireReAuth({ icon:"📦", title:"Archive Promotion", desc:"Hidden from website. Restore anytime.", action:"",
+  onConfirmed: async () => { await updateDoc(doc(db,"promotions",id),{status:"archived"}); _showToast("Promo archived ✓"); loadPromos(); }
+});
+window._unarchivePromo = id => requireReAuth({ icon:"♻️", title:"Restore Promotion", desc:"Promotion will go live on the website again.", action:"",
+  onConfirmed: async () => { await updateDoc(doc(db,"promotions",id),{status:"active"}); _showToast("Promo restored ✓"); loadPromos(); }
+});
+window._deletePromo = (id,title) => _confirm("🗑️","Delete Promotion?",`"${title}" will be permanently deleted.`, () =>
+  requireReAuth({ icon:"🗑️", title:"Confirm Delete", desc:"Permanently delete this promotion?", action:`"${title}"`,
+    onConfirmed: async () => { await deleteDoc(doc(db,"promotions",id)); _showToast("Promo deleted ✓"); loadPromos(); }
+  })
+);
+
+/* ── Publish new promo ── */
+let _promoFile = null, _promoURL = null;
+_initDrop(document.getElementById("promoDrop"), document.getElementById("promoFile"),
+  document.getElementById("promoPreview"), document.getElementById("promoPreviewImg"),
+  document.getElementById("promoPreviewName"), f => { _promoFile = f; _promoURL = null; });
+document.getElementById("promoPreviewRemove").addEventListener("click", () => {
+  _promoFile = null; _promoURL = null;
+  document.getElementById("promoPreviewImg").src = "";
+  document.getElementById("promoPreview").style.display = "none";
+  document.getElementById("promoDrop").style.display    = "block";
+  document.getElementById("promoFile").value            = "";
+});
+document.getElementById("publishPromoBtn").addEventListener("click", () => {
+  const title = document.getElementById("promoTitle").value.trim();
+  if (!title) { _showToast("Please enter a promotion title", true); return; }
+  requireReAuth({ icon:"🎁", title:"Publish Promotion", desc:"This offer will appear live on the website.", action:`"${title}"`,
+    onConfirmed: async () => {
+      const btn = document.getElementById("publishPromoBtn");
+      btn.disabled = true; btn.textContent = "Publishing…";
+      try {
+        if (_promoFile && !_promoURL) _promoURL = await _upload(_promoFile,`promos/${Date.now()}_${_promoFile.name}`,
+          document.getElementById("promoProgressBar"), document.getElementById("promoProgressPct"), document.getElementById("promoProgress"));
+        const expVal = document.getElementById("promoExpiry")?.value;
+        await addDoc(collection(db,"promotions"),{
+          title, description:document.getElementById("promoDesc").value.trim(),
+          badge:document.getElementById("promoBadgeInput").value.trim()||"Offer",
+          emoji:document.getElementById("promoEmoji").value.trim()||"🎁",
+          image:_promoURL||null,
+          expiresAt:expVal?new Date(expVal):null,
+          createdAt:new Date(), status:"active"
+        });
+        _showToast("Promotion published ✓");
+        ["promoTitle","promoDesc","promoBadgeInput","promoEmoji","promoExpiry"].forEach(id => { const el=document.getElementById(id); if(el) el.value=""; });
+        document.getElementById("promoPreviewRemove")?.click();
+        loadPromos();
+      } catch(e) { _showToast("Error: "+e.message, true); }
+      finally { btn.disabled=false; btn.textContent="Publish Promotion"; }
+    }
+  });
+});
+
+/* ══════════════════════════════════
+   FUEL PRICES
+══════════════════════════════════ */
+async function loadCurrentPrices() {
+  try {
+    const snap = await getDoc(doc(db,"fuel_prices","current"));
+    if (!snap.exists()) return;
+    const { petrol, diesel, updatedAt } = snap.data();
+    document.getElementById("currentPetrol").textContent   = petrol ? `UGX ${petrol}` : "—";
+    document.getElementById("currentDiesel").textContent   = diesel ? `UGX ${diesel}` : "—";
+    document.getElementById("pricesUpdatedAt").textContent = updatedAt?.toDate?.()?.toLocaleString("en-GB",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}) || "—";
+  } catch(e) {}
+}
+document.getElementById("savePricesBtn").addEventListener("click", () => {
+  const petrol = parseFloat(document.getElementById("petrolInput").value);
+  const diesel = parseFloat(document.getElementById("dieselInput").value);
+  if (isNaN(petrol)||isNaN(diesel)) { _showToast("Please enter valid prices", true); return; }
+  requireReAuth({ icon:"⛽", title:"Update Prices", desc:"These prices go live immediately on the website.", action:`Petrol UGX${petrol} · Diesel UGX${diesel}`,
+    onConfirmed: async () => {
+      await setDoc(doc(db,"fuel_prices","current"),{petrol,diesel,updatedAt:new Date()});
+      _showToast("Prices updated ✓");
+      if (Notification.permission==="granted") new Notification("NERO Admin",{body:`Prices updated — Petrol UGX${petrol} / Diesel UGX${diesel}`,icon:"../images/nerologo2.png"});
+      loadCurrentPrices();
+    }
+  });
+});
+
+/* ══════════════════════════════════
+   STATION STATUS
+══════════════════════════════════ */
+async function loadCurrentStatus() {
+  try {
+    const snap = await getDoc(doc(db,"station_status","current"));
+    if (!snap.exists()) return;
+    const data = snap.data();
+    [0,1,2].forEach(i => {
+      const sel = document.getElementById(`stationStatus${i}`);
+      if (sel && data[`station${i}`]) sel.value = data[`station${i}`];
+    });
+  } catch(e) {}
+}
+document.getElementById("saveStatusBtn").addEventListener("click", () => {
+  const s = [0,1,2].map(i => document.getElementById(`stationStatus${i}`)?.value||"green");
+  requireReAuth({ icon:"📍", title:"Update Station Status", desc:"Updates the live busy indicator visible to all customers.", action:`Kiwoko:${s[0]} · Nakaseke:${s[1]} · Butalangu:${s[2]}`,
+    onConfirmed: async () => {
+      await setDoc(doc(db,"station_status","current"),{station0:s[0],station1:s[1],station2:s[2],updatedAt:new Date()});
+      _showToast("Station status updated ✓");
+    }
+  });
+});
+
+/* ══════════════════════════════════
+   SECTION PHOTOS
+══════════════════════════════════ */
+const _PHOTO_COLLECTIONS = {
+  hero_slide0: { db_col:"site_images", db_doc:"hero",    db_key:"slide0"        },
+  hero_slide1: { db_col:"site_images", db_doc:"hero",    db_key:"slide1"        },
+  hero_slide2: { db_col:"site_images", db_doc:"hero",    db_key:"slide2"        },
+  carwash_quick:   { db_col:"site_images", db_doc:"carwash", db_key:"quick-wash"    },
+  carwash_full:    { db_col:"site_images", db_doc:"carwash", db_key:"full-service"  },
+  carwash_premium: { db_col:"site_images", db_doc:"carwash", db_key:"premium-detail"},
+  services_petrol: { db_col:"site_images", db_doc:"services",db_key:"petrol"        },
+  services_diesel: { db_col:"site_images", db_doc:"services",db_key:"diesel"        },
+  services_fleet:  { db_col:"site_images", db_doc:"services",db_key:"fleet"         },
+};
+
+async function loadSectionPhotos() {
+  try {
+    const [heroSnap, carwashSnap, servicesSnap] = await Promise.all([
+      getDoc(doc(db,"site_images","hero")),
+      getDoc(doc(db,"site_images","carwash")),
+      getDoc(doc(db,"site_images","services"))
+    ]);
+    const allData = {
+      hero:     heroSnap.exists()     ? heroSnap.data()     : {},
+      carwash:  carwashSnap.exists()  ? carwashSnap.data()  : {},
+      services: servicesSnap.exists() ? servicesSnap.data() : {}
+    };
+    Object.entries(_PHOTO_COLLECTIONS).forEach(([slotKey, cfg]) => {
+      const url = allData[cfg.db_doc]?.[cfg.db_key];
+      if (url) _setSectionPhotoPreview(slotKey, url);
+    });
+  } catch(e) {}
+}
+
+function _setSectionPhotoPreview(slotKey, url) {
+  const img = document.getElementById(`sphoto_${slotKey}`);
+  const ph  = document.getElementById(`sphoto_ph_${slotKey}`);
+  if (img) { img.src = url; img.style.display = "block"; }
+  if (ph)  ph.style.display = "none";
+}
+
+/* Wire section photo drops */
+document.querySelectorAll(".section-photo-drop").forEach(drop => {
+  const key   = drop.dataset.key;
+  const input = drop.querySelector("input[type=file]");
+  const slot  = drop.closest(".section-photo-slot");
+  const prog  = slot?.querySelector(".section-photo-progress");
+  const bar   = slot?.querySelector(".section-photo-bar");
+
+  drop.addEventListener("dragover",  e => { e.preventDefault(); drop.classList.add("dragover"); });
+  drop.addEventListener("dragleave", () => drop.classList.remove("dragover"));
+  drop.addEventListener("drop", e => { e.preventDefault(); drop.classList.remove("dragover"); const f=e.dataTransfer.files[0]; if(f?.type.startsWith("image/")) _handleSectionPhoto(key,f,drop,prog,bar); });
+  input?.addEventListener("change", () => { if(input.files[0]) _handleSectionPhoto(key,input.files[0],drop,prog,bar); });
+});
+
+async function _handleSectionPhoto(key, file, drop, prog, bar) {
+  const cfg = _PHOTO_COLLECTIONS[key];
+  if (!cfg) return;
+
+  /* Show local preview immediately */
+  const reader = new FileReader();
+  reader.onload = ev => _setSectionPhotoPreview(key, ev.target.result);
+  reader.readAsDataURL(file);
+
+  if (prog) prog.style.display = "block";
+
+  try {
+    const url = await _upload(file, `sections/${key}_${Date.now()}_${file.name}`,
+      bar, null, null,
+      pct => { if(bar) bar.style.width = pct+"%"; }
+    );
+    if (prog) prog.style.display = "none";
+    await setDoc(doc(db, cfg.db_col, cfg.db_doc), { [cfg.db_key]: url, updatedAt: new Date() }, { merge: true });
+    _setSectionPhotoPreview(key, url);
+    _showToast("Photo updated ✓");
+  } catch(e) {
+    if(prog) prog.style.display="none";
+    _showToast("Upload failed: "+e.message, true);
+  }
+}
+
+/* ══════════════════════════════════
+   CAR WASH
+══════════════════════════════════ */
+const _cwFiles = [null,null,null];
+const _cwURLs  = [null,null,null];
+const _cwNames = ["quick-wash","full-service","premium-detail"];
+window._cwFiles = _cwFiles;
+
+for (let i=0; i<3; i++) {
+  _initDrop(document.getElementById(`cwDrop${i}`), document.getElementById(`cwFile${i}`),
+    document.getElementById(`cwPreview${i}`), document.getElementById(`cwPreviewImg${i}`),
+    document.getElementById(`cwPreviewName${i}`), f => { _cwFiles[i]=f; _cwURLs[i]=null; });
+}
+
+document.getElementById("saveCarwashBtn").addEventListener("click", () => {
+  if (!_cwFiles.some(Boolean)) { _showToast("Drop at least one image first", true); return; }
+  requireReAuth({ icon:"🚗", title:"Save Car Wash Images", desc:"These images will appear live on the Car Wash page.", action:`${_cwFiles.filter(Boolean).length} image(s)`,
+    onConfirmed: async () => {
+      const btn = document.getElementById("saveCarwashBtn");
+      btn.disabled=true; btn.textContent="Saving…";
+      try {
+        const updates = {};
+        for (let i=0;i<3;i++) {
+          if (_cwFiles[i]&&!_cwURLs[i]) _cwURLs[i] = await _upload(_cwFiles[i],`carwash/${_cwNames[i]}_${Date.now()}_${_cwFiles[i].name}`,
+            document.getElementById(`cwProgressBar${i}`), document.getElementById(`cwPct${i}`), document.getElementById(`cwProgress${i}`));
+          if (_cwURLs[i]) updates[_cwNames[i]] = _cwURLs[i];
+        }
+        if (Object.keys(updates).length) {
+          await setDoc(doc(db,"site_images","carwash"),{...updates,updatedAt:new Date()},{merge:true});
+          _showToast("Car wash images saved ✓");
+        }
+      } catch(e) { _showToast("Error: "+e.message, true); }
+      finally { btn.disabled=false; btn.textContent="Save Car Wash Images"; }
+    }
+  });
+});
+
+/* ══════════════════════════════════
+   UPLOAD HELPER
+══════════════════════════════════ */
+function _upload(file, path, barEl, pctEl, wrapEl, onProgress) {
   return new Promise((resolve, reject) => {
     const task = uploadBytesResumable(ref(storage, path), file);
     if (wrapEl) wrapEl.style.display = "block";
     task.on("state_changed",
       snap => {
-        const p = Math.round(snap.bytesTransferred / snap.totalBytes * 100);
-        if (barEl) barEl.style.width = p + "%";
+        const p = Math.round(snap.bytesTransferred/snap.totalBytes*100);
+        if (barEl) barEl.style.width = p+"%";
         if (pctEl) pctEl.textContent = p;
+        if (onProgress) onProgress(p);
       },
       reject,
-      async () => {
-        if (wrapEl) wrapEl.style.display = "none";
-        resolve(await getDownloadURL(task.snapshot.ref));
-      }
+      async () => { if(wrapEl) wrapEl.style.display="none"; resolve(await getDownloadURL(task.snapshot.ref)); }
     );
   });
 }
 
-/* ── Drop zone helper ── */
-function initDropZone(dropEl, fileInput, previewWrap, previewImg, previewName, onFile) {
+/* ══════════════════════════════════
+   DROP ZONE HELPER
+══════════════════════════════════ */
+function _initDrop(dropEl, fileInput, previewWrap, previewImg, previewName, onFile) {
+  if (!dropEl || !fileInput) return;
   dropEl.addEventListener("dragover",  e => { e.preventDefault(); dropEl.classList.add("dragover"); });
   dropEl.addEventListener("dragleave", () => dropEl.classList.remove("dragover"));
-  dropEl.addEventListener("drop", e => {
-    e.preventDefault(); dropEl.classList.remove("dragover");
-    const f = e.dataTransfer.files[0];
-    if (f?.type.startsWith("image/")) handle(f);
-  });
-  fileInput.addEventListener("change", () => { if (fileInput.files[0]) handle(fileInput.files[0]); });
-
-  function handle(file) {
+  dropEl.addEventListener("drop", e => { e.preventDefault(); dropEl.classList.remove("dragover"); const f=e.dataTransfer.files[0]; if(f?.type.startsWith("image/")) _handle(f); });
+  fileInput.addEventListener("change", () => { if(fileInput.files[0]) _handle(fileInput.files[0]); });
+  function _handle(file) {
     const reader = new FileReader();
     reader.onload = ev => {
-      previewImg.src            = ev.target.result;
-      previewName.textContent   = file.name;
-      previewWrap.style.display = "block";
-      dropEl.style.display      = "none";
+      if(previewImg)  previewImg.src = ev.target.result;
+      if(previewName) previewName.textContent = file.name;
+      if(previewWrap) previewWrap.style.display = "block";
+      dropEl.style.display = "none";
     };
     reader.readAsDataURL(file);
-    if (onFile) onFile(file);
+    if(onFile) onFile(file);
   }
 }
 
-/* ── Fuel Prices ── */
-document.getElementById("priceForm").addEventListener("submit", async e => {
-  e.preventDefault();
-  const petrol = parseFloat(document.getElementById("petrolInput").value);
-  const diesel = parseFloat(document.getElementById("dieselInput").value);
-  try {
-    await setDoc(doc(db, "fuel_prices", "current"), { petrol, diesel, updatedAt: new Date() });
-    showToast("Fuel prices updated ✓");
-    e.target.reset();
-    // Send local notification if granted
-    if (Notification.permission === "granted") {
-      new Notification("NERO Admin", { body: `Prices updated — Petrol $${petrol} / Diesel $${diesel}`, icon: "../images/nerologo2.png" });
-    }
-  } catch(err) { alert("Error: " + err.message); }
-});
+/* ══════════════════════════════════
+   RE-AUTH
+══════════════════════════════════ */
+function requireReAuth({ icon, title, desc, action, onConfirmed }) {
+  document.getElementById("reAuthIcon").textContent        = icon  || "🔒";
+  document.getElementById("reAuthTitle").textContent       = title || "Confirm";
+  document.getElementById("reAuthDesc").textContent        = desc  || "";
+  document.getElementById("reAuthActionLabel").textContent = action ? `Action: ${action}` : "";
+  document.getElementById("reAuthPassword").value          = "";
+  document.getElementById("reAuthError").style.display     = "none";
 
-/* ── News ── */
-let newsImageFile = null, newsImageURL = null;
-initDropZone(
-  document.getElementById("newsDrop"),
-  document.getElementById("newsFile"),
-  document.getElementById("newsPreview"),
-  document.getElementById("newsPreviewImg"),
-  document.getElementById("newsPreviewName"),
-  f => { newsImageFile = f; newsImageURL = null; }
-);
-document.getElementById("newsPreviewRemove").addEventListener("click", () => {
-  newsImageFile = null; newsImageURL = null;
-  document.getElementById("newsPreviewImg").src     = "";
-  document.getElementById("newsPreview").style.display = "none";
-  document.getElementById("newsDrop").style.display    = "block";
-  document.getElementById("newsFile").value            = "";
-});
-document.getElementById("publishBtn").addEventListener("click", async () => {
-  const title = document.getElementById("newsTitle").value.trim();
-  const text  = document.getElementById("newsText").value.trim();
-  if (!title || !text) { alert("Please fill in the title and content."); return; }
-  const btn = document.getElementById("publishBtn");
-  btn.disabled = true; btn.textContent = "Publishing…";
-  try {
-    if (newsImageFile && !newsImageURL) {
-      newsImageURL = await uploadFile(newsImageFile,
-        `news/${Date.now()}_${newsImageFile.name}`,
-        document.getElementById("newsProgressBar"),
-        document.getElementById("newsProgressPct"),
-        document.getElementById("newsProgress")
-      );
-    }
-    await addDoc(collection(db, "updates"), { title, text, image: newsImageURL || null, date: new Date() });
-    showToast("News published ✓");
-    document.getElementById("newsTitle").value = "";
-    document.getElementById("newsText").value  = "";
-    document.getElementById("newsPreviewRemove").click();
-  } catch(err) { alert("Error: " + err.message); }
-  finally { btn.disabled = false; btn.textContent = "Publish Update"; }
-});
+  const modal = document.getElementById("reAuthModal");
+  const input = document.getElementById("reAuthPassword");
+  modal.style.display = "flex";
+  setTimeout(() => input.focus(), 100);
 
-/* ── Hero Slideshow ── */
-for (let i = 0; i < 3; i++) {
-  const slot  = document.getElementById(`heroSlot${i}`);
-  const input = slot.querySelector("input[type=file]");
-  slot.addEventListener("dragover",  e => { e.preventDefault(); slot.classList.add("dragover"); });
-  slot.addEventListener("dragleave", () => slot.classList.remove("dragover"));
-  slot.addEventListener("drop", e => {
-    e.preventDefault(); slot.classList.remove("dragover");
-    const f = e.dataTransfer.files[0];
-    if (f?.type.startsWith("image/")) handleHero(i, f);
-  });
-  input.addEventListener("change", () => { if (input.files[0]) handleHero(i, input.files[0]); });
+  const freshConfirm = document.getElementById("reAuthConfirmBtn").cloneNode(true);
+  const freshCancel  = document.getElementById("reAuthCancelBtn").cloneNode(true);
+  document.getElementById("reAuthConfirmBtn").replaceWith(freshConfirm);
+  document.getElementById("reAuthCancelBtn").replaceWith(freshCancel);
+
+  async function doConfirm() {
+    const password = input.value;
+    if (!password) { _reAuthErr("Please enter your password."); return; }
+    freshConfirm.disabled=true; freshConfirm.textContent="Verifying…";
+    try {
+      const user = auth.currentUser;
+      await reauthenticateWithCredential(user, EmailAuthProvider.credential(user.email, password));
+      modal.style.display = "none";
+      await onConfirmed();
+    } catch(err) {
+      const bad=["auth/wrong-password","auth/invalid-credential","auth/invalid-login-credentials"];
+      _reAuthErr(bad.includes(err.code) ? "Incorrect password. Try again." : "Verification failed.");
+    } finally { freshConfirm.disabled=false; freshConfirm.textContent="Confirm"; }
+  }
+
+  freshConfirm.addEventListener("click", doConfirm);
+  freshCancel.addEventListener("click",  () => { modal.style.display="none"; _showToast("Action cancelled"); });
+  input.addEventListener("keydown", e => { if(e.key==="Enter") doConfirm(); });
+}
+function _reAuthErr(msg) {
+  const el = document.getElementById("reAuthError");
+  el.textContent=msg; el.style.display="block";
+  el.style.animation="none"; el.offsetHeight; el.style.animation="reAuthShake .4s ease";
 }
 
-function handleHero(i, file) {
-  const slot = document.getElementById(`heroSlot${i}`);
-  const reader = new FileReader();
-  reader.onload = ev => {
-    let img = slot.querySelector("img");
-    if (!img) { img = document.createElement("img"); slot.appendChild(img); }
-    img.src = ev.target.result;
-  };
-  reader.readAsDataURL(file);
-  document.getElementById("heroUploadStatus").style.display = "block";
-  uploadFile(file, `hero/slide${i}_${Date.now()}_${file.name}`,
-    document.getElementById("heroProgressBar"),
-    document.getElementById("heroPct"), null)
-    .then(url => {
-      document.getElementById("heroUploadStatus").style.display = "none";
-      return setDoc(doc(db, "site_images", "hero"), { [`slide${i}`]: url, updatedAt: new Date() }, { merge: true });
-    })
-    .then(() => showToast(`Slide ${i+1} updated ✓`))
-    .catch(err => alert("Upload error: " + err.message));
+/* ══════════════════════════════════
+   INACTIVITY — 15 min idle → 60s warning
+══════════════════════════════════ */
+const _IA_IDLE   = 15*60*1000;
+const _IA_WARN   = 60;
+const _IA_CIRC   = 213.6;
+
+let _iaIdleT=null, _iaCountT=null, _iaSecs=_IA_WARN;
+
+function _iaStart() {
+  const events=["mousemove","mousedown","keydown","touchstart","scroll","click","input"];
+  events.forEach(e => document.addEventListener(e, _iaReset, {passive:true}));
+  _iaReset();
 }
-
-/* ── Car Wash ── */
-const cwFiles = [null, null, null];
-const cwURLs  = [null, null, null];
-const cwNames = ["quick-wash", "full-service", "premium-detail"];
-window._cwFiles = cwFiles;
-
-for (let i = 0; i < 3; i++) {
-  initDropZone(
-    document.getElementById(`cwDrop${i}`),
-    document.getElementById(`cwFile${i}`),
-    document.getElementById(`cwPreview${i}`),
-    document.getElementById(`cwPreviewImg${i}`),
-    document.getElementById(`cwPreviewName${i}`),
-    f => { cwFiles[i] = f; cwURLs[i] = null; }
-  );
+function _iaStop() {
+  clearTimeout(_iaIdleT); clearInterval(_iaCountT);
 }
+function _iaReset() {
+  clearTimeout(_iaIdleT); clearInterval(_iaCountT);
+  const modal = document.getElementById("inactivityModal");
+  if (modal.style.display==="flex") _iaHide();
+  if (auth.currentUser) _iaIdleT = setTimeout(_iaWarn, _IA_IDLE);
+}
+function _iaWarn() {
+  _iaSecs = _IA_WARN;
+  document.getElementById("inactivityModal").style.display = "flex";
+  _iaUpdate();
+  _iaCountT = setInterval(() => { _iaSecs--; _iaUpdate(); if(_iaSecs<=0){ clearInterval(_iaCountT); _iaForceOut(); } }, 1000);
+}
+function _iaUpdate() {
+  const num  = document.getElementById("iaCountdownNum");
+  const txt  = document.getElementById("iaCountdownText");
+  const ring = document.getElementById("iaRing");
+  if(num)  num.textContent  = _iaSecs;
+  if(txt)  txt.textContent  = _iaSecs;
+  if(ring) { ring.style.strokeDashoffset = _IA_CIRC*(1-_iaSecs/_IA_WARN); ring.style.stroke = _iaSecs<=15?"#f97316":"#e8000d"; }
+  if(num)  num.style.color = _iaSecs<=15?"#f97316":"#fff";
+}
+function _iaHide() {
+  document.getElementById("inactivityModal").style.display="none";
+  clearInterval(_iaCountT); _iaSecs=_IA_WARN;
+  const ring=document.getElementById("iaRing");
+  if(ring){ring.style.strokeDashoffset=0;ring.style.stroke="#e8000d";}
+  const num=document.getElementById("iaCountdownNum");
+  if(num){num.textContent=_IA_WARN;num.style.color="#fff";}
+}
+async function _iaForceOut() {
+  _iaHide(); clearTimeout(_iaIdleT);
+  await signOut(auth);
+  setTimeout(() => {
+    const err=document.getElementById("loginError");
+    if(err){err.textContent="Signed out due to inactivity.";err.style.display="block";err.style.color="#fbbf24";}
+  },300);
+}
+document.getElementById("iaStayBtn").addEventListener("click",  () => { _iaHide(); _iaReset(); });
+document.getElementById("iaSignOutBtn").addEventListener("click", _iaForceOut);
 
-document.getElementById("saveCarwashBtn").addEventListener("click", async () => {
-  const btn = document.getElementById("saveCarwashBtn");
-  btn.disabled = true; btn.textContent = "Saving…";
-  try {
-    const updates = {};
-    for (let i = 0; i < 3; i++) {
-      if (cwFiles[i] && !cwURLs[i]) {
-        cwURLs[i] = await uploadFile(cwFiles[i],
-          `carwash/${cwNames[i]}_${Date.now()}_${cwFiles[i].name}`,
-          document.getElementById(`cwProgressBar${i}`),
-          document.getElementById(`cwPct${i}`),
-          document.getElementById(`cwProgress${i}`)
-        );
-      }
-      if (cwURLs[i]) updates[cwNames[i]] = cwURLs[i];
-    }
-    if (!Object.keys(updates).length) { alert("Drop at least one image first."); return; }
-    await setDoc(doc(db, "site_images", "carwash"), { ...updates, updatedAt: new Date() }, { merge: true });
-    showToast("Car wash images saved ✓");
-  } catch(err) { alert("Error: " + err.message); }
-  finally { btn.disabled = false; btn.textContent = "Save Car Wash Images"; }
+/* ══════════════════════════════════
+   NOTIFICATION BANNER
+══════════════════════════════════ */
+document.getElementById("enableNotifBtn").addEventListener("click", async () => {
+  const p = await Notification.requestPermission();
+  localStorage.setItem("notifAsked","1");
+  document.getElementById("notifBanner").style.display="none";
+  if(p==="granted") _showToast("Notifications enabled ✓");
 });
 
-/* ── Helpers ── */
-function showToast(msg) {
-  const t = document.getElementById("statusToast");
-  t.textContent = msg;
-  t.classList.add("show");
-  setTimeout(() => t.classList.remove("show"), 3200);
-}
-function showLoginError(msg) {
-  const el = document.getElementById("loginError");
-  el.textContent = msg; el.style.display = "block";
+/* ══════════════════════════════════
+   LOGIN HELPERS
+══════════════════════════════════ */
+function _loginErr(msg) {
+  const el=document.getElementById("loginError");
+  el.textContent=msg; el.style.display="block";
 }
 </script>
 

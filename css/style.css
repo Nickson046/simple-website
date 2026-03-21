@@ -44,20 +44,259 @@ body {
   overflow-x: hidden;
 }
 
-/* LIGHT MODE */
+/* ══════════════════════════════
+   LIGHT MODE — WARM OFF-WHITE PREMIUM
+══════════════════════════════ */
+
+/* ── CSS variables override for light mode ── */
 body.light {
-  background: #f0f0f0;
-  color: #111;
+  background: #f7f4f0;
+  color: #1a1208;
+
+  /* Override dark vars for light context */
+  --black:  #f7f4f0;
+  --dark:   #ffffff;
+  --dark2:  #f0ece6;
+  --dark3:  #e8e3dc;
+  --mid:    #d4cec6;
+  --light:  #1a1208;
+  --muted:  #7a6f64;
+  --white:  #1a1208;
 }
-body.light .ticker-bar { background: #111; }
-body.light section.section { background: #f0f0f0; }
-body.light .why-section { background: #e5e5e5; }
-body.light .service-card { background: #fff; color: #111; border-color: #ddd; }
-body.light .why-card { background: #fff; }
-body.light .location-card { background: #fff; color: #111; border-color: #ddd; }
-body.light .news-card { background: #fff; color: #111; }
-body.light footer { background: #111; color: #fff; }
-body.light .footer-bottom { background: #000; }
+
+/* ── Body & base text ── */
+body.light p { color: #5a5048; }
+body.light h1, body.light h2, body.light h3,
+body.light h4 { color: #1a1208; }
+
+/* ── Header ── */
+body.light header {
+  background: rgba(255,252,248,0.96);
+  border-bottom: 2px solid var(--red);
+  box-shadow: 0 2px 20px rgba(26,18,8,0.08);
+}
+body.light header.scrolled {
+  background: rgba(255,252,248,0.99);
+}
+body.light nav.main-nav a { color: #3a3028; }
+body.light nav.main-nav a:hover,
+body.light nav.main-nav a.active { color: #1a1208; background: rgba(232,0,13,0.06); }
+body.light .logo-text { color: #1a1208; }
+body.light #themeToggle { border-color: rgba(26,18,8,0.15); color: #3a3028; }
+
+/* ── Ticker stays dark — brand anchor ── */
+body.light .ticker-bar { background: #1a1208; }
+
+/* ── Sections alternate warm tones ── */
+body.light section.section { background: #f7f4f0; }
+body.light .why-section    { background: #ffffff; }
+body.light .promos-section { background: #ffffff; border-bottom: 1px solid #e8e3dc; }
+body.light .status-section { background: #f7f4f0; }
+body.light .fuel-explainer-section { background: #ffffff; border-color: #e8e3dc; }
+body.light .loyalty-section { background: #f7f4f0; border-color: #e8e3dc; }
+body.light .news-section { background: #ffffff; }
+body.light .locations-section { background: #f7f4f0; }
+body.light .services-section { background: #ffffff; }
+
+/* ── Cards — white with warm shadows ── */
+body.light .card {
+  background: #ffffff;
+  border-color: #e8e3dc;
+  box-shadow: 0 2px 12px rgba(26,18,8,0.06);
+  color: #1a1208;
+}
+body.light .card:hover {
+  box-shadow: 0 8px 28px rgba(26,18,8,0.12);
+  border-color: rgba(232,0,13,0.3);
+}
+body.light .card h3,
+body.light .card h4 { color: #1a1208; }
+body.light .card p { color: #5a5048; }
+
+/* ── Service cards ── */
+body.light .service-card { background: #1a1208; }
+body.light .service-card-bg { opacity: 0.25; }
+body.light .service-card:hover .service-card-bg { opacity: 0.4; }
+
+/* ── Why cards ── */
+body.light .why-card {
+  background: #f7f4f0;
+  border-color: #e8e3dc;
+  box-shadow: 0 2px 12px rgba(26,18,8,0.05);
+}
+body.light .why-card:hover { border-color: rgba(232,0,13,0.3); background: #fff; }
+body.light .why-card h4 { color: #1a1208; }
+body.light .why-card p  { color: #5a5048; }
+body.light .why-icon {
+  background: rgba(232,0,13,0.08);
+  border-color: rgba(232,0,13,0.2);
+}
+
+/* ── Location cards ── */
+body.light .location-card {
+  background: #ffffff;
+  border-color: #e8e3dc;
+  color: #1a1208;
+  box-shadow: 0 2px 16px rgba(26,18,8,0.07);
+}
+body.light .location-card:hover {
+  box-shadow: 0 12px 36px rgba(26,18,8,0.13);
+  border-color: rgba(232,0,13,0.35);
+}
+body.light .location-card h3 { color: #1a1208; }
+body.light .location-card > p { color: #5a5048; }
+body.light .location-card ul li { color: #7a6f64; }
+body.light .location-num { color: rgba(232,0,13,0.12); }
+body.light .location-badge { background: var(--red); color: #fff; }
+
+/* ── News cards ── */
+body.light .news-card {
+  background: #ffffff;
+  border-color: #e8e3dc;
+  color: #1a1208;
+  box-shadow: 0 2px 12px rgba(26,18,8,0.06);
+}
+body.light .news-card:hover {
+  border-color: rgba(232,0,13,0.3);
+  box-shadow: 0 8px 28px rgba(26,18,8,0.1);
+}
+body.light .news-card h3 { color: #1a1208; }
+body.light .news-card p  { color: #5a5048; }
+
+/* ── Promo cards ── */
+body.light .promo-card {
+  background: #ffffff;
+  border-color: #e8e3dc;
+  box-shadow: 0 2px 12px rgba(26,18,8,0.06);
+}
+body.light .promo-card:hover {
+  border-color: rgba(232,0,13,0.3);
+  box-shadow: 0 8px 28px rgba(26,18,8,0.1);
+}
+body.light .promo-card h3 { color: #1a1208; }
+body.light .promo-card p  { color: #5a5048; }
+body.light .promo-card-expiry { color: #a09488; border-top-color: #e8e3dc; }
+
+/* ── Status cards ── */
+body.light .status-card {
+  background: #ffffff;
+  border-color: #e8e3dc;
+  box-shadow: 0 2px 12px rgba(26,18,8,0.06);
+}
+body.light .status-card:hover { border-color: rgba(26,18,8,0.2); }
+body.light .status-name { color: #1a1208; }
+body.light .status-address { color: #7a6f64; }
+body.light .status-pill {
+  background: rgba(26,18,8,0.05);
+  border-color: rgba(26,18,8,0.1);
+  color: #7a6f64;
+}
+body.light .status-wait { color: #9a8f84; border-top-color: #e8e3dc; }
+
+/* ── Fuel explainer cards ── */
+body.light .fuel-type-card { border-color: #e8e3dc; }
+body.light .fuel-type-card:hover { border-color: rgba(232,0,13,0.35); }
+body.light .fuel-type-body { background: #ffffff; }
+body.light .fuel-type-body h3 { color: #1a1208; }
+body.light .fuel-type-body p  { color: #5a5048; }
+body.light .fuel-vehicle-row  { color: #5a5048; }
+body.light .fuel-vehicle-icon {
+  background: rgba(232,0,13,0.07);
+  border-color: rgba(232,0,13,0.15);
+}
+body.light .fuel-type-tip {
+  background: rgba(26,18,8,0.04);
+  color: #7a6f64;
+}
+body.light .fuel-type-tip strong { color: #3a3028; }
+body.light .fuel-type-card.petrol .fuel-type-img-placeholder {
+  background: linear-gradient(135deg, rgba(232,0,13,0.12), rgba(26,18,8,0.08));
+}
+body.light .fuel-type-card.diesel .fuel-type-img-placeholder {
+  background: linear-gradient(135deg, rgba(30,80,200,0.1), rgba(26,18,8,0.08));
+}
+
+/* ── Loyalty section ── */
+body.light .loyalty-calc {
+  background: #f0ece6;
+  border-color: #e0dbd2;
+}
+body.light .loyalty-calc label { color: #7a6f64; }
+body.light .loyalty-input-row input {
+  background: #ffffff;
+  border-color: #d4cec6;
+  color: #1a1208;
+}
+body.light .points-result { color: #5a5048; }
+body.light .loyalty-card-visual {
+  background: linear-gradient(135deg, #2a1a10 0%, #4a0a05 50%, #1a1208 100%);
+  border-color: rgba(232,0,13,0.5);
+}
+
+/* ── Section headers & tags ── */
+body.light .section-tag {
+  color: var(--red);
+  border-color: rgba(232,0,13,0.4);
+  background: rgba(232,0,13,0.05);
+}
+body.light h2 { color: #1a1208; }
+body.light .section-header p { color: #5a5048; }
+
+/* ── Buttons in light mode ── */
+body.light .btn-outline {
+  color: #1a1208;
+  border-color: rgba(26,18,8,0.3);
+}
+body.light .btn-outline:hover {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+/* ── Page hero (inner pages) ── */
+body.light .page-hero { background-color: #1a1208; }
+body.light .page-hero .breadcrumb { color: rgba(255,255,255,0.4); }
+
+/* ── Footer stays dark — strong anchor ── */
+body.light footer { background: #1a1208; color: #fff; }
+body.light .footer-bottom { background: #0f0a04; color: #fff; }
+body.light .footer-brand p { color: rgba(255,255,255,0.55); }
+body.light .footer-links h4 { color: rgba(255,255,255,0.4); }
+body.light .footer-links a { color: rgba(255,255,255,0.55); }
+body.light .footer-links a:hover { color: var(--red); }
+body.light .footer-contact p { color: rgba(255,255,255,0.55); }
+body.light .footer-admin-link { color: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.08); }
+body.light .footer-admin-link:hover { color: var(--red); border-color: var(--red); }
+body.light .footer-socials a { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); }
+body.light .footer-socials a:hover { background: var(--red); color: #fff; }
+
+/* ── Inputs & forms ── */
+body.light input[type="text"],
+body.light input[type="email"],
+body.light input[type="number"],
+body.light input[type="date"],
+body.light select,
+body.light textarea {
+  background: #ffffff;
+  border-color: #d4cec6;
+  color: #1a1208;
+}
+body.light input:focus,
+body.light select:focus,
+body.light textarea:focus { border-color: var(--red); }
+
+/* ── Hero scroll hint ── */
+body.light .hero-scroll-hint span { color: rgba(255,255,255,0.5); }
+
+/* ── Why left text ── */
+body.light .why-left h2 { color: #1a1208; }
+body.light .why-left p  { color: #5a5048; }
+
+/* ── "Still not sure" callout ── */
+body.light #fuelGuide > .container > div:last-child {
+  background: rgba(232,0,13,0.05);
+  border-color: rgba(232,0,13,0.2);
+}
+body.light #fuelGuide > .container > div:last-child p { color: #5a5048; }
 
 /* ── UTILITY ── */
 .container {
@@ -272,8 +511,9 @@ nav.main-nav a.nav-admin:hover {
 /* ── HERO ── */
 .hero {
   position: relative;
-  height: 100vh;
-  min-height: 640px;
+  height: 78vh;
+  min-height: 520px;
+  max-height: 780px;
   display: flex;
   flex-direction: column;
   justify-content: center;

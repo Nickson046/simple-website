@@ -4,10 +4,273 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="images/nerologo2.png" type="image/png">
-<title>NERO PETRO Station</title>
+<title>NERO PETRO Station — Drive Further. Pay Less.</title>
+<meta name="description" content="NERO PETRO Station — Premium petrol and diesel, car wash, fleet fuel and loyalty rewards. Kiwoko, Nakaseke and Butalangu. Open 24/7.">
 <link rel="stylesheet" href="css/style.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+
+/* ══════════════════════════════
+   PROMO BANNER
+══════════════════════════════ */
+.promo-banner {
+  background: var(--red);
+  padding: 0.6rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 100;
+}
+.promo-banner-text {
+  font-family: var(--font-head);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fff;
+  text-align: center;
+}
+.promo-badge {
+  background: rgba(0,0,0,0.25);
+  border-radius: 4px;
+  padding: 0.2rem 0.7rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.85);
+  font-family: var(--font-head);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* ══════════════════════════════
+   PROMOTIONS SECTION
+══════════════════════════════ */
+.promos-section { background: var(--dark); border-bottom: 1px solid rgba(255,255,255,0.06); }
+.promos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+.promo-card {
+  background: var(--dark2);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s, border-color 0.3s;
+}
+.promo-card:hover { transform: translateY(-4px); border-color: rgba(232,0,13,0.4); }
+.promo-card-img { width: 100%; height: 160px; object-fit: cover; display: block; }
+.promo-card-img-placeholder {
+  width: 100%; height: 160px;
+  background: linear-gradient(135deg, rgba(232,0,13,0.15), rgba(0,0,0,0.4));
+  display: flex; align-items: center; justify-content: center; font-size: 3rem;
+}
+.promo-card-body { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; gap: 0.6rem; }
+.promo-card-tag {
+  font-family: var(--font-head); font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--red);
+}
+.promo-card h3 { font-size: 1.2rem; color: var(--white); margin: 0; }
+.promo-card p  { font-size: 0.88rem; color: var(--muted); margin: 0; line-height: 1.6; }
+.promo-card-expiry {
+  font-family: var(--font-head); font-size: 0.72rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: rgba(255,255,255,0.25);
+  margin-top: auto; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.06);
+}
+.promos-empty { grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--muted); font-size: 0.9rem; }
+
+/* ══════════════════════════════
+   STATION STATUS
+══════════════════════════════ */
+.status-section { background: var(--black); }
+.status-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+.status-card {
+  background: var(--dark); border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px; padding: 1.75rem;
+  display: flex; flex-direction: column; gap: 1rem;
+  transition: border-color 0.3s;
+}
+.status-card:hover { border-color: rgba(255,255,255,0.15); }
+.status-top { display: flex; align-items: center; justify-content: space-between; }
+.status-name {
+  font-family: var(--font-head); font-size: 1rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.05em; color: var(--white);
+}
+.status-badge {
+  display: flex; align-items: center; gap: 0.45rem;
+  padding: 0.3rem 0.85rem; border-radius: 100px;
+  font-family: var(--font-head); font-size: 0.72rem;
+  font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+}
+.status-badge.green  { background: rgba(34,197,94,0.12);  color: #22c55e; }
+.status-badge.yellow { background: rgba(234,179,8,0.12);  color: #eab308; }
+.status-badge.red    { background: rgba(239,68,68,0.12);  color: #ef4444; }
+.status-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  animation: statusPulse 2s ease-in-out infinite; flex-shrink: 0;
+}
+.status-badge.green  .status-dot { background: #22c55e; box-shadow: 0 0 6px #22c55e; }
+.status-badge.yellow .status-dot { background: #eab308; box-shadow: 0 0 6px #eab308; }
+.status-badge.red    .status-dot { background: #ef4444; box-shadow: 0 0 6px #ef4444; }
+@keyframes statusPulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.5; transform: scale(0.85); }
+}
+.status-address { font-size: 0.82rem; color: var(--muted); }
+.status-services { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.status-pill {
+  font-family: var(--font-head); font-size: 0.68rem; letter-spacing: 0.08em;
+  text-transform: uppercase; color: rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+  padding: 0.25rem 0.6rem; border-radius: 4px;
+}
+.status-wait {
+  font-size: 0.82rem; color: rgba(255,255,255,0.45);
+  padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.06); font-style: italic;
+}
+
+/* ══════════════════════════════
+   FUEL EXPLAINER
+══════════════════════════════ */
+.fuel-explainer-section {
+  background: var(--dark);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.fuel-explainer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.fuel-type-card {
+  border-radius: 12px; overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: border-color 0.3s, transform 0.3s;
+}
+.fuel-type-card:hover { border-color: rgba(232,0,13,0.4); transform: translateY(-3px); }
+.fuel-type-img-placeholder {
+  width: 100%; height: 200px;
+  display: flex; align-items: center; justify-content: center; font-size: 4rem;
+}
+.fuel-type-card.petrol .fuel-type-img-placeholder {
+  background: linear-gradient(135deg, rgba(232,0,13,0.2), rgba(0,0,0,0.6));
+}
+.fuel-type-card.diesel .fuel-type-img-placeholder {
+  background: linear-gradient(135deg, rgba(30,80,200,0.2), rgba(0,0,0,0.6));
+}
+.fuel-type-body { background: var(--dark2); padding: 1.75rem; }
+.fuel-type-label {
+  font-family: var(--font-head); font-size: 0.72rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--red); margin-bottom: 0.4rem;
+}
+.fuel-type-body h3 { font-size: 1.6rem; color: var(--white); margin-bottom: 0.75rem; }
+.fuel-type-body p  { font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.25rem; }
+.fuel-type-vehicles { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.25rem; }
+.fuel-vehicle-row {
+  display: flex; align-items: center; gap: 0.75rem;
+  font-size: 0.88rem; color: rgba(255,255,255,0.6);
+}
+.fuel-vehicle-icon {
+  width: 28px; height: 28px;
+  background: rgba(232,0,13,0.1); border: 1px solid rgba(232,0,13,0.2);
+  border-radius: 4px; display: flex; align-items: center;
+  justify-content: center; font-size: 0.9rem; flex-shrink: 0;
+}
+.fuel-type-tip {
+  background: rgba(255,255,255,0.04); border-left: 3px solid var(--red);
+  padding: 0.75rem 1rem; font-size: 0.82rem;
+  color: rgba(255,255,255,0.5); border-radius: 0 4px 4px 0; line-height: 1.6;
+}
+.fuel-type-tip strong { color: rgba(255,255,255,0.75); }
+
+/* ══════════════════════════════
+   SERVICE CARDS — IMAGE BG
+══════════════════════════════ */
+.services-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1.5px; background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.service-card {
+  position: relative; overflow: hidden; min-height: 220px;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 1.75rem; text-decoration: none; color: var(--white);
+  background: var(--dark); transition: transform 0.3s;
+}
+.service-card-bg {
+  position: absolute; inset: 0; background-size: cover;
+  background-position: center; opacity: 0.18;
+  transition: opacity 0.3s, transform 0.4s;
+}
+.service-card:hover .service-card-bg { opacity: 0.32; transform: scale(1.05); }
+.service-card::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 60%);
+  pointer-events: none;
+}
+.service-card-content { position: relative; z-index: 1; }
+.service-card-content .service-icon { font-size: 1.8rem; margin-bottom: 0.5rem; display: block; }
+.service-card-content h3 { font-size: 1.2rem; margin-bottom: 0.3rem; }
+.service-card-content p  { font-size: 0.82rem; color: rgba(255,255,255,0.6); margin: 0; }
+.service-card::before {
+  content: ''; position: absolute; bottom: 0; left: 0;
+  width: 100%; height: 3px; background: var(--red);
+  transform: scaleX(0); transform-origin: left; transition: transform 0.3s; z-index: 2;
+}
+.service-card:hover::before { transform: scaleX(1); }
+.service-card.featured { border-top: 3px solid var(--red); }
+.service-arrow {
+  position: absolute; top: 1.25rem; right: 1.25rem;
+  font-size: 1rem; color: var(--red); z-index: 1; transition: transform 0.25s;
+}
+.service-card:hover .service-arrow { transform: translate(3px,-3px); }
+
+/* ══════════════════════════════
+   WHATSAPP FLOAT
+══════════════════════════════ */
+.whatsapp-float {
+  position: fixed; bottom: 2rem; right: 2rem;
+  z-index: 3000; display: flex; flex-direction: column;
+  align-items: flex-end; gap: 0.75rem;
+}
+.whatsapp-tooltip {
+  background: var(--dark); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px; padding: 0.6rem 1rem;
+  font-size: 0.8rem; color: rgba(255,255,255,0.7);
+  white-space: nowrap; opacity: 0; transform: translateX(10px);
+  transition: all 0.25s ease; pointer-events: none;
+}
+.whatsapp-float:hover .whatsapp-tooltip { opacity: 1; transform: translateX(0); }
+.whatsapp-btn {
+  width: 58px; height: 58px; background: #25D366;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 20px rgba(37,211,102,0.4); cursor: pointer;
+  transition: transform 0.25s, box-shadow 0.25s; text-decoration: none;
+  position: relative;
+}
+.whatsapp-btn:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,0.55); }
+.whatsapp-btn svg { width: 30px; height: 30px; fill: white; }
+.whatsapp-pulse {
+  position: absolute; width: 58px; height: 58px;
+  border-radius: 50%; background: rgba(37,211,102,0.3);
+  animation: waPulse 2s ease-out infinite;
+}
+@keyframes waPulse {
+  0%   { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+/* ══════════════════════════════
+   RESPONSIVE
+══════════════════════════════ */
+@media(max-width:900px) {
+  .status-grid { grid-template-columns: 1fr; }
+  .fuel-explainer-grid { grid-template-columns: 1fr; }
+  .services-grid { grid-template-columns: 1fr 1fr; }
+}
+@media(max-width:600px) {
+  .services-grid { grid-template-columns: 1fr; }
+  .whatsapp-float { bottom: 1.25rem; right: 1.25rem; }
+}
+</style>
 </head>
 <body>
 
@@ -17,17 +280,14 @@
     <img src="images/nerologo2.png" alt="NERO" id="logo">
     <span class="logo-text"><span></span></span>
   </a>
-
   <nav class="main-nav" id="mainNav">
     <a href="index.html" class="active">Home</a>
     <a href="pages/services.html">Services</a>
-    <!--<a href="pages/prices.html">Fuel Prices</a>-->
     <a href="pages/fleet.html">Fleet</a>
     <a href="pages/carwash.html">Car Wash</a>
     <a href="pages/location.html">Locations</a>
-    <!--<a href="pages/admin.html" class="nav-admin">Admin</a>-->
+    <!-- Admin link hidden from public — access via footer or direct URL -->
   </nav>
-
   <div class="header-right">
     <button id="themeToggle" aria-label="Toggle theme">🌙</button>
     <div class="menu-toggle" id="menuToggle" aria-label="Menu">
@@ -36,12 +296,16 @@
   </div>
 </header>
 
+<!-- ── PROMO BANNER (hidden until Firebase loads a promo) ── -->
+<div class="promo-banner" id="promoBanner" style="display:none;">
+  <span class="promo-badge" id="promoBadge">Offer</span>
+  <span class="promo-banner-text" id="promoBannerText"></span>
+</div>
+
 <!-- ── HERO ── -->
 <section class="hero" id="hero">
   <div class="hero-bg-slider">
-    <!--<div class="hero-slide active" style="background-image:url('images/hero.jpg')"></div>-->
-    <!--<div class="hero-slide" style="background-image:url('images/hero1.jpg')"></div>-->
-    <div class="hero-slide" style="background-image:url('images/nerokiwoko1.jpeg')"></div>
+    <div class="hero-slide active" style="background-image:url('images/nerokiwoko1.jpeg')"></div>
     <div class="hero-slide" style="background-image:url('images/nerobutalangu0.jpeg')"></div>
     <div class="hero-slide" style="background-image:url('images/nerokiwoko0.jpeg')"></div>
   </div>
@@ -50,15 +314,12 @@
   <div class="hero-content">
     <div class="hero-tag">⛽ Our Stations — Always Open</div>
     <h1>Next Generation<br><span>Fuel Network</span></h1>
-    <p>Premium fuel. Smart service. Every station, every time.</p>
+    <p>Drive Further. Pay Less.</p>
     <div class="hero-actions">
-      <a href="pages/fleet.html" class="btn btn-primary">TAKING FUEL IN BULK</a>
+      <a href="pages/fleet.html" class="btn btn-primary">Taking Fuel in Bulk?</a>
       <a href="pages/location.html" class="btn btn-outline">Find a Station</a>
     </div>
   </div>
-
-  <div class="hero-stats">
-    <div class="stat"><span class="stat-num">3</span><span class="stat-label">Stations</span></div>
     <div class="stat-divider"></div>
     <div class="stat"><span class="stat-num">24/7</span><span class="stat-label">Open</span></div>
     <div class="stat-divider"></div>
@@ -73,17 +334,37 @@
   </div>
 </section>
 
-<!-- ── LIVE PRICES TICKER ── -->
+<!-- ── TICKER ── -->
 <div class="ticker-bar">
   <div class="ticker-label">STATION INFO</div>
   <div class="ticker-track">
     <div class="ticker-item">⛽ PETROL &nbsp;<strong>High quality petrol</strong></div>
     <div class="ticker-item">🛢 DIESEL &nbsp;<strong>High quality diesel</strong></div>
-    <div class="ticker-item">🛒 Snacks, Coffee & Essentials In Store</div>
+    <div class="ticker-item">🛒 Snacks, Coffee &amp; Essentials In Store</div>
+    <div class="ticker-item">🏆 Loyalty points on every fill</div>
+    <div class="ticker-item">🚗 Car wash available at all stations</div>
+    <div class="ticker-item">📍 Kiwoko · Nakaseke · Butalangu</div>
+    <div class="ticker-item">⛽ PETROL &nbsp;<strong>High quality petrol</strong></div>
+    <div class="ticker-item">🛢 DIESEL &nbsp;<strong>High quality diesel</strong></div>
   </div>
 </div>
 
-<!-- ── SERVICES ── -->
+<!-- ══════════════════════════════
+     PROMOTIONS
+══════════════════════════════ -->
+<section class="promos-section" id="promos" style="display:none;">
+  <div class="container" style="padding:2rem 2rem;">
+    <div class="section-header" style="margin-bottom:1.5rem;">
+      <span class="section-tag">Current Deals</span>
+      <h2>Promotions &amp; Offers</h2>
+    </div>
+    <div class="promos-grid" id="promosContainer"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     SERVICES — IMAGE CARDS
+══════════════════════════════ -->
 <section class="section services-section" id="services">
   <div class="container">
     <div class="section-header">
@@ -91,135 +372,289 @@
       <h2>Our Services</h2>
     </div>
     <div class="services-grid">
+
       <a href="#" class="service-card">
-        <div class="service-icon">⛽</div>
-        <h3>Petrol</h3>
-        <p>High-octane petrol for all vehicles. Tested and certified daily.</p>
+        <div class="service-card-bg" style="background-image:url('images/nerokiwoko1.jpeg')"></div>
         <span class="service-arrow">→</span>
+        <div class="service-card-content">
+          <span class="service-icon">⛽</span>
+          <h3>Petrol</h3>
+          <p>High-octane petrol for all vehicles. Tested and certified daily.</p>
+        </div>
       </a>
+
       <a href="#" class="service-card">
-        <div class="service-icon">🛢</div>
-        <h3>Diesel</h3>
-        <p>Low-emission diesel for trucks, fleets and private vehicles.</p>
+        <div class="service-card-bg" style="background-image:url('images/nerobutalangu0.jpeg')"></div>
         <span class="service-arrow">→</span>
+        <div class="service-card-content">
+          <span class="service-icon">🛢</span>
+          <h3>Diesel</h3>
+          <p>Low-emission diesel for trucks, fleets and private vehicles.</p>
+        </div>
       </a>
+
       <a href="pages/carwash.html" class="service-card featured">
-        <div class="service-icon">🚗</div>
-        <h3>Car Wash</h3>
-        <p>Automatic cleaning in under 5 minutes. Three packages available.</p>
+        <div class="service-card-bg" style="background-image:url('images/nerokiwoko0.jpeg')"></div>
         <span class="service-arrow">→</span>
+        <div class="service-card-content">
+          <span class="service-icon">🚗</span>
+          <h3>Car Wash</h3>
+          <p>Automatic cleaning in under 5 minutes. Three packages available.</p>
+        </div>
       </a>
+
       <a href="pages/fleet.html" class="service-card">
-        <div class="service-icon">🚛</div>
-        <h3>Fleet Orders</h3>
-        <p>Bulk fuel supply with monthly billing for registered businesses.</p>
+        <div class="service-card-bg" style="background-image:url('images/nerobutalangu0.jpeg')"></div>
         <span class="service-arrow">→</span>
+        <div class="service-card-content">
+          <span class="service-icon">🚛</span>
+          <h3>Fleet Orders</h3>
+          <p>Bulk fuel supply with monthly billing for registered businesses.</p>
+        </div>
       </a>
+
       <a href="pages/services.html" class="service-card">
-        <div class="service-icon">🛒</div>
-        <h3>Mini Market</h3>
-        <p>Snacks, drinks, coffee and travel essentials — always stocked.</p>
+        <div class="service-card-bg" style="background-image:url('images/nerokiwoko1.jpeg')"></div>
         <span class="service-arrow">→</span>
+        <div class="service-card-content">
+          <span class="service-icon">🛒</span>
+          <h3>Mini Market</h3>
+          <p>Snacks, drinks, coffee and travel essentials — always stocked.</p>
+        </div>
       </a>
+
       <a href="pages/services.html" class="service-card">
-        <div class="service-icon">🏆</div>
-        <h3>Loyalty Rewards</h3>
-        <p>Earn 2 points per litre. Redeem discounts and free services.</p>
+        <div class="service-card-bg" style="background-image:url('images/nerokiwoko0.jpeg')"></div>
         <span class="service-arrow">→</span>
+        <div class="service-card-content">
+          <span class="service-icon">🏆</span>
+          <h3>Loyalty Rewards</h3>
+          <p>Earn 2 points per litre. Redeem discounts and free services.</p>
+        </div>
       </a>
+
     </div>
   </div>
 </section>
 
-<!-- ── WHY NERO ── -->
+<!-- ══════════════════════════════
+     STATION BUSY INDICATOR
+══════════════════════════════ -->
+<section class="section status-section" id="stationStatus">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Live Station Status</span>
+      <h2>How Busy Are We Right Now?</h2>
+    </div>
+    <div class="status-grid">
+
+      <div class="status-card">
+        <div class="status-top">
+          <span class="status-name">Kiwoko</span>
+          <div class="status-badge green" id="status0">
+            <div class="status-dot"></div>
+            <span id="statusLabel0">Open</span>
+          </div>
+        </div>
+        <div class="status-address">Next to the roundabout, Kiwoko</div>
+        <div class="status-services">
+          <span class="status-pill">⛽ Petrol</span>
+          <span class="status-pill">🛢 Diesel</span>
+          <span class="status-pill">🚗 Car Wash</span>
+          <span class="status-pill">🛒 Market</span>
+        </div>
+        <div class="status-wait" id="statusWait0">No waiting — pull in now</div>
+      </div>
+
+      <div class="status-card">
+        <div class="status-top">
+          <span class="status-name">Nakaseke</span>
+          <div class="status-badge green" id="status1">
+            <div class="status-dot"></div>
+            <span id="statusLabel1">Open</span>
+          </div>
+        </div>
+        <div class="status-address">Nakaseke Town</div>
+        <div class="status-services">
+          <span class="status-pill">⛽ Petrol</span>
+          <span class="status-pill">🛢 Diesel</span>
+          <span class="status-pill">🚛 Fleet</span>
+          <span class="status-pill">🚗 Car Wash</span>
+        </div>
+        <div class="status-wait" id="statusWait1">No waiting — pull in now</div>
+      </div>
+
+      <div class="status-card">
+        <div class="status-top">
+          <span class="status-name">Butalangu</span>
+          <div class="status-badge green" id="status2">
+            <div class="status-dot"></div>
+            <span id="statusLabel2">Open</span>
+          </div>
+        </div>
+        <div class="status-address">Butalangu Town</div>
+        <div class="status-services">
+          <span class="status-pill">⛽ Petrol</span>
+          <span class="status-pill">🛢 Diesel</span>
+          <span class="status-pill">🚗 Car Wash</span>
+          <span class="status-pill">🛒 24hr Market</span>
+        </div>
+        <div class="status-wait" id="statusWait2">No waiting — pull in now</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     WHY NERO
+══════════════════════════════ -->
 <section class="section why-section">
   <div class="container why-container">
     <div class="why-left">
       <span class="section-tag">Why NERO</span>
-      <h2>Built for Modern<br>Drivers & Businesses</h2>
+      <h2>Built for Modern<br>Drivers &amp; Businesses</h2>
       <p>NERO operates in strategically located stations delivering premium fuel, smart services and real rewards to thousands of drivers every day.</p>
-      <a href="pages/services.html" class="btn btn-primary" style="margin-top:2rem;">Explore All Services</a>
+      <a href="pages/services.html" class="btn btn-primary" style="margin-top:1.5rem;">Explore All Services</a>
     </div>
     <div class="why-right">
       <div class="why-card">
         <div class="why-icon">⚡</div>
-        <div>
-          <h4>24/7 Service</h4>
-          <p>All three stations open day and night, every day of the year.</p>
-        </div>
+        <div><h4>24/7 Service</h4><p>All stations open day and night, every day of the year.</p></div>
       </div>
       <div class="why-card">
         <div class="why-icon">🏅</div>
-        <div>
-          <h4>Certified Fuel Quality</h4>
-          <p>Every batch tested. Every pump calibrated. No compromise.</p>
-        </div>
+        <div><h4>Certified Fuel Quality</h4><p>Every batch tested. Every pump calibrated. No compromise.</p></div>
       </div>
       <div class="why-card">
         <div class="why-icon">📍</div>
-        <div>
-          <h4>Convenient Locations</h4>
-          <p>Strategically placed so there's always a NERO nearby.</p>
-        </div>
+        <div><h4>Convenient Locations</h4><p>Strategically placed so there's always a NERO nearby.</p></div>
       </div>
       <div class="why-card">
         <div class="why-icon">💳</div>
-        <div>
-          <h4>Loyalty Rewards Program</h4>
-          <p>Earn points on every fill-up. Redeem them for real savings.</p>
-        </div>
+        <div><h4>Loyalty Rewards Program</h4><p>Earn points on every fill-up. Redeem for real savings.</p></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── LOCATIONS ── -->
+<!-- ══════════════════════════════
+     FUEL EXPLAINER
+══════════════════════════════ -->
+<section class="section fuel-explainer-section" id="fuelGuide">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Fuel Guide</span>
+      <h2>Petrol or Diesel —<br>Which One Is For You?</h2>
+      <p style="max-width:540px;margin:0.75rem auto 0;">Not sure which fuel your car takes? Here's a simple guide. When in doubt, our staff at any NERO station are always happy to help.</p>
+    </div>
+
+    <div class="fuel-explainer-grid">
+
+      <div class="fuel-type-card petrol">
+        <div class="fuel-type-img-placeholder">⛽</div>
+        <div class="fuel-type-body">
+          <div class="fuel-type-label">Petrol</div>
+          <h3>Petrol Fuel</h3>
+          <p>Petrol is for regular everyday cars and smaller engines. If you drive a normal car — saloon, hatchback, SUV or minibus — it almost certainly takes petrol.</p>
+          <div class="fuel-type-vehicles">
+            <div class="fuel-vehicle-row"><div class="fuel-vehicle-icon">🚗</div>Saloon cars, hatchbacks, sedans</div>
+            <div class="fuel-vehicle-row"><div class="fuel-vehicle-icon">🚐</div>Minibuses and small vans</div>
+            <div class="fuel-vehicle-row"><div class="fuel-vehicle-icon">🏍️</div>Motorcycles and boda bodas</div>
+            <div class="fuel-vehicle-row"><div class="fuel-vehicle-icon">🚙</div>Most SUVs and 4x4s</div>
+          </div>
+          <div class="fuel-type-tip">
+            <strong>Quick check:</strong> Open your fuel cap — it usually says "PETROL" or "UNLEADED". You can also check your car handbook or ask our staff.
+          </div>
+        </div>
+      </div>
+
+      <div class="fuel-type-card diesel">
+        <div class="fuel-type-img-placeholder">🛢</div>
+        <div class="fuel-type-body">
+          <div class="fuel-type-label">Diesel</div>
+          <h3>Diesel Fuel</h3>
+          <p>Diesel is for bigger, heavier engines — especially trucks, lorries, buses and some large SUVs. Diesel engines are more powerful and economical over long distances.</p>
+          <div class="fuel-type-vehicles">
+            <div class="fuel-vehicle-row"><div class="fuel-vehicle-icon">🚛</div>Trucks, lorries and heavy vehicles</div>
+            <div class="fuel-vehicle-row"><div class="fuel-vehicle-icon">🚌</div>Buses and large passenger vehicles</div>
+            <div class="fuel-vehicle-row"><div class="fuel-vehicle-icon">🚜</div>Farm equipment and generators</div>
+            <div class="fuel-vehicle-row"><div class="fuel-vehicle-icon">🚙</div>Some large pickup trucks &amp; 4x4s</div>
+          </div>
+          <div class="fuel-type-tip">
+            <strong>Warning:</strong> Never put petrol in a diesel engine or diesel in a petrol engine. If you're unsure, ask our staff before fuelling — we're always here to help.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="margin-top:2rem;background:rgba(232,0,13,0.06);border:1px solid rgba(232,0,13,0.2);border-radius:10px;padding:1.5rem 2rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;">
+      <div style="font-size:2.5rem;flex-shrink:0;">🙋</div>
+      <div>
+        <div style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--white);margin-bottom:0.3rem;">Still Not Sure? Just Ask!</div>
+        <p style="font-size:0.88rem;margin:0;max-width:560px;">Our staff at every NERO station are trained to help you choose the right fuel. Never guess — a wrong fuel fill can damage your engine. We're always happy to check for you.</p>
+      </div>
+      <a href="pages/location.html" class="btn btn-primary btn-sm" style="margin-left:auto;flex-shrink:0;">Find a Station</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     LOCATIONS
+══════════════════════════════ -->
 <section class="section locations-section" id="locations">
   <div class="container">
     <div class="section-header">
       <span class="section-tag">Our Network</span>
-      <h2>Find a nearby station</h2>
+      <h2>Find a Nearby Station</h2>
     </div>
     <div class="locations-grid">
+
       <div class="location-card">
         <div class="location-num">01</div>
-        <h3>Kiwoko City Centre</h3>
-        <p>Next to the round about</p>
+        <h3>Kiwoko</h3>
+        <p>Next to the roundabout, Kiwoko</p>
         <ul>
-          <li>✓ Petrol & Diesel</li>
+          <li>✓ Petrol &amp; Diesel</li>
           <li>✓ Car Wash</li>
           <li>✓ Mini Market</li>
         </ul>
         <a href="pages/location.html" class="btn btn-outline btn-sm">Get Directions</a>
       </div>
+
       <div class="location-card featured">
         <div class="location-badge">Flagship</div>
         <div class="location-num">02</div>
         <h3>NERO Nakaseke</h3>
-        <p>Nakaseke TOWN</p>
+        <p>Nakaseke Town</p>
         <ul>
-          <li>✓ Petrol & Diesel</li>
+          <li>✓ Petrol &amp; Diesel</li>
           <li>✓ Fleet Pumps</li>
-          <li>✓ Car Wash & Market</li>
+          <li>✓ Car Wash &amp; Market</li>
         </ul>
         <a href="pages/location.html" class="btn btn-primary btn-sm">Get Directions</a>
       </div>
+
       <div class="location-card">
         <div class="location-num">03</div>
-        <h3>NERO BUTALANGU</h3>
-        <p>BUTALANGU TOWN</p>
+        <h3>NERO Butalangu</h3>
+        <p>Butalangu Town</p>
         <ul>
-          <li>✓ Petrol & Diesel</li>
+          <li>✓ Petrol &amp; Diesel</li>
           <li>✓ Express Car Wash</li>
           <li>✓ 24hr Market</li>
         </ul>
         <a href="pages/location.html" class="btn btn-outline btn-sm">Get Directions</a>
       </div>
+
     </div>
   </div>
 </section>
 
-<!-- ── LOYALTY SECTION ── -->
+<!-- ══════════════════════════════
+     LOYALTY
+══════════════════════════════ -->
 <section class="section loyalty-section">
   <div class="container loyalty-container">
     <div class="loyalty-content">
@@ -249,7 +684,9 @@
   </div>
 </section>
 
-<!-- ── NEWS ── -->
+<!-- ══════════════════════════════
+     NEWS
+══════════════════════════════ -->
 <section class="section news-section" id="news">
   <div class="container">
     <div class="section-header">
@@ -257,7 +694,6 @@
       <h2>Station Updates</h2>
     </div>
     <div class="news-grid" id="newsContainer">
-      <!-- Populated by Firebase/news.js -->
       <div class="news-card skeleton"></div>
       <div class="news-card skeleton"></div>
       <div class="news-card skeleton"></div>
@@ -265,13 +701,14 @@
   </div>
 </section>
 
-<!-- ── FOOTER ── -->
+<!-- ══════════════════════════════
+     FOOTER
+══════════════════════════════ -->
 <footer>
   <div class="footer-inner container">
     <div class="footer-brand">
-      <!--<img src="images/nerologo2.png" alt="NERO" id="logo">-->
-      <div class="footer-logo"> NERO</div>
-      <p>Your trusted fuel network. Premium quality, smart service, All stations always Open.</p>
+      <div class="footer-logo">NERO</div>
+      <p>Your trusted fuel network. Premium quality, smart service, all stations always open.</p>
       <div class="footer-socials">
         <a href="#">FB</a>
         <a href="#">IG</a>
@@ -283,7 +720,6 @@
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="pages/services.html">Services</a></li>
-        <!--<a href="prices.html">Fuel Prices</a>-->
         <li><a href="pages/fleet.html">Fleet Orders</a></li>
         <li><a href="pages/carwash.html">Car Wash</a></li>
         <li><a href="pages/location.html">Locations</a></li>
@@ -292,7 +728,7 @@
     <div class="footer-links">
       <h4>Services</h4>
       <ul>
-        <li><a href="pages/services.html">Petrol & Diesel</a></li>
+        <li><a href="pages/services.html">Petrol &amp; Diesel</a></li>
         <li><a href="pages/carwash.html">Car Wash</a></li>
         <li><a href="pages/fleet.html">Fleet Program</a></li>
         <li><a href="pages/services.html">Loyalty Rewards</a></li>
@@ -301,27 +737,46 @@
     </div>
     <div class="footer-contact">
       <h4>Contact</h4>
-      <p>📧 info@NERO.com</p>
+      <p>📧 <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6f060109002f010a1d00410c0002">[email&#160;protected]</a></p>
       <p>📞 +256 708 870667</p>
       <p>🕐 Open 24 Hours</p>
+      <p>📍 Kiwoko · Nakaseke · Butalangu</p>
     </div>
   </div>
   <div class="footer-bottom">
     <p>© 2026 NERO PETRO Station. All rights reserved.</p>
-    <!--<a href="pages/admin.html" class="footer-admin-link">Admin Panel</a>-->
+    <!-- Admin link kept subtle in footer only -->
+    <a href="pages/admin.html" class="footer-admin-link">Admin</a>
   </div>
 </footer>
 
-<script src="js/theme.js"></script>
+<!-- ══════════════════════════════
+     WHATSAPP BUTTON
+     Replace 256708870667 with your WhatsApp number
+══════════════════════════════ -->
+<div class="whatsapp-float">
+  <div class="whatsapp-tooltip">Chat with NERO on WhatsApp</div>
+  <a class="whatsapp-btn"
+     href="https://wa.me/256708870667?text=Hello%20NERO%20Petro%20Station%2C%20I%20have%20an%20enquiry."
+     target="_blank" rel="noopener" aria-label="WhatsApp">
+    <div class="whatsapp-pulse"></div>
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+</div>
+
+<!-- ══════════════════════════════
+     SCRIPTS
+══════════════════════════════ -->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/theme.js"></script>
 <script src="js/script.js"></script>
 <script src="js/loyalty.js"></script>
-<script type="module" src="js/firebase.js"></script>
-<script type="module" src="js/news.js"></script>
 
 <script>
-// Sync ticker prices with Firebase prices display
 document.addEventListener('DOMContentLoaded', () => {
-  // Hero slideshow
+
+  /* ── Hero slideshow ── */
   const slides = document.querySelectorAll('.hero-slide');
   let current = 0;
   setInterval(() => {
@@ -330,24 +785,177 @@ document.addEventListener('DOMContentLoaded', () => {
     slides[current].classList.add('active');
   }, 5000);
 
-  // Header shrink on scroll
+  /* ── Header shrink on scroll ── */
   const header = document.getElementById('mainHeader');
   window.addEventListener('scroll', () => {
     header.classList.toggle('scrolled', window.scrollY > 60);
   });
 
-  // Loyalty calc sync to card
-  const fuelInput = document.getElementById('fuelAmount');
-  const pointsEl = document.getElementById('points');
+  /* ── Loyalty calculator ── */
+  const fuelInput  = document.getElementById('fuelAmount');
+  const pointsEl   = document.getElementById('points');
   const lcPointsEl = document.getElementById('lcPoints');
   if (fuelInput) {
     fuelInput.addEventListener('input', () => {
       const pts = Math.floor((parseFloat(fuelInput.value) || 0) * 2);
-      pointsEl.textContent = pts;
-      lcPointsEl.textContent = pts;
+      if (pointsEl)   pointsEl.textContent   = pts;
+      if (lcPointsEl) lcPointsEl.textContent = pts;
     });
   }
+
 });
 </script>
+
+<!-- Firebase: loads news, promotions, station status -->
+<script type="module">
+import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import {
+  getFirestore, doc, getDoc,
+  collection, query, orderBy, limit, getDocs
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+const app = getApps().length ? getApps()[0] : initializeApp({
+  apiKey:            "AIzaSyB-Q-MFZDCgHnaVgMRrgxEL9YPrIqZwUrU",
+  authDomain:        "redfuel-a2152.firebaseapp.com",
+  projectId:         "redfuel-a2152",
+  storageBucket:     "redfuel-a2152.firebasestorage.app",
+  messagingSenderId: "782154176195",
+  appId:             "1:782154176195:web:46af20e4252e415ba77476"
+});
+const db = getFirestore(app);
+
+/* ── Promotions ── */
+async function loadPromos() {
+  const container = document.getElementById("promosContainer");
+  const section   = document.getElementById("promos");
+  const banner    = document.getElementById("promoBanner");
+  if (!container) return;
+  try {
+    const q    = query(collection(db,"promotions"), orderBy("createdAt","desc"), limit(3));
+    const snap = await getDocs(q);
+    container.innerHTML = "";
+
+    // Filter only active (non-archived) promos
+    const active = [];
+    snap.forEach(d => { if (d.data().status !== "archived") active.push(d); });
+
+    // Hide section entirely when no active promos
+    if (active.length === 0) {
+      if (section) section.style.display = "none";
+      return;
+    }
+
+    // Show section now that we have promos
+    if (section) section.style.display = "block";
+
+    let first = true;
+    active.forEach(d => {
+      const p   = d.data();
+      const exp = p.expiresAt?.toDate?.();
+      const expStr = exp ? `Expires ${exp.toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"})}` : "";
+      if (first && banner) {
+        document.getElementById("promoBannerText").textContent = p.title;
+        if (p.badge) document.getElementById("promoBadge").textContent = p.badge;
+        banner.style.display = "flex";
+        first = false;
+      }
+      const card = document.createElement("div");
+      card.className = "promo-card";
+      card.innerHTML = `
+        ${p.image ? `<img class="promo-card-img" src="${p.image}" alt="${p.title}" loading="lazy" onerror="this.style.display='none'">` : ""}
+        <div class="promo-card-img-placeholder" style="${p.image ? 'display:none' : ''}">${p.emoji || "🎁"}</div>
+        <div class="promo-card-body">
+          <div class="promo-card-tag">${p.badge || "Offer"}</div>
+          <h3>${p.title}</h3>
+          <p>${p.description || ""}</p>
+          ${expStr ? `<div class="promo-card-expiry">🕐 ${expStr}</div>` : ""}
+        </div>`;
+      container.appendChild(card);
+    });
+  } catch(e) {
+    console.warn("Promos:", e);
+    // On error just keep section hidden — don't show broken state
+    if (section) section.style.display = "none";
+  }
+}
+
+/* ── Station Status ── */
+const STATUS_MAP = {
+  green:  { text: "Open — Quiet",  wait: "No waiting — pull in now" },
+  yellow: { text: "Busy",          wait: "Short wait — approx. 5 mins" },
+  red:    { text: "Very Busy",     wait: "Longer wait — approx. 15 mins" }
+};
+async function loadStatus() {
+  try {
+    const snap = await getDoc(doc(db,"station_status","current"));
+    if (!snap.exists()) return;
+    const data = snap.data();
+    [0,1,2].forEach(i => {
+      const colour   = data[`station${i}`] || "green";
+      const badgeEl  = document.getElementById(`status${i}`);
+      const labelEl  = document.getElementById(`statusLabel${i}`);
+      const waitEl   = document.getElementById(`statusWait${i}`);
+      if (!badgeEl) return;
+      badgeEl.className         = `status-badge ${colour}`;
+      if (labelEl) labelEl.textContent = STATUS_MAP[colour]?.text || "Open";
+      if (waitEl)  waitEl.textContent  = STATUS_MAP[colour]?.wait || "";
+    });
+  } catch(e) { console.warn("Status:", e); }
+}
+
+/* ── News ── */
+async function loadNews() {
+  const container = document.getElementById("newsContainer");
+  if (!container) return;
+  try {
+    const q    = query(collection(db,"updates"), orderBy("date","desc"), limit(3));
+    const snap = await getDocs(q);
+    container.innerHTML = "";
+    if (snap.empty) {
+      container.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted);"><p>No updates yet. Check back soon.</p></div>`;
+      return;
+    }
+    snap.forEach(d => {
+      const data = d.data();
+      const date = data.date?.toDate?.() || new Date();
+      const fmt  = date.toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"});
+      const card = document.createElement("div");
+      card.className = "news-card";
+      card.innerHTML = `
+        ${data.image ? `<img src="${data.image}" alt="${data.title||''}" loading="lazy" onerror="this.style.display='none'">` : ""}
+        <div class="news-card-body">
+          <div class="news-card-date">${fmt}</div>
+          <h3>${data.title || "Station Update"}</h3>
+          <p>${data.text || ""}</p>
+        </div>`;
+      container.appendChild(card);
+    });
+  } catch(e) {
+    console.warn("News:", e);
+    container.innerHTML = `
+      <div class="news-card"><div class="news-card-body"><div class="news-card-date">Mar 2026</div><h3>Welcome to NERO</h3><p>NERO PETRO Station is now serving Kiwoko, Nakaseke and Butalangu. Visit us today!</p></div></div>`;
+  }
+}
+
+/* ── Hero images (if admin uploaded via Storage) ── */
+async function loadHeroImages() {
+  const slides = document.querySelectorAll(".hero-slide");
+  if (!slides.length) return;
+  try {
+    const snap = await getDoc(doc(db,"site_images","hero"));
+    if (!snap.exists()) return;
+    const data = snap.data();
+    ["slide0","slide1","slide2"].forEach((k,i) => {
+        if (data[k] && slides[i]) slides[i].style.backgroundImage = `url('${data[k]}')`;
+    });
+  } catch(e) { console.warn("Hero:", e); }
+}
+
+loadPromos();
+loadStatus();
+loadNews();
+loadHeroImages();
+</script>
+
 </body>
 </html>
