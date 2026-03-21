@@ -14,7 +14,7 @@
 <link rel="manifest" href="admin-manifest.json">
 
 <!-- Apple touch icon (home screen icon on iOS) -->
-<link rel="apple-touch-icon" href="../images/logo.png">
+<link rel="apple-touch-icon" href="../images/nerologo2.png">
 
 <!-- Splash screen meta for iOS -->
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -947,7 +947,7 @@ document.getElementById("priceForm").addEventListener("submit", async e => {
     e.target.reset();
     // Send local notification if granted
     if (Notification.permission === "granted") {
-      new Notification("NERO Admin", { body: `Prices updated — Petrol $${petrol} / Diesel $${diesel}`, icon: "../images/logo.png" });
+      new Notification("NERO Admin", { body: `Prices updated — Petrol $${petrol} / Diesel $${diesel}`, icon: "../images/nerologo2.png" });
     }
   } catch(err) { alert("Error: " + err.message); }
 });

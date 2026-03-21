@@ -13,7 +13,7 @@ const PRECACHE = [
   "/css/style.css",
   "/js/theme.js",
   "/js/script.js",
-  "/images/logo.png",
+  "/images/nerologo2.png",
   "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500&display=swap"
 ];
 
@@ -72,8 +72,8 @@ self.addEventListener("push", event => {
   const title   = data.title   || "NERO Admin";
   const options = {
     body:    data.body    || "You have a new notification.",
-    icon:    "/images/logo.png",
-    badge:   "/images/logo.png",
+    icon:    "/images/nerologo2.png",
+    badge:   "/images/nerologo2.png",
     vibrate: [100, 50, 100],
     data:    { url: data.url || "/pages/admin.html" },
     actions: [
