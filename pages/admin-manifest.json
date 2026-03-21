@@ -1,0 +1,40 @@
+{
+  "name": "NERO Admin Panel",
+  "short_name": "NERO Admin",
+  "description": "NERO Fuel Station — Admin Dashboard",
+  "start_url": "/pages/admin.html",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0a0a0a",
+  "theme_color": "#e8000d",
+  "categories": ["business", "utilities"],
+  "icons": [
+    {
+      "src": "../images/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "../images/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Update Fuel Prices",
+      "short_name": "Prices",
+      "description": "Jump to fuel price updater",
+      "url": "/pages/admin.html#prices"
+    },
+    {
+      "name": "Post News",
+      "short_name": "News",
+      "description": "Post a station update",
+      "url": "/pages/admin.html#news"
+    }
+  ]
+}

@@ -2,147 +2,1084 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Locations — NERO</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="NERO Admin">
+<meta name="theme-color" content="#e8000d">
+<title>NERO Admin</title>
+
+<!-- PWA Manifest -->
+<link rel="manifest" href="admin-manifest.json">
+
+<!-- Apple touch icon (home screen icon on iOS) -->
+<link rel="apple-touch-icon" href="../images/logo.png">
+
+<!-- Splash screen meta for iOS -->
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
 <link rel="stylesheet" href="../css/style.css">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+
+/* ══════════════════════════════
+   SPLASH SCREEN
+══════════════════════════════ */
+#splashScreen {
+  position: fixed; inset: 0; z-index: 99999;
+  background: var(--black);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 1.5rem;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+#splashScreen.hidden {
+  opacity: 0; pointer-events: none; transform: scale(1.04);
+}
+.splash-logo {
+  font-family: var(--font-head);
+  font-size: 3.5rem; font-weight: 900;
+  letter-spacing: 0.1em; color: var(--white);
+}
+.splash-logo span { color: var(--red); }
+.splash-tagline {
+  font-family: var(--font-head);
+  font-size: 0.8rem; letter-spacing: 0.25em;
+  text-transform: uppercase; color: rgba(255,255,255,0.35);
+}
+.splash-bar-wrap {
+  width: 120px; height: 3px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 3px; overflow: hidden;
+}
+.splash-bar {
+  height: 100%; width: 0%;
+  background: var(--red);
+  border-radius: 3px;
+  animation: splashLoad 1.6s ease forwards;
+}
+@keyframes splashLoad {
+  0%   { width: 0%; }
+  60%  { width: 75%; }
+  100% { width: 100%; }
+}
+.splash-version {
+  font-size: 0.7rem; color: rgba(255,255,255,0.2);
+  letter-spacing: 0.1em; font-family: var(--font-head);
+  position: absolute; bottom: 2.5rem;
+}
+
+/* ══════════════════════════════
+   LOGIN SCREEN
+══════════════════════════════ */
+#loginScreen {
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--black);
+  display: none; align-items: center; justify-content: center;
+  padding: 2rem;
+}
+.login-box {
+  width: 100%; max-width: 420px;
+  background: var(--dark);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-top: 3px solid var(--red);
+  border-radius: 12px;
+  padding: 3rem 2.5rem;
+  display: flex; flex-direction: column; gap: 1.5rem;
+}
+.login-logo {
+  font-family: var(--font-head); font-size: 2rem; font-weight: 900;
+  letter-spacing: 0.08em; color: var(--white); text-align: center;
+}
+.login-logo span { color: var(--red); }
+.login-title {
+  font-family: var(--font-head); font-size: 1.1rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.15em;
+  text-align: center; color: var(--muted); margin-top: -1rem;
+}
+.login-field { display: flex; flex-direction: column; gap: 0.4rem; }
+.login-field label {
+  font-family: var(--font-head); font-size: 0.72rem;
+  letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted);
+}
+.login-field input {
+  background: var(--dark2); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 6px; color: var(--white);
+  padding: 0.9rem 1rem; font-family: var(--font-body);
+  font-size: 1rem; width: 100%; margin: 0;
+  transition: border-color 0.3s;
+}
+.login-field input:focus { outline: none; border-color: var(--red); }
+#loginBtn {
+  width: 100%; padding: 1rem;
+  font-family: var(--font-head); font-size: 1.1rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  background: var(--red); color: var(--white);
+  border: none; border-radius: 6px; cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+#loginBtn:hover { background: var(--red-dark); transform: translateY(-1px); }
+#loginBtn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+#loginError {
+  font-size: 0.85rem; color: #ff5555; text-align: center;
+  padding: 0.7rem 1rem;
+  background: rgba(255,50,50,0.08); border: 1px solid rgba(255,50,50,0.25);
+  border-radius: 6px; display: none;
+}
+.login-note {
+  font-size: 0.72rem; color: rgba(255,255,255,0.2);
+  text-align: center; letter-spacing: 0.05em;
+}
+
+/* ══════════════════════════════
+   DASHBOARD
+══════════════════════════════ */
+#dashboard { display: none; }
+
+/* ── Top App Bar (PWA style) ── */
+.app-bar {
+  position: sticky; top: 0; z-index: 500;
+  background: var(--dark);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  display: flex; align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  height: 60px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.4);
+}
+.app-bar-logo {
+  font-family: var(--font-head); font-size: 1.4rem; font-weight: 900;
+  letter-spacing: 0.08em; color: var(--white);
+}
+.app-bar-logo span { color: var(--red); }
+.app-bar-title {
+  font-family: var(--font-head); font-size: 0.75rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  position: absolute; left: 50%; transform: translateX(-50%);
+}
+.app-bar-right {
+  display: flex; align-items: center; gap: 0.75rem;
+}
+
+/* ── User pill ── */
+.user-pill {
+  display: flex; align-items: center; gap: 0.5rem;
+  background: var(--dark2);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 100px;
+  padding: 0.35rem 0.9rem 0.35rem 0.5rem;
+  font-size: 0.78rem; color: rgba(255,255,255,0.5);
+  max-width: 200px;
+}
+.user-dot {
+  width: 7px; height: 7px; flex-shrink: 0;
+  background: #22c55e; border-radius: 50%;
+  box-shadow: 0 0 6px #22c55e;
+}
+.user-email {
+  white-space: nowrap; overflow: hidden;
+  text-overflow: ellipsis; max-width: 130px;
+  color: rgba(255,255,255,0.6);
+}
+
+/* ── Logout button ── */
+#logoutBtn {
+  display: flex; align-items: center; gap: 0.4rem;
+  background: transparent;
+  border: 1px solid rgba(232,0,13,0.3);
+  color: rgba(232,0,13,0.7);
+  padding: 0.4rem 0.9rem;
+  font-family: var(--font-head); font-size: 0.75rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  border-radius: 6px; cursor: pointer; transition: all 0.25s;
+}
+#logoutBtn:hover {
+  background: rgba(232,0,13,0.1);
+  border-color: var(--red); color: var(--red);
+}
+#logoutBtn .logout-icon { font-size: 0.9rem; }
+
+/* ── Offline banner ── */
+#offlineBanner {
+  display: none;
+  background: #b45309;
+  border-bottom: 1px solid #92400e;
+  padding: 0.6rem 1.5rem;
+  font-family: var(--font-head); font-size: 0.78rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: #fef3c7; text-align: center;
+}
+
+/* ── Install prompt banner ── */
+#installBanner {
+  display: none;
+  background: var(--dark2);
+  border-bottom: 1px solid rgba(232,0,13,0.2);
+  padding: 0.75rem 1.5rem;
+  align-items: center; justify-content: space-between; gap: 1rem;
+}
+.install-text {
+  font-size: 0.85rem; color: rgba(255,255,255,0.6);
+}
+.install-text strong { color: var(--white); }
+.install-actions { display: flex; gap: 0.5rem; flex-shrink: 0; }
+#installBtn {
+  background: var(--red); color: #fff; border: none;
+  padding: 0.45rem 1rem; border-radius: 4px;
+  font-family: var(--font-head); font-size: 0.78rem;
+  font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  cursor: pointer; transition: background 0.2s;
+}
+#installBtn:hover { background: var(--red-dark); }
+#dismissInstall {
+  background: transparent; border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.35); padding: 0.45rem 0.75rem;
+  border-radius: 4px; font-size: 0.75rem; cursor: pointer;
+  font-family: var(--font-head); letter-spacing: 0.05em;
+  text-transform: uppercase; transition: all 0.2s;
+}
+#dismissInstall:hover { border-color: rgba(255,255,255,0.25); color: rgba(255,255,255,0.5); }
+
+/* ── Notification permission prompt ── */
+#notifBanner {
+  display: none;
+  background: rgba(232,0,13,0.06);
+  border-bottom: 1px solid rgba(232,0,13,0.15);
+  padding: 0.75rem 1.5rem;
+  align-items: center; justify-content: space-between; gap: 1rem;
+}
+.notif-text { font-size: 0.85rem; color: rgba(255,255,255,0.55); }
+.notif-text strong { color: var(--white); }
+#enableNotifBtn {
+  background: var(--red); color: #fff; border: none;
+  padding: 0.45rem 1rem; border-radius: 4px;
+  font-family: var(--font-head); font-size: 0.78rem;
+  font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  cursor: pointer; white-space: nowrap;
+}
+#dismissNotif {
+  background: transparent; border: none;
+  color: rgba(255,255,255,0.25); font-size: 1rem; cursor: pointer;
+}
+
+/* ══════════════════════════════
+   ADMIN CONTENT LAYOUT
+══════════════════════════════ */
+.admin-content {
+  max-width: 1100px; margin: 0 auto;
+  padding: 2rem 1.5rem 5rem;
+}
+
+/* Section headings */
+.admin-section-label {
+  font-family: var(--font-head); font-size: 0.72rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--red); margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 0.75rem;
+}
+.admin-section-label::after {
+  content: ''; flex: 1; height: 1px;
+  background: rgba(255,255,255,0.06);
+}
+
+.admin-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1.25rem; margin-bottom: 1.25rem;
+}
+.admin-grid.single { grid-template-columns: 1fr; }
+
+.admin-panel {
+  background: var(--dark);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px; padding: 1.75rem;
+}
+.admin-panel h2 {
+  font-size: 1.15rem; margin-bottom: 1.5rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  display: flex; align-items: center; gap: 0.5rem;
+}
+
+/* ══════════════════════════════
+   DROP ZONE
+══════════════════════════════ */
+.drop-zone {
+  border: 2px dashed rgba(255,255,255,0.12);
+  border-radius: 8px; padding: 1.75rem 1.25rem;
+  text-align: center; cursor: pointer;
+  transition: all 0.25s ease;
+  background: var(--dark2); position: relative;
+  margin-bottom: 0.75rem;
+}
+.drop-zone:hover, .drop-zone.dragover {
+  border-color: var(--red); background: rgba(232,0,13,0.04);
+}
+.drop-zone input[type="file"] {
+  position: absolute; inset: 0; opacity: 0;
+  cursor: pointer; width: 100%; height: 100%;
+  margin: 0; padding: 0; border: none;
+}
+.drop-zone-icon { font-size: 1.75rem; margin-bottom: 0.4rem; }
+.drop-zone-label {
+  font-family: var(--font-head); font-size: 0.8rem;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+}
+.drop-zone-sub { font-size: 0.72rem; color: var(--muted); margin-top: 0.25rem; }
+
+/* ══════════════════════════════
+   PREVIEW
+══════════════════════════════ */
+.preview-wrap {
+  display: none; position: relative;
+  border-radius: 8px; overflow: hidden;
+  margin-bottom: 0.75rem;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.preview-wrap img {
+  width: 100%; max-height: 180px; object-fit: cover; display: block;
+}
+.preview-remove {
+  position: absolute; top: 0.5rem; right: 0.5rem;
+  background: rgba(0,0,0,0.8); color: #fff; border: none;
+  border-radius: 4px; padding: 0.3rem 0.65rem;
+  font-size: 0.7rem; cursor: pointer;
+  font-family: var(--font-head); letter-spacing: 0.05em;
+  text-transform: uppercase; transition: background 0.2s;
+}
+.preview-remove:hover { background: var(--red); }
+.preview-filename {
+  padding: 0.4rem 0.75rem; font-size: 0.72rem;
+  color: var(--muted); background: var(--dark2);
+  font-family: var(--font-head); letter-spacing: 0.04em;
+}
+
+/* ══════════════════════════════
+   PROGRESS BAR
+══════════════════════════════ */
+.upload-progress { display: none; margin-bottom: 0.75rem; }
+.upload-progress-bar-wrap {
+  background: var(--dark2); border-radius: 4px;
+  height: 5px; overflow: hidden; margin-bottom: 0.35rem;
+}
+.upload-progress-bar {
+  height: 100%; width: 0%; background: var(--red);
+  border-radius: 4px; transition: width 0.2s ease;
+  box-shadow: 0 0 8px var(--red-glow);
+}
+.upload-progress-label {
+  font-family: var(--font-head); font-size: 0.7rem;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
+}
+
+/* ══════════════════════════════
+   HERO SLIDES
+══════════════════════════════ */
+.hero-slides-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 0.85rem; margin-bottom: 1rem;
+}
+.hero-slide-slot {
+  border: 2px dashed rgba(255,255,255,0.1);
+  border-radius: 8px; aspect-ratio: 16/9;
+  background: var(--dark2); position: relative;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.25s; overflow: hidden;
+}
+.hero-slide-slot:hover, .hero-slide-slot.dragover {
+  border-color: var(--red); background: rgba(232,0,13,0.05);
+}
+.hero-slide-slot input[type="file"] {
+  position: absolute; inset: 0; opacity: 0;
+  cursor: pointer; width: 100%; height: 100%;
+  margin: 0; padding: 0; border: none;
+}
+.hero-slide-slot img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover;
+}
+.slot-label {
+  font-family: var(--font-head); font-size: 0.7rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.25); text-align: center; z-index: 1;
+  pointer-events: none;
+}
+.slot-overlay {
+  position: absolute; inset: 0; background: rgba(0,0,0,0.6);
+  display: none; align-items: center; justify-content: center; z-index: 2;
+}
+.hero-slide-slot:hover .slot-overlay { display: flex; }
+.slot-overlay button {
+  background: var(--red); color: #fff; border: none;
+  padding: 0.35rem 0.85rem; border-radius: 4px;
+  font-family: var(--font-head); font-size: 0.72rem;
+  letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer;
+}
+
+/* ══════════════════════════════
+   CAR WASH PACKAGES
+══════════════════════════════ */
+.carwash-packages {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1rem; margin-bottom: 1.25rem;
+}
+.carwash-pkg {
+  background: var(--dark2); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px; padding: 1.1rem;
+  display: flex; flex-direction: column; gap: 0.65rem;
+}
+.carwash-pkg-title {
+  font-family: var(--font-head); font-size: 0.82rem;
+  font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--white);
+}
+
+/* ══════════════════════════════
+   STATUS TOAST
+══════════════════════════════ */
+#statusToast {
+  position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(100px);
+  background: var(--dark); border: 1px solid rgba(34,197,94,0.35);
+  border-left: 3px solid #22c55e;
+  border-radius: 8px; padding: 0.85rem 1.5rem;
+  font-family: var(--font-head); font-size: 0.85rem;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: #22c55e; white-space: nowrap;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s;
+  z-index: 8000; opacity: 0;
+}
+#statusToast.show {
+  transform: translateX(-50%) translateY(0); opacity: 1;
+}
+
+/* ══════════════════════════════
+   MOBILE RESPONSIVE
+══════════════════════════════ */
+@media(max-width: 700px) {
+  .admin-grid { grid-template-columns: 1fr; }
+  .hero-slides-grid { grid-template-columns: 1fr 1fr; }
+  .carwash-packages { grid-template-columns: 1fr; }
+  .app-bar-title { display: none; }
+  .user-email { max-width: 80px; }
+  .admin-content { padding: 1.25rem 1rem 5rem; }
+}
+@media(max-width: 400px) {
+  .hero-slides-grid { grid-template-columns: 1fr; }
+  .user-pill { display: none; }
+}
+</style>
 </head>
 <body>
 
-<header id="mainHeader">
-  <a href="../index.html" class="logo-wrap">
-    <img src="../images/logo.png" alt="NERO" id="logo">
-    <span class="logo-text">RED<span>FUEL</span></span>
-  </a>
-  <nav class="main-nav" id="mainNav">
-    <a href="../index.html">Home</a>
-    <a href="services.html">Services</a>
-    <!--<a href="prices.html">Fuel Prices</a>-->
-    <a href="fleet.html">Fleet</a>
-    <a href="carwash.html">Car Wash</a>
-    <a href="location.html" class="active">Locations</a>
-    <a href="admin.html" class="nav-admin">Admin</a>
-  </nav>
-  <div class="header-right">
-    <button id="themeToggle">🌙</button>
-    <div class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></div>
+<!-- ══════════════════════════════
+     SPLASH SCREEN
+══════════════════════════════ -->
+<div id="splashScreen">
+  <div class="splash-logo">NE<span>RO</span></div>
+  <div class="splash-tagline">Admin Panel</div>
+  <div class="splash-bar-wrap">
+    <div class="splash-bar"></div>
   </div>
-</header>
-
-<div class="page-hero" style="background-image: linear-gradient(to right, rgba(0,0,0,0.92), rgba(0,0,0,0.55)), url('../images/location.jpg');">
-  <div class="breadcrumb">NERO / <span>Locations</span></div>
-  <h1>Find Our Stations</h1>
+  <div class="splash-version">v1.0 · Drive Further. Pay Less.</div>
 </div>
 
-<!-- LOCATION CARDS -->
-<section class="section visible" style="padding-top:4rem;">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-tag">Our Network</span>
-      <h2>3 Stations Near You</h2>
+
+<!-- ══════════════════════════════
+     LOGIN SCREEN
+══════════════════════════════ -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">NE<span>RO</span></div>
+    <div class="login-title">Admin Access</div>
+
+    <div class="login-field">
+      <label>Email Address</label>
+      <input type="email" id="loginEmail" placeholder="admin@nero.com" autocomplete="email">
+    </div>
+    <div class="login-field">
+      <label>Password</label>
+      <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password">
     </div>
 
-    <!-- STATION 1 -->
-    <div style="display:grid; grid-template-columns:1fr 1.6fr; gap:2rem; align-items:start; margin-bottom:3rem; background:var(--dark); border:1px solid rgba(255,255,255,0.07); border-radius:12px; overflow:hidden;">
-      <div style="padding:2.5rem;">
-        <div style="font-family:var(--font-head); font-size:3rem; font-weight:900; color:rgba(232,0,13,0.15); line-height:1; margin-bottom:-0.5rem;">01</div>
-        <h3 style="color:var(--white); margin:0.75rem 0 0.5rem;">NERO City Centre</h3>
-        <p style="margin-bottom:1.5rem; font-size:0.9rem;">123 Main Street, City Centre</p>
-        <ul style="display:flex; flex-direction:column; gap:0.5rem; margin-bottom:1.5rem;">
-          <li style="font-size:0.88rem; color:rgba(255,255,255,0.55);">✓ Petrol & Diesel</li>
-          <li style="font-size:0.88rem; color:rgba(255,255,255,0.55);">✓ Car Wash</li>
-          <li style="font-size:0.88rem; color:rgba(255,255,255,0.55);">✓ Mini Market</li>
-          <li style="font-size:0.88rem; color:rgba(255,255,255,0.55);">✓ 24/7 Service</li>
-        </ul>
-        <a href="https://maps.google.com/?q=123+Main+Street" target="_blank" class="btn btn-outline btn-sm">Get Directions</a>
-      </div>
-      <div class="location">
-        <iframe
-          src="https://maps.google.com/maps?q=gas%20station&t=&z=13&ie=UTF8&iwloc=&output=embed"
-          width="100%" height="280" style="border:0; border-radius:0; margin:0; display:block;" allowfullscreen loading="lazy">
-        </iframe>
-      </div>
-    </div>
-
-    <!-- STATION 2 -->
-    <div style="display:grid; grid-template-columns:1fr 1.6fr; gap:2rem; align-items:start; margin-bottom:3rem; background:var(--dark); border:1px solid rgba(232,0,13,0.3); border-radius:12px; overflow:hidden; position:relative;">
-      <div style="position:absolute; top:1.25rem; right:1.25rem; background:var(--red); color:#fff; font-family:var(--font-head); font-size:0.7rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:0.25rem 0.75rem; border-radius:2px; z-index:1;">Flagship</div>
-      <div style="padding:2.5rem;">
-        <div style="font-family:var(--font-head); font-size:3rem; font-weight:900; color:rgba(232,0,13,0.15); line-height:1; margin-bottom:-0.5rem;">02</div>
-        <h3 style="color:var(--white); margin:0.75rem 0 0.5rem;">NERO North Hub</h3>
-        <p style="margin-bottom:1.5rem; font-size:0.9rem;">45 Industrial Road, North Zone</p>
-        <ul style="display:flex; flex-direction:column; gap:0.5rem; margin-bottom:1.5rem;">
-          <li style="font-size:0.88rem; color:rgba(255,255,255,0.55);">✓ Petrol & Diesel</li>
-          <li style="font-size:0.88rem; color:rgba(255,255,255,0.55);">✓ Fleet Priority Pumps</li>
-          <li style="font-size:0.88rem; color:rgba(255,255,255,0.55);">✓ Car Wash & Market</li>
-          <li style="font-size:0.88rem; color:rgba(255,255,255,0.55);">✓ 24/7 Service</li>
-        </ul>
-        <a href="https://maps.google.com/?q=45+Industrial+Road" target="_blank" class="btn btn-primary btn-sm">Get Directions</a>
-      </div>
-      <div class="location">
-        <iframe
-          src="https://maps.google.com/maps?q=fuel+station+industrial&t=&z=13&ie=UTF8&iwloc=&output=embed"
-          width="100%" height="280" style="border:0; border-radius:0; margin:0; display:block;" allowfullscreen loading="lazy">
-        </iframe>
-      </div>
-    </div>
-
-    <!-- STATION 3 -->
-    <div style="display:grid; grid-template-columns:1fr 1.6fr; gap:2rem; align-items:start; background:var(--dark); border:1px solid rgba(255,255,255,0.07); border-radius:12px; overflow:hidden;">
-      <div style="padding:2.5rem;">
-        <div style="font-family:var(--font-head); font-size:3rem; font-weight:900; color:rgba(232,0,13,0.15); line-height:1; margin-bottom:-0.5rem;">03</div>
-        <h3 style="color:var(--white); margin:0.75rem 0 0.5rem;">NERO East Express</h3>
-        <p style="margin-bottom:1.5rem; font-size:0.9rem;">78 Highway Boulevard, East</p>
-        <ul style="display:flex; flex-direction:column; gap:0.5rem; margin-bottom:1.5rem;">
-          <li style="font-size:0.88rem; color:rgba(255,255,255,0.55);">✓ Petrol & Diesel</li>
-          <li style="font-size:0.88rem; color:rgba(255,255,255,0.55);">✓ Express Car Wash</li>
-          <li style="font-size:0.88rem; color:rgba(255,255,255,0.55);">✓ 24hr Market</li>
-          <li style="font-size:0.88rem; color:rgba(255,255,255,0.55);">✓ Highway Access</li>
-        </ul>
-        <a href="https://maps.google.com/?q=78+Highway+Boulevard" target="_blank" class="btn btn-outline btn-sm">Get Directions</a>
-      </div>
-      <div class="location">
-        <iframe
-          src="https://maps.google.com/maps?q=gas+station+highway&t=&z=13&ie=UTF8&iwloc=&output=embed"
-          width="100%" height="280" style="border:0; border-radius:0; margin:0; display:block;" allowfullscreen loading="lazy">
-        </iframe>
-      </div>
-    </div>
-
+    <div id="loginError"></div>
+    <button id="loginBtn">Sign In</button>
+    <p class="login-note">⛽ Restricted to authorised NERO staff only.</p>
   </div>
-</section>
+</div>
 
-<footer>
-  <div class="footer-inner container">
-    <div class="footer-brand">
-      <div class="footer-logo">⛽ NERO</div>
-      <p>Premium fuel network. Always open.</p>
-    </div>
-    <div class="footer-links">
-      <h4>Quick Links</h4>
-      <ul>
-        <li><a href="../index.html">Home</a></li>
-        <li><a href="services.html">Services</a></li>
-        <!--<a href="prices.html">Fuel Prices</a>-->
-        <li><a href="fleet.html">Fleet Orders</a></li>
-        <li><a href="carwash.html">Car Wash</a></li>
-        <li><a href="location.html">Locations</a></li>
-      </ul>
-    </div>
-    <div class="footer-contact">
-      <h4>Contact</h4>
-      <p>📧 info@NERO.com</p>
-      <p>📞 +256 708 870667</p>
-      <p>🕐 Open 24 Hours</p>
+
+<!-- ══════════════════════════════
+     DASHBOARD
+══════════════════════════════ -->
+<div id="dashboard">
+
+  <!-- APP BAR -->
+  <div class="app-bar">
+    <div class="app-bar-logo">NE<span>RO</span></div>
+    <div class="app-bar-title">Admin Panel</div>
+    <div class="app-bar-right">
+      <!-- Online user pill -->
+      <div class="user-pill">
+        <div class="user-dot"></div>
+        <span class="user-email" id="adminEmailDisplay"></span>
+      </div>
+      <!-- LOGOUT BUTTON -->
+      <button id="logoutBtn">
+        <span class="logout-icon">⏻</span> Sign Out
+      </button>
     </div>
   </div>
-  <div class="footer-bottom">
-    <p>© 2026 NERO Smart Station. All rights reserved.</p>
-    <!--<a href="pages/admin.html" class="footer-admin-link">Admin Panel</a>-->
-  </div>
-</footer>
 
+  <!-- OFFLINE BANNER -->
+  <div id="offlineBanner">⚠ You are offline — changes will sync when reconnected</div>
+
+  <!-- INSTALL PROMPT BANNER -->
+  <div id="installBanner">
+    <div class="install-text">
+      <strong>Install NERO Admin</strong> — add it to your home screen for quick access
+    </div>
+    <div class="install-actions">
+      <button id="installBtn">Install App</button>
+      <button id="dismissInstall">Not now</button>
+    </div>
+  </div>
+
+  <!-- NOTIFICATION PERMISSION BANNER -->
+  <div id="notifBanner">
+    <div class="notif-text">
+      <strong>Enable notifications</strong> — get alerts when prices need updating
+    </div>
+    <div style="display:flex;gap:0.5rem;align-items:center;">
+      <button id="enableNotifBtn">Enable</button>
+      <button id="dismissNotif">✕</button>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="admin-content">
+
+    <!-- Status Toast -->
+    <div id="statusToast"></div>
+
+    <!-- ── ROW 1: Prices + News ── -->
+    <div class="admin-section-label">Station Management</div>
+    <div class="admin-grid">
+
+      <!-- FUEL PRICES -->
+      <div class="admin-panel" id="prices">
+        <h2>⛽ Fuel Prices</h2>
+        <form id="priceForm">
+          <div class="form-group">
+            <label>Petrol Price ($)</label>
+            <input type="number" step="0.01" id="petrolInput" placeholder="e.g. 1.45" inputmode="decimal" required>
+          </div>
+          <div class="form-group">
+            <label>Diesel Price ($)</label>
+            <input type="number" step="0.01" id="dieselInput" placeholder="e.g. 1.38" inputmode="decimal" required>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;margin-top:0.5rem;">
+            Update Prices
+          </button>
+        </form>
+      </div>
+
+      <!-- NEWS POST -->
+      <div class="admin-panel" id="news">
+        <h2>📰 Post News</h2>
+
+        <div class="form-group">
+          <label>News Image</label>
+          <div class="drop-zone" id="newsDrop">
+            <input type="file" id="newsFile" accept="image/*">
+            <div class="drop-zone-icon">🖼️</div>
+            <div class="drop-zone-label">Drag & drop or tap to browse</div>
+            <div class="drop-zone-sub">JPG · PNG · WEBP</div>
+          </div>
+          <div class="upload-progress" id="newsProgress">
+            <div class="upload-progress-bar-wrap">
+              <div class="upload-progress-bar" id="newsProgressBar"></div>
+            </div>
+            <div class="upload-progress-label">Uploading… <span id="newsProgressPct">0</span>%</div>
+          </div>
+          <div class="preview-wrap" id="newsPreview">
+            <img id="newsPreviewImg" src="" alt="">
+            <div class="preview-filename" id="newsPreviewName"></div>
+            <button class="preview-remove" id="newsPreviewRemove">✕ Remove</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Title</label>
+          <input type="text" id="newsTitle" placeholder="e.g. New pump lane open">
+        </div>
+        <div class="form-group">
+          <label>Content</label>
+          <textarea id="newsText" placeholder="Write your update…" style="min-height:90px;"></textarea>
+        </div>
+        <button id="publishBtn" class="btn btn-primary" style="width:100%;">
+          Publish Update
+        </button>
+      </div>
+
+    </div><!-- /row 1 -->
+
+
+    <!-- ── ROW 2: Hero Slideshow ── -->
+    <div class="admin-section-label" style="margin-top:2rem;">Hero Slideshow</div>
+    <div class="admin-grid single">
+      <div class="admin-panel">
+        <h2>🖼️ Slideshow Images</h2>
+        <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.25rem;">
+          Drag & drop or tap each slot to replace homepage slideshow images. Changes go live immediately.
+        </p>
+        <div class="hero-slides-grid">
+          <div class="hero-slide-slot" id="heroSlot0">
+            <input type="file" accept="image/*" data-slot="0">
+            <div class="slot-label">Slide 1<br><small style="opacity:.5;font-size:.6rem;">tap to change</small></div>
+            <div class="slot-overlay"><button onclick="triggerSlotUpload(0)">Replace</button></div>
+          </div>
+          <div class="hero-slide-slot" id="heroSlot1">
+            <input type="file" accept="image/*" data-slot="1">
+            <div class="slot-label">Slide 2<br><small style="opacity:.5;font-size:.6rem;">tap to change</small></div>
+            <div class="slot-overlay"><button onclick="triggerSlotUpload(1)">Replace</button></div>
+          </div>
+          <div class="hero-slide-slot" id="heroSlot2">
+            <input type="file" accept="image/*" data-slot="2">
+            <div class="slot-label">Slide 3<br><small style="opacity:.5;font-size:.6rem;">tap to change</small></div>
+            <div class="slot-overlay"><button onclick="triggerSlotUpload(2)">Replace</button></div>
+          </div>
+        </div>
+        <div id="heroUploadStatus" style="display:none;font-family:var(--font-head);font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);">
+          Uploading… <span id="heroPct">0</span>%
+          <div class="upload-progress-bar-wrap" style="margin-top:0.5rem;">
+            <div class="upload-progress-bar" id="heroProgressBar"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ── ROW 3: Car Wash ── -->
+    <div class="admin-section-label" style="margin-top:2rem;">Car Wash</div>
+    <div class="admin-grid single">
+      <div class="admin-panel">
+        <h2>🚗 Package Images</h2>
+        <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.25rem;">
+          Upload a photo for each package — displayed on the Car Wash page.
+        </p>
+        <div class="carwash-packages">
+          <div class="carwash-pkg">
+            <div class="carwash-pkg-title">⚡ Quick Wash</div>
+            <div class="drop-zone" id="cwDrop0" style="padding:1rem;">
+              <input type="file" id="cwFile0" accept="image/*" data-pkg="0">
+              <div class="drop-zone-icon" style="font-size:1.4rem;">🖼️</div>
+              <div class="drop-zone-label" style="font-size:0.72rem;">Drop image</div>
+            </div>
+            <div class="upload-progress" id="cwProgress0">
+              <div class="upload-progress-bar-wrap"><div class="upload-progress-bar" id="cwProgressBar0"></div></div>
+              <div class="upload-progress-label"><span id="cwPct0">0</span>%</div>
+            </div>
+            <div class="preview-wrap" id="cwPreview0">
+              <img id="cwPreviewImg0" src="" alt="">
+              <div class="preview-filename" id="cwPreviewName0"></div>
+              <button class="preview-remove" onclick="removePreview('cw',0)">✕</button>
+            </div>
+          </div>
+          <div class="carwash-pkg">
+            <div class="carwash-pkg-title">🚗 Full Service</div>
+            <div class="drop-zone" id="cwDrop1" style="padding:1rem;">
+              <input type="file" id="cwFile1" accept="image/*" data-pkg="1">
+              <div class="drop-zone-icon" style="font-size:1.4rem;">🖼️</div>
+              <div class="drop-zone-label" style="font-size:0.72rem;">Drop image</div>
+            </div>
+            <div class="upload-progress" id="cwProgress1">
+              <div class="upload-progress-bar-wrap"><div class="upload-progress-bar" id="cwProgressBar1"></div></div>
+              <div class="upload-progress-label"><span id="cwPct1">0</span>%</div>
+            </div>
+            <div class="preview-wrap" id="cwPreview1">
+              <img id="cwPreviewImg1" src="" alt="">
+              <div class="preview-filename" id="cwPreviewName1"></div>
+              <button class="preview-remove" onclick="removePreview('cw',1)">✕</button>
+            </div>
+          </div>
+          <div class="carwash-pkg">
+            <div class="carwash-pkg-title">✨ Premium Detail</div>
+            <div class="drop-zone" id="cwDrop2" style="padding:1rem;">
+              <input type="file" id="cwFile2" accept="image/*" data-pkg="2">
+              <div class="drop-zone-icon" style="font-size:1.4rem;">🖼️</div>
+              <div class="drop-zone-label" style="font-size:0.72rem;">Drop image</div>
+            </div>
+            <div class="upload-progress" id="cwProgress2">
+              <div class="upload-progress-bar-wrap"><div class="upload-progress-bar" id="cwProgressBar2"></div></div>
+              <div class="upload-progress-label"><span id="cwPct2">0</span>%</div>
+            </div>
+            <div class="preview-wrap" id="cwPreview2">
+              <img id="cwPreviewImg2" src="" alt="">
+              <div class="preview-filename" id="cwPreviewName2"></div>
+              <button class="preview-remove" onclick="removePreview('cw',2)">✕</button>
+            </div>
+          </div>
+        </div>
+        <button id="saveCarwashBtn" class="btn btn-primary">Save Car Wash Images</button>
+      </div>
+    </div>
+
+  </div><!-- /admin-content -->
+</div><!-- /dashboard -->
+
+
+<!-- ══════════════════════════════
+     SCRIPTS
+══════════════════════════════ -->
 <script src="../js/theme.js"></script>
-<script src="../js/script.js"></script>
+
+<!-- Register Service Worker -->
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("../sw.js")
+      .then(reg => console.log("SW registered:", reg.scope))
+      .catch(err => console.log("SW error:", err));
+  });
+}
+
+// Offline / online detection
+window.addEventListener("offline", () => {
+  document.getElementById("offlineBanner").style.display = "block";
+});
+window.addEventListener("online", () => {
+  document.getElementById("offlineBanner").style.display = "none";
+});
+
+// PWA install prompt
+let deferredInstallPrompt = null;
+window.addEventListener("beforeinstallprompt", e => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  const banner = document.getElementById("installBanner");
+  if (!localStorage.getItem("installDismissed")) {
+    banner.style.display = "flex";
+  }
+});
+
+document.getElementById("installBtn").addEventListener("click", async () => {
+  if (!deferredInstallPrompt) return;
+  deferredInstallPrompt.prompt();
+  const { outcome } = await deferredInstallPrompt.userChoice;
+  deferredInstallPrompt = null;
+  document.getElementById("installBanner").style.display = "none";
+  if (outcome === "accepted") showToast("App installed! ✓");
+});
+
+document.getElementById("dismissInstall").addEventListener("click", () => {
+  document.getElementById("installBanner").style.display = "none";
+  localStorage.setItem("installDismissed", "1");
+});
+
+// Splash screen — hide after 1.8s
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    document.getElementById("splashScreen").classList.add("hidden");
+  }, 1800);
+});
+
+// Global helpers exposed for inline onclick
+window.triggerSlotUpload = i => {
+  document.querySelector(`#heroSlot${i} input[type=file]`).click();
+};
+window.removePreview = (type, i) => {
+  if (type === "cw") {
+    document.getElementById(`cwPreviewImg${i}`).src = "";
+    document.getElementById(`cwPreview${i}`).style.display  = "none";
+    document.getElementById(`cwDrop${i}`).style.display     = "block";
+    document.getElementById(`cwFile${i}`).value             = "";
+    if (window._cwFiles) window._cwFiles[i] = null;
+  }
+};
+</script>
+
+<!-- Firebase Module -->
+<script type="module">
+import { initializeApp }   from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged }
+                            from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, collection, addDoc }
+                            from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL }
+                            from "https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
+
+const app = initializeApp({
+  apiKey:            "AIzaSyB-Q-MFZDCgHnaVgMRrgxEL9YPrIqZwUrU",
+  authDomain:        "redfuel-a2152.firebaseapp.com",
+  projectId:         "redfuel-a2152",
+  storageBucket:     "redfuel-a2152.firebasestorage.app",
+  messagingSenderId: "782154176195",
+  appId:             "1:782154176195:web:46af20e4252e415ba77476"
+});
+const auth    = getAuth(app);
+const db      = getFirestore(app);
+const storage = getStorage(app);
+
+/* ── Auth state ── */
+const loginScreen = document.getElementById("loginScreen");
+const dashboard   = document.getElementById("dashboard");
+const splashEl    = document.getElementById("splashScreen");
+
+onAuthStateChanged(auth, user => {
+  // Always hide splash first
+  splashEl.classList.add("hidden");
+
+  if (user) {
+    loginScreen.style.display = "none";
+    dashboard.style.display   = "block";
+    document.getElementById("adminEmailDisplay").textContent = user.email;
+    // Show notification prompt if not already granted/denied
+    if (Notification.permission === "default" && !localStorage.getItem("notifAsked")) {
+      setTimeout(() => {
+        document.getElementById("notifBanner").style.display = "flex";
+      }, 2000);
+    }
+  } else {
+    loginScreen.style.display = "flex";
+    dashboard.style.display   = "none";
+  }
+});
+
+/* ── Login ── */
+const loginBtn   = document.getElementById("loginBtn");
+const loginError = document.getElementById("loginError");
+
+loginBtn.addEventListener("click", async () => {
+  const email = document.getElementById("loginEmail").value.trim();
+  const pass  = document.getElementById("loginPassword").value;
+  loginError.style.display = "none";
+  if (!email || !pass) { showLoginError("Please enter your email and password."); return; }
+  loginBtn.disabled = true; loginBtn.textContent = "Signing in…";
+  try {
+    await signInWithEmailAndPassword(auth, email, pass);
+  } catch (err) {
+    const bad = ["auth/invalid-credential","auth/wrong-password","auth/user-not-found","auth/invalid-email"];
+    showLoginError(bad.includes(err.code)
+      ? "Incorrect email or password."
+      : "Login failed. Check your connection.");
+  } finally { loginBtn.disabled = false; loginBtn.textContent = "Sign In"; }
+});
+document.getElementById("loginPassword").addEventListener("keydown", e => {
+  if (e.key === "Enter") loginBtn.click();
+});
+
+/* ── LOGOUT ── */
+document.getElementById("logoutBtn").addEventListener("click", async () => {
+  if (confirm("Sign out of NERO Admin?")) {
+    await signOut(auth);
+    showToast("Signed out successfully");
+  }
+});
+
+/* ── Push Notifications ── */
+document.getElementById("enableNotifBtn").addEventListener("click", async () => {
+  const permission = await Notification.requestPermission();
+  localStorage.setItem("notifAsked", "1");
+  document.getElementById("notifBanner").style.display = "none";
+  if (permission === "granted") showToast("Notifications enabled ✓");
+});
+document.getElementById("dismissNotif").addEventListener("click", () => {
+  document.getElementById("notifBanner").style.display = "none";
+  localStorage.setItem("notifAsked", "1");
+});
+
+/* ── Upload helper ── */
+function uploadFile(file, path, barEl, pctEl, wrapEl) {
+  return new Promise((resolve, reject) => {
+    const task = uploadBytesResumable(ref(storage, path), file);
+    if (wrapEl) wrapEl.style.display = "block";
+    task.on("state_changed",
+      snap => {
+        const p = Math.round(snap.bytesTransferred / snap.totalBytes * 100);
+        if (barEl) barEl.style.width = p + "%";
+        if (pctEl) pctEl.textContent = p;
+      },
+      reject,
+      async () => {
+        if (wrapEl) wrapEl.style.display = "none";
+        resolve(await getDownloadURL(task.snapshot.ref));
+      }
+    );
+  });
+}
+
+/* ── Drop zone helper ── */
+function initDropZone(dropEl, fileInput, previewWrap, previewImg, previewName, onFile) {
+  dropEl.addEventListener("dragover",  e => { e.preventDefault(); dropEl.classList.add("dragover"); });
+  dropEl.addEventListener("dragleave", () => dropEl.classList.remove("dragover"));
+  dropEl.addEventListener("drop", e => {
+    e.preventDefault(); dropEl.classList.remove("dragover");
+    const f = e.dataTransfer.files[0];
+    if (f?.type.startsWith("image/")) handle(f);
+  });
+  fileInput.addEventListener("change", () => { if (fileInput.files[0]) handle(fileInput.files[0]); });
+
+  function handle(file) {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      previewImg.src            = ev.target.result;
+      previewName.textContent   = file.name;
+      previewWrap.style.display = "block";
+      dropEl.style.display      = "none";
+    };
+    reader.readAsDataURL(file);
+    if (onFile) onFile(file);
+  }
+}
+
+/* ── Fuel Prices ── */
+document.getElementById("priceForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const petrol = parseFloat(document.getElementById("petrolInput").value);
+  const diesel = parseFloat(document.getElementById("dieselInput").value);
+  try {
+    await setDoc(doc(db, "fuel_prices", "current"), { petrol, diesel, updatedAt: new Date() });
+    showToast("Fuel prices updated ✓");
+    e.target.reset();
+    // Send local notification if granted
+    if (Notification.permission === "granted") {
+      new Notification("NERO Admin", { body: `Prices updated — Petrol $${petrol} / Diesel $${diesel}`, icon: "../images/logo.png" });
+    }
+  } catch(err) { alert("Error: " + err.message); }
+});
+
+/* ── News ── */
+let newsImageFile = null, newsImageURL = null;
+initDropZone(
+  document.getElementById("newsDrop"),
+  document.getElementById("newsFile"),
+  document.getElementById("newsPreview"),
+  document.getElementById("newsPreviewImg"),
+  document.getElementById("newsPreviewName"),
+  f => { newsImageFile = f; newsImageURL = null; }
+);
+document.getElementById("newsPreviewRemove").addEventListener("click", () => {
+  newsImageFile = null; newsImageURL = null;
+  document.getElementById("newsPreviewImg").src     = "";
+  document.getElementById("newsPreview").style.display = "none";
+  document.getElementById("newsDrop").style.display    = "block";
+  document.getElementById("newsFile").value            = "";
+});
+document.getElementById("publishBtn").addEventListener("click", async () => {
+  const title = document.getElementById("newsTitle").value.trim();
+  const text  = document.getElementById("newsText").value.trim();
+  if (!title || !text) { alert("Please fill in the title and content."); return; }
+  const btn = document.getElementById("publishBtn");
+  btn.disabled = true; btn.textContent = "Publishing…";
+  try {
+    if (newsImageFile && !newsImageURL) {
+      newsImageURL = await uploadFile(newsImageFile,
+        `news/${Date.now()}_${newsImageFile.name}`,
+        document.getElementById("newsProgressBar"),
+        document.getElementById("newsProgressPct"),
+        document.getElementById("newsProgress")
+      );
+    }
+    await addDoc(collection(db, "updates"), { title, text, image: newsImageURL || null, date: new Date() });
+    showToast("News published ✓");
+    document.getElementById("newsTitle").value = "";
+    document.getElementById("newsText").value  = "";
+    document.getElementById("newsPreviewRemove").click();
+  } catch(err) { alert("Error: " + err.message); }
+  finally { btn.disabled = false; btn.textContent = "Publish Update"; }
+});
+
+/* ── Hero Slideshow ── */
+for (let i = 0; i < 3; i++) {
+  const slot  = document.getElementById(`heroSlot${i}`);
+  const input = slot.querySelector("input[type=file]");
+  slot.addEventListener("dragover",  e => { e.preventDefault(); slot.classList.add("dragover"); });
+  slot.addEventListener("dragleave", () => slot.classList.remove("dragover"));
+  slot.addEventListener("drop", e => {
+    e.preventDefault(); slot.classList.remove("dragover");
+    const f = e.dataTransfer.files[0];
+    if (f?.type.startsWith("image/")) handleHero(i, f);
+  });
+  input.addEventListener("change", () => { if (input.files[0]) handleHero(i, input.files[0]); });
+}
+
+function handleHero(i, file) {
+  const slot = document.getElementById(`heroSlot${i}`);
+  const reader = new FileReader();
+  reader.onload = ev => {
+    let img = slot.querySelector("img");
+    if (!img) { img = document.createElement("img"); slot.appendChild(img); }
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+  document.getElementById("heroUploadStatus").style.display = "block";
+  uploadFile(file, `hero/slide${i}_${Date.now()}_${file.name}`,
+    document.getElementById("heroProgressBar"),
+    document.getElementById("heroPct"), null)
+    .then(url => {
+      document.getElementById("heroUploadStatus").style.display = "none";
+      return setDoc(doc(db, "site_images", "hero"), { [`slide${i}`]: url, updatedAt: new Date() }, { merge: true });
+    })
+    .then(() => showToast(`Slide ${i+1} updated ✓`))
+    .catch(err => alert("Upload error: " + err.message));
+}
+
+/* ── Car Wash ── */
+const cwFiles = [null, null, null];
+const cwURLs  = [null, null, null];
+const cwNames = ["quick-wash", "full-service", "premium-detail"];
+window._cwFiles = cwFiles;
+
+for (let i = 0; i < 3; i++) {
+  initDropZone(
+    document.getElementById(`cwDrop${i}`),
+    document.getElementById(`cwFile${i}`),
+    document.getElementById(`cwPreview${i}`),
+    document.getElementById(`cwPreviewImg${i}`),
+    document.getElementById(`cwPreviewName${i}`),
+    f => { cwFiles[i] = f; cwURLs[i] = null; }
+  );
+}
+
+document.getElementById("saveCarwashBtn").addEventListener("click", async () => {
+  const btn = document.getElementById("saveCarwashBtn");
+  btn.disabled = true; btn.textContent = "Saving…";
+  try {
+    const updates = {};
+    for (let i = 0; i < 3; i++) {
+      if (cwFiles[i] && !cwURLs[i]) {
+        cwURLs[i] = await uploadFile(cwFiles[i],
+          `carwash/${cwNames[i]}_${Date.now()}_${cwFiles[i].name}`,
+          document.getElementById(`cwProgressBar${i}`),
+          document.getElementById(`cwPct${i}`),
+          document.getElementById(`cwProgress${i}`)
+        );
+      }
+      if (cwURLs[i]) updates[cwNames[i]] = cwURLs[i];
+    }
+    if (!Object.keys(updates).length) { alert("Drop at least one image first."); return; }
+    await setDoc(doc(db, "site_images", "carwash"), { ...updates, updatedAt: new Date() }, { merge: true });
+    showToast("Car wash images saved ✓");
+  } catch(err) { alert("Error: " + err.message); }
+  finally { btn.disabled = false; btn.textContent = "Save Car Wash Images"; }
+});
+
+/* ── Helpers ── */
+function showToast(msg) {
+  const t = document.getElementById("statusToast");
+  t.textContent = msg;
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 3200);
+}
+function showLoginError(msg) {
+  const el = document.getElementById("loginError");
+  el.textContent = msg; el.style.display = "block";
+}
+</script>
+
 </body>
 </html>
