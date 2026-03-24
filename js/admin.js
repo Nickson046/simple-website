@@ -9,7 +9,7 @@ addDoc
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
+  apiKey: "AIzaSyB-Q-MFZDCgHnaVgMRrgxEL9YPrIqZwUrU",
   authDomain: "NERO-a2152.firebaseapp.com",
   projectId: "NERO-a2152",
   storageBucket: "NERO-a2152.firebasestorage.app",
