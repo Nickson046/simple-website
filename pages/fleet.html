@@ -31,7 +31,7 @@
 </header>
 
 <div class="page-hero" style="background-image: linear-gradient(to right, rgba(0,0,0,0.92), rgba(0,0,0,0.55)), url('../images/fleet.jpg');">
-  <div class="breadcrumb">NERO / <span>Fleet Orders</span></div>
+  <div class="breadcrumb">NERO / Fleet Orders</div>
   <h1>Fleet Fuel Program</h1>
 </div>
 
@@ -44,73 +44,94 @@
     </div>
     <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:1.5rem; max-width:960px; margin:0 auto 4rem;">
       <div class="card">
-        <div style="font-size:2rem; margin-bottom:1rem;">💰</div>
         <h3>Bulk Discounts</h3>
-        <p>Registered companies receive volume-based discounted rates across all stations.</p>
+        <p>Registered companies receive volume-based discounted rates across all our stations.</p>
       </div>
       <div class="card">
-        <div style="font-size:2rem; margin-bottom:1rem;">🧾</div>
         <h3>Monthly Billing</h3>
         <p>Consolidated monthly invoices for simple fleet accounting and tracking.</p>
       </div>
       <div class="card">
-        <div style="font-size:2rem; margin-bottom:1rem;">📊</div>
         <h3>Fuel Monitoring</h3>
         <p>Track consumption per vehicle, per driver, per station in real time.</p>
       </div>
       <div class="card">
-        <div style="font-size:2rem; margin-bottom:1rem;">⚡</div>
         <h3>Priority Service</h3>
-        <p>Dedicated fleet lanes at all our stations to minimize downtime.</p>
+        <p>Dedicated fleet lanes at all our stations to minimise downtime for your business.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ORDER FORM -->
+<!-- FLEET ENQUIRY -->
 <section class="section" style="padding-top:1rem;">
   <div class="container">
     <div class="form-section">
-      <h2>Submit Fleet Order</h2>
+      <h2>Request a Callback</h2>
+      <p style="margin-bottom:1.5rem; font-size:0.9rem; color:var(--muted);">Fill in your details and we'll open WhatsApp so our fleet team can reach you directly.</p>
       <div class="form-group">
         <label>Company Name</label>
-        <input type="text" placeholder="Your company name">
+        <input type="text" id="flCompany" placeholder="Your company name">
       </div>
       <div class="form-group">
         <label>Contact Person</label>
-        <input type="text" placeholder="Full name">
-      </div>
-      <div class="form-group">
-        <label>Email Address</label>
-        <input type="email" placeholder="company@example.com">
+        <input type="text" id="flContact" placeholder="Full name">
       </div>
       <div class="form-group">
         <label>Fuel Type</label>
-        <select>
+        <select id="flFuel">
           <option>Petrol</option>
           <option>Diesel</option>
-          <option>Mixed (Petrol & Diesel)</option>
+          <option>Mixed (Petrol &amp; Diesel)</option>
         </select>
       </div>
       <div class="form-group">
-        <label>Litres Required</label>
-        <input type="number" placeholder="e.g. 5000" min="0">
+        <label>Estimated Litres per Month</label>
+        <input type="number" id="flLitres" placeholder="e.g. 5000" min="0">
       </div>
       <div class="form-group">
         <label>Preferred Station</label>
-        <select>
+        <select id="flStation">
           <option>NERO Kiwoko</option>
-          <option>NERO Butalangu</option>
           <option>NERO Nakaseke</option>
-          <option>All Stations</option>
+          <option>NERO Butalangu</option>
+          <option>All Our Stations</option>
         </select>
       </div>
-      <button class="btn btn-primary" style="width:100%; margin-top:0.5rem;" onclick="alert('Fleet order submitted! Our team will contact you within 24 hours.')">
-        Submit Order
+
+      <!-- Mobile Money badge -->
+      <div style="display:flex; align-items:center; gap:0.75rem; padding:0.75rem 1rem; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:var(--radius); margin-bottom:1rem;">
+        <span style="font-family:var(--font-head); font-size:0.7rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted);">We accept</span>
+        <span style="font-family:var(--font-head); font-size:0.82rem; font-weight:700; color:#ffcc00;">MTN MoMo</span>
+        <span style="color:var(--muted);">·</span>
+        <span style="font-family:var(--font-head); font-size:0.82rem; font-weight:700; color:#ff6200;">Airtel Money</span>
+        <span style="color:var(--muted);">·</span>
+        <span style="font-family:var(--font-head); font-size:0.82rem; font-weight:700; color:var(--muted);">Bank Transfer</span>
+      </div>
+
+      <button class="btn btn-primary" style="width:100%; margin-top:0.5rem;" onclick="fleetWhatsApp()">
+        Request Callback via WhatsApp
       </button>
     </div>
   </div>
 </section>
+
+<script>
+function fleetWhatsApp() {
+  const company = document.getElementById('flCompany').value.trim();
+  const contact = document.getElementById('flContact').value.trim();
+  const fuel    = document.getElementById('flFuel').value;
+  const litres  = document.getElementById('flLitres').value.trim();
+  const station = document.getElementById('flStation').value;
+  let msg = 'Hello NERO, I am interested in a fleet fuel account.';
+  if (company) msg += `\nCompany: ${company}`;
+  if (contact) msg += `\nContact Person: ${contact}`;
+  if (fuel)    msg += `\nFuel Type: ${fuel}`;
+  if (litres)  msg += `\nEstimated Monthly Litres: ${litres}`;
+  if (station) msg += `\nPreferred Station: ${station}`;
+  window.open(`https://wa.me/256708870667?text=${encodeURIComponent(msg)}`, '_blank');
+}
+</script>
 
 <footer>
   <div class="footer-inner container">
