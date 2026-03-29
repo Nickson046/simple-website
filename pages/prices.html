@@ -5,7 +5,147 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fuel Prices — NERO</title>
 <link rel="stylesheet" href="../css/style.css">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ── Override headline font to Oswald for this page ── */
+  :root { --font-head: 'Oswald', sans-serif; }
+
+  /* ── HERO SLIDESHOW ── */
+  .hero-slideshow-wrap {
+    position: relative;
+    height: 500px;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .hero-slide {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.4s ease;
+  }
+  .hero-slide.active { opacity: 1; }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.2) 100%);
+    z-index: 1;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 5% 3.5rem;
+    width: 100%;
+  }
+
+  .hero-content .breadcrumb {
+    font-family: var(--font-head);
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .hero-content h1 {
+    font-family: var(--font-head);
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    line-height: 1;
+    color: #fff;
+  }
+
+  .slide-dots {
+    position: absolute;
+    bottom: 1.4rem;
+    left: 5%;
+    z-index: 3;
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .slide-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    cursor: pointer;
+    transition: background 0.3s;
+    border: none;
+  }
+  .slide-dot.active { background: var(--red); }
+
+  /* ── SECTION BG IMAGE ── */
+  .section-bg { position: relative; overflow: hidden; }
+  .section-bg-img {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.1;
+  }
+  .section-bg .container { position: relative; z-index: 1; }
+
+  /* ── IMAGE CARDS ── */
+  .card-img-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    max-width: 980px;
+    margin: 0 auto;
+  }
+
+  .card-visual {
+    background: var(--dark);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: var(--trans);
+  }
+  .card-visual:hover {
+    border-color: rgba(232,0,13,0.35);
+    transform: translateY(-5px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.55);
+  }
+  .card-visual-img {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.78);
+    transition: filter 0.4s ease;
+  }
+  .card-visual:hover .card-visual-img { filter: brightness(0.92); }
+
+  .card-visual-body { padding: 1.5rem 1.75rem; }
+  .card-visual-body h3 {
+    font-family: var(--font-head);
+    font-size: 1.35rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.55rem;
+    color: var(--light);
+  }
+  .card-visual-body p {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  body.light .card-visual { background: #ffffff; border-color: #e8e3dc; }
+  body.light .card-visual:hover { border-color: rgba(232,0,13,0.35); }
+  body.light .card-visual-body h3 { color: #1a1208; }
+  body.light .card-visual-body p  { color: #5a5048; }
+</style>
 </head>
 <body>
 
@@ -17,11 +157,9 @@
   <nav class="main-nav" id="mainNav">
     <a href="../index.html">Home</a>
     <a href="services.html">Services</a>
-    <!--<a href="prices.html" class="active">Fuel Prices</a>-->
     <a href="fleet.html">Fleet</a>
     <a href="carwash.html">Car Wash</a>
     <a href="location.html">Locations</a>
-    <!--<a href="pages/admin.html" class="nav-admin">Admin</a>-->
   </nav>
   <div class="header-right">
     <button id="themeToggle">🌙</button>
@@ -29,28 +167,44 @@
   </div>
 </header>
 
-<div class="page-hero" style="background-image: linear-gradient(to right, rgba(0,0,0,0.92), rgba(0,0,0,0.55)), url('../images/prices.jpg');">
-  <div class="breadcrumb">NERO / <span>Fuel Prices</span></div>
-  <h1>Live Fuel Prices</h1>
+<!-- HERO SLIDESHOW -->
+<div class="hero-slideshow-wrap">
+  <div class="hero-slide active" style="background-image: url('../images/prices.jpg');"></div>
+  <div class="hero-slide"        style="background-image: url('../images/hero.jpg');"></div>
+  <div class="hero-slide"        style="background-image: url('../images/hero1.jpg');"></div>
+  <div class="hero-slide"        style="background-image: url('../images/hero2.jpg');"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="breadcrumb">NERO / Fuel Prices</div>
+    <h1>Live Fuel Prices</h1>
+  </div>
+  <div class="slide-dots">
+    <div class="slide-dot active"></div>
+    <div class="slide-dot"></div>
+    <div class="slide-dot"></div>
+    <div class="slide-dot"></div>
+  </div>
 </div>
 
-<section class="section visible" style="padding-top:4rem;">
+<!-- PRICE BOARD -->
+<section class="section visible section-bg" style="padding-top:4rem; padding-bottom:4rem;">
+  <div class="section-bg-img" style="background-image: url('../images/prices.jpg');"></div>
   <div class="container" style="text-align:center;">
     <span class="section-tag">Updated Daily</span>
     <h2 style="margin: 1rem 0 0.75rem;">Today's Prices</h2>
     <p style="margin-bottom:0; max-width:500px; margin-inline:auto;">
-      Prices are refreshed every 24 hours and displayed live across all three stations.
+      Prices are refreshed every 24 hours and displayed live across all our stations.
     </p>
 
     <div class="price-board">
       <div class="fuel">
         <span class="fuel-type">PETROL 95</span>
-        <span class="fuel-price" id="petrolPrice">$1.45</span>
+        <span class="fuel-price" id="petrolPrice">UGX —</span>
         <span style="font-size:0.75rem; color:var(--muted); font-family:var(--font-head); letter-spacing:0.1em;">PER LITRE</span>
       </div>
       <div class="fuel">
         <span class="fuel-type">DIESEL</span>
-        <span class="fuel-price" id="dieselPrice">$1.38</span>
+        <span class="fuel-price" id="dieselPrice">UGX —</span>
         <span style="font-size:0.75rem; color:var(--muted); font-family:var(--font-head); letter-spacing:0.1em;">PER LITRE</span>
       </div>
     </div>
@@ -62,27 +216,34 @@
 </section>
 
 <!-- FUEL QUALITY -->
-<section class="section" style="padding-top:2rem;">
+<section class="section section-bg" style="padding-top:3rem; padding-bottom:4.5rem;">
+  <div class="section-bg-img" style="background-image: url('../images/hero1.jpg');"></div>
   <div class="container">
     <div class="section-header">
       <span class="section-tag">Standards</span>
       <h2>Fuel Quality Guarantee</h2>
     </div>
-    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:1.5rem; max-width:900px; margin:0 auto;">
-      <div class="card">
-        <div style="font-size:2rem; margin-bottom:1rem;">🏅</div>
-        <h3>High Octane Petrol</h3>
-        <p>Our 95-grade petrol delivers consistent performance for all modern engines.</p>
+    <div class="card-img-layout">
+      <div class="card-visual">
+        <img src="../images/nerokiwoko0.jpeg" alt="High Octane Petrol" class="card-visual-img">
+        <div class="card-visual-body">
+          <h3>High Octane Petrol</h3>
+          <p>Our 95-grade petrol delivers consistent performance for all modern engines.</p>
+        </div>
       </div>
-      <div class="card">
-        <div style="font-size:2rem; margin-bottom:1rem;">🌿</div>
-        <h3>Low Emission Diesel</h3>
-        <p>Euro 6 compliant diesel — cleaner combustion, better efficiency.</p>
+      <div class="card-visual">
+        <img src="../images/nerobutalangu0.jpeg" alt="Low Emission Diesel" class="card-visual-img">
+        <div class="card-visual-body">
+          <h3>Low Emission Diesel</h3>
+          <p>Euro 6 compliant diesel — cleaner combustion, better efficiency.</p>
+        </div>
       </div>
-      <div class="card">
-        <div style="font-size:2rem; margin-bottom:1rem;">🔬</div>
-        <h3>Daily Testing</h3>
-        <p>Every batch is tested before distribution. Zero compromise on quality.</p>
+      <div class="card-visual">
+        <img src="../images/neronakaseke0.jpeg" alt="Daily Testing" class="card-visual-img">
+        <div class="card-visual-body">
+          <h3>Daily Testing</h3>
+          <p>Every batch is tested before distribution. Zero compromise on quality.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -91,30 +252,44 @@
 <footer>
   <div class="footer-inner container">
     <div class="footer-brand">
-      <div class="footer-logo">NERO</div>
-      <p>Premium fuel network. Always open.</p>
+      <img src="../images/nerologo2.png" alt="NERO" class="footer-logo-img">
+      <p>Your trusted fuel network. Premium quality, smart service, all stations always open.</p>
+      <div class="footer-socials">
+        <a href="#">FB</a>
+        <a href="#">IG</a>
+        <a href="#">TW</a>
+      </div>
     </div>
     <div class="footer-links">
       <h4>Quick Links</h4>
       <ul>
         <li><a href="../index.html">Home</a></li>
         <li><a href="services.html">Services</a></li>
-        <!--<li><a href="prices.html">Fuel Prices</a></li>-->
         <li><a href="fleet.html">Fleet Orders</a></li>
         <li><a href="carwash.html">Car Wash</a></li>
         <li><a href="location.html">Locations</a></li>
       </ul>
     </div>
+    <div class="footer-links">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="services.html">Petrol &amp; Diesel</a></li>
+        <li><a href="carwash.html">Car Wash</a></li>
+        <li><a href="fleet.html">Fleet Program</a></li>
+        <li><a href="services.html">Loyalty Rewards</a></li>
+        <li><a href="services.html">Mini Market</a></li>
+      </ul>
+    </div>
     <div class="footer-contact">
       <h4>Contact</h4>
-      <p>📧 info@NERO.com</p>
-      <p>📞 +256 708 870667</p>
-      <p>🕐 Open 24 Hours</p>
+      <p>info@NERO.com</p>
+      <p>+256 708 870667</p>
+      <p>Open 24 Hours</p>
+      <p>Kiwoko · Nakaseke · Butalangu</p>
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2026 NERO Petro Station. All rights reserved.</p>
-    <!--<a href="pages/admin.html" class="footer-admin-link">Admin Panel</a>-->
+    <p>© 2026 NERO PETRO Station. All rights reserved.</p>
   </div>
 </footer>
 
@@ -124,15 +299,34 @@
 <script type="module" src="../js/fuelAPI.js"></script>
 
 <script>
-async function loadPrices(){
+// ── Fuel Prices API ──
+async function loadPrices() {
   try {
     const response = await fetch("https://opensheet.elk.sh/1jhnbiykWFW5jiTp2RVW1uS8brr1FHLzm12eAKwYEdeE/1");
     const data = await response.json();
-    document.getElementById("petrolPrice").innerText = "$" + data[0]["PRICE "];
-    document.getElementById("dieselPrice").innerText = "$" + data[1]["PRICE "];
+    document.getElementById("petrolPrice").innerText = "UGX " + data[0]["PRICE "];
+    document.getElementById("dieselPrice").innerText  = "UGX " + data[1]["PRICE "];
   } catch(e) { /* fallback to Firebase */ }
 }
 loadPrices();
+
+// ── Hero Slideshow ──
+(function () {
+  const slides  = document.querySelectorAll('.hero-slide');
+  const dots    = document.querySelectorAll('.slide-dot');
+  let current   = 0;
+
+  function goTo(n) {
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = n;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+  }
+
+  dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
+  setInterval(() => goTo((current + 1) % slides.length), 5000);
+})();
 </script>
 </body>
 </html>

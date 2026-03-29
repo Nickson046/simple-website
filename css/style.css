@@ -216,6 +216,16 @@ body.light .fuel-type-card.diesel .fuel-type-img-placeholder {
   background: linear-gradient(135deg, rgba(30,80,200,0.1), rgba(26,18,8,0.08));
 }
 
+.fuel-type-real-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.75);
+  transition: filter 0.4s ease;
+}
+.fuel-type-card:hover .fuel-type-real-img { filter: brightness(0.9); }
+
 /* ── Loyalty section ── */
 body.light .loyalty-calc {
   background: #f0ece6;
@@ -423,8 +433,8 @@ header.scrolled {
 }
 
 #logo {
-  width: 44px;
-  height: auto;
+  height: 52px;
+  width: auto;
   object-fit: contain;
 }
 
@@ -823,10 +833,14 @@ nav.main-nav a.nav-admin:hover {
 }
 
 .why-icon {
-  font-size: 1.6rem;
+  font-family: var(--font-head);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--red);
   flex-shrink: 0;
   width: 48px; height: 48px;
-  background: rgba(232,0,13,0.1);
+  background: rgba(232,0,13,0.08);
   border: 1px solid rgba(232,0,13,0.25);
   display: flex; align-items: center; justify-content: center;
   border-radius: var(--radius);
@@ -1117,6 +1131,13 @@ footer {
   font-weight: 900;
   letter-spacing: 0.08em;
   color: var(--red);
+  margin-bottom: 1rem;
+}
+
+.footer-logo-img {
+  height: 52px;
+  width: auto;
+  display: block;
   margin-bottom: 1rem;
 }
 

@@ -54,10 +54,10 @@ function loadLivePrices() {
     const { petrol, diesel } = snap.data();
 
     petrolEls.forEach(el => {
-      if (el) el.textContent = petrol ? `$${parseFloat(petrol).toFixed(2)}` : el.textContent;
+      if (el) el.textContent = petrol ? `UGX ${Number(petrol).toLocaleString()}` : el.textContent;
     });
     dieselEls.forEach(el => {
-      if (el) el.textContent = diesel ? `$${parseFloat(diesel).toFixed(2)}` : el.textContent;
+      if (el) el.textContent = diesel ? `UGX ${Number(diesel).toLocaleString()}` : el.textContent;
     });
   }, err => console.warn("Price listener error:", err));
 }

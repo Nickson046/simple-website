@@ -31,7 +31,7 @@
 </header>
 
 <div class="page-hero" style="background-image: linear-gradient(to right, rgba(0,0,0,0.92), rgba(0,0,0,0.5)), url('../images/carwash.jpg');">
-  <div class="breadcrumb">NERO / <span>Car Wash</span></div>
+  <div class="breadcrumb">NERO / Car Wash</div>
   <h1>Professional Car Wash</h1>
 </div>
 
@@ -44,23 +44,23 @@
     </div>
     <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:1.5rem; max-width:960px; margin:0 auto 4rem;">
       <div class="card">
-        <div style="font-size:2rem; margin-bottom:1rem;">⚡</div>
+        <div style="font-family:var(--font-head); font-size:0.75rem; font-weight:700; letter-spacing:0.15em; color:var(--red); text-transform:uppercase; margin-bottom:0.75rem;">In &amp; Out Fast</div>
         <h3>Quick Wash</h3>
-        <div style="font-family:var(--font-head); font-size:2rem; color:var(--red); margin:0.5rem 0;"></div>
-        <p>Fast exterior rinse and dry in under 5 minutes. Perfect for a quick refresh.</p>
+        <p>Fast exterior rinse and dry in under 5 minutes. Perfect for a quick refresh on the go.</p>
+        <div style="margin-top:1.25rem; font-family:var(--font-head); font-size:0.8rem; letter-spacing:0.08em; color:var(--muted); text-transform:uppercase;">Available at all stations</div>
       </div>
       <div class="card" style="border-color: rgba(232,0,13,0.4); border-top: 3px solid var(--red); position:relative;">
         <div style="position:absolute; top:1.25rem; right:1.25rem; background:var(--red); color:#fff; font-family:var(--font-head); font-size:0.7rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:0.2rem 0.7rem; border-radius:2px;">Popular</div>
-        <div style="font-size:2rem; margin-bottom:1rem;">🚗</div>
+        <div style="font-family:var(--font-head); font-size:0.75rem; font-weight:700; letter-spacing:0.15em; color:var(--red); text-transform:uppercase; margin-bottom:0.75rem;">Complete Inside &amp; Out</div>
         <h3>Full Service</h3>
-        <div style="font-family:var(--font-head); font-size:2rem; color:var(--red); margin:0.5rem 0;"></div>
-        <p>Exterior wash with interior vacuum, window clean and wheel shine.</p>
+        <p>Exterior wash with interior vacuum, window clean and wheel shine. Our most chosen package.</p>
+        <div style="margin-top:1.25rem; font-family:var(--font-head); font-size:0.8rem; letter-spacing:0.08em; color:var(--muted); text-transform:uppercase;">Available at all stations</div>
       </div>
       <div class="card">
-        <div style="font-size:2rem; margin-bottom:1rem;">✨</div>
+        <div style="font-family:var(--font-head); font-size:0.75rem; font-weight:700; letter-spacing:0.15em; color:var(--red); text-transform:uppercase; margin-bottom:0.75rem;">Showroom Finish</div>
         <h3>Premium Detail</h3>
-        <div style="font-family:var(--font-head); font-size:2rem; color:var(--red); margin:0.5rem 0;"></div>
-        <p>Full deep clean including hand wax, polish and interior dressing.</p>
+        <p>Full deep clean including hand wax, polish and interior dressing. Your car, restored.</p>
+        <div style="margin-top:1.25rem; font-family:var(--font-head); font-size:0.8rem; letter-spacing:0.08em; color:var(--muted); text-transform:uppercase;">Available at all stations</div>
       </div>
     </div>
   </div>
@@ -71,68 +71,105 @@
   <div class="container">
     <div class="form-section">
       <h2>Book a Car Wash</h2>
+      <p style="margin-bottom:1.5rem; font-size:0.9rem; color:var(--muted);">Fill in your details and we'll open WhatsApp so you can confirm directly with our team.</p>
       <div class="form-group">
         <label>Your Name</label>
-        <input type="text" placeholder="Full name">
-      </div>
-      <div class="form-group">
-        <label>Email Address</label>
-        <input type="email" placeholder="you@example.com">
+        <input type="text" id="cwName" placeholder="Full name">
       </div>
       <div class="form-group">
         <label>Preferred Date</label>
-        <input type="date">
+        <input type="date" id="cwDate">
       </div>
       <div class="form-group">
         <label>Package</label>
-        <select>
-          <option>Quick Wash </option>
-          <option>Full Service </option>
+        <select id="cwPackage">
+          <option>Quick Wash</option>
+          <option>Full Service</option>
           <option>Premium Detail</option>
         </select>
       </div>
       <div class="form-group">
         <label>Station Location</label>
-        <select>
+        <select id="cwStation">
           <option>NERO Kiwoko</option>
-          <option>NERO Butalangu</option>
           <option>NERO Nakaseke</option>
+          <option>NERO Butalangu</option>
         </select>
       </div>
-      <button class="btn btn-primary" style="width:100%; margin-top:0.5rem;" onclick="alert('Booking confirmed! We will contact you shortly.')">
-        Confirm Booking
+
+      <!-- Mobile Money badge -->
+      <div style="display:flex; align-items:center; gap:0.75rem; padding:0.75rem 1rem; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:var(--radius); margin-bottom:1rem;">
+        <span style="font-family:var(--font-head); font-size:0.7rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted);">We accept</span>
+        <span style="font-family:var(--font-head); font-size:0.82rem; font-weight:700; color:#ffcc00;">MTN MoMo</span>
+        <span style="color:var(--muted);">·</span>
+        <span style="font-family:var(--font-head); font-size:0.82rem; font-weight:700; color:#ff6200;">Airtel Money</span>
+        <span style="color:var(--muted);">·</span>
+        <span style="font-family:var(--font-head); font-size:0.82rem; font-weight:700; color:var(--muted);">Cash</span>
+      </div>
+
+      <button class="btn btn-primary" style="width:100%; margin-top:0.5rem;" onclick="bookCarWashWhatsApp()">
+        Book via WhatsApp
       </button>
     </div>
   </div>
 </section>
 
+<script>
+function bookCarWashWhatsApp() {
+  const name    = document.getElementById('cwName').value.trim();
+  const date    = document.getElementById('cwDate').value;
+  const pkg     = document.getElementById('cwPackage').value;
+  const station = document.getElementById('cwStation').value;
+  let msg = 'Hello NERO, I would like to book a car wash.';
+  if (name)    msg += `\nName: ${name}`;
+  if (pkg)     msg += `\nPackage: ${pkg}`;
+  if (station) msg += `\nStation: ${station}`;
+  if (date)    msg += `\nPreferred Date: ${date}`;
+  window.open(`https://wa.me/256708870667?text=${encodeURIComponent(msg)}`, '_blank');
+}
+</script>
+
 <footer>
   <div class="footer-inner container">
     <div class="footer-brand">
-      <div class="footer-logo">NERO</div>
-      <p>Premium fuel network. Always open.</p>
+      <img src="../images/nerologo2.png" alt="NERO" class="footer-logo-img">
+      <p>Your trusted fuel network. Premium quality, smart service, all stations always open.</p>
+      <div class="footer-socials">
+        <a href="#">FB</a>
+        <a href="#">IG</a>
+        <a href="#">TW</a>
+      </div>
     </div>
     <div class="footer-links">
       <h4>Quick Links</h4>
       <ul>
         <li><a href="../index.html">Home</a></li>
         <li><a href="services.html">Services</a></li>
-        <!--<a href="prices.html">Fuel Prices</a>-->
         <li><a href="fleet.html">Fleet Orders</a></li>
         <li><a href="carwash.html">Car Wash</a></li>
         <li><a href="location.html">Locations</a></li>
       </ul>
     </div>
+    <div class="footer-links">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="services.html">Petrol &amp; Diesel</a></li>
+        <li><a href="carwash.html">Car Wash</a></li>
+        <li><a href="fleet.html">Fleet Program</a></li>
+        <li><a href="services.html">Loyalty Rewards</a></li>
+        <li><a href="services.html">Mini Market</a></li>
+      </ul>
+    </div>
     <div class="footer-contact">
       <h4>Contact</h4>
-      <p>📧 info@NERO.com</p>
-      <p>📞 +256 708 870667</p>
-      <p>🕐 Open 24 Hours</p>
+      <p>info@NERO.com</p>
+      <p>+256 708 870667</p>
+      <p>Open 24 Hours</p>
+      <p>Kiwoko · Nakaseke · Butalangu</p>
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2026 NERO Petro Station. All rights reserved.</p>
-    <!--<a href="pages/admin.html" class="footer-admin-link">Admin Panel</a>-->
+    <p>© 2026 NERO PETRO Station. All rights reserved.</p>
   </div>
 </footer>
 
